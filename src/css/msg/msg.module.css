@@ -1,0 +1,31 @@
+.info,
+.success,
+.warning,
+.error {
+  margin: 10px 0px;
+  padding: 12px;
+}
+.info {
+  color: #00529b;
+  background-color: #bde5f8;
+}
+.success {
+  color: #4f8a10;
+  background-color: #dff2bf;
+}
+.warning {
+  color: #9f6000;
+  background-color: #feefb3;
+}
+.error {
+  color: #d8000c;
+  background-color: #ffd2d2;
+}
+.info i,
+.success i,
+.warning i,
+.error i {
+  margin: 10px 22px;
+  font-size: 2em;
+  vertical-align: middle;
+}
