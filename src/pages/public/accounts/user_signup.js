@@ -1,24 +1,65 @@
 // import axios from "axios";
-import validate from "../../../components/accounts/user/validateUserSignup";
-import useForm from "../../../components/accounts/user/UseSignupForm";
+
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userSignup } from "../../../redux/actions/userActions";
 import classes from "../../../css/account_css/UserAccount.module.css";
+import validate from "../../../components/accounts/user/validateUserSignup";
 import msg from "../../../css/msg/msg.module.css";
 
-const User_Signup = ({ submitForm }) => {
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    submitForm,
-    validate
-  );
+const User_Signup = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    conpass: "",
+  });
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/homepage");
+    }
+  }, [userInfo, navigate]);
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    const mess = validate(values);
+    if (Object.keys(mess).length !== 0) {
+      setMessage(mess);
+    } else {
+      dispatch(userSignup(values));
+      // navigate("/userlogin");
+    }
+  };
+
   return (
     <div className={classes.signupBody}>
       <div className={classes.container}>
         <div className={classes.title}>Registration</div>
         <div className={classes.content}>
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={submitForm}>
             <div className={classes["user-details"]}>
+              {loading && <p>Loading...</p>}
               <div className={classes["input-box"]}>
-                <span className="signinspan">Username</span>
+                <span className={classes.signinspan}>Username</span>
                 <input
                   type="text"
                   name="username"
@@ -26,13 +67,16 @@ const User_Signup = ({ submitForm }) => {
                   onChange={handleChange}
                   placeholder="Enter your username"
                 />
-                {errors.username && (
-                  <p className={msg.error}>{errors.username}</p>
+                {message.username && (
+                  <p className={msg.error}>{message.username}</p>
+                )}
+                {error && error.username && (
+                  <p className={msg.error}>{error.username}</p>
                 )}
               </div>
 
               <div className={classes["input-box"]}>
-                <span className="signinspan">Email</span>
+                <span className={classes.signinspan}>Email</span>
                 <input
                   type="text"
                   name="email"
@@ -40,11 +84,14 @@ const User_Signup = ({ submitForm }) => {
                   onChange={handleChange}
                   placeholder="Enter your email"
                 />
-                {errors.email && <p className={msg.error}>{errors.email}</p>}
+                {message.email && <p className={msg.error}>{message.email}</p>}
+                {error && error.email && (
+                  <p className={msg.error}>{error.email}</p>
+                )}
               </div>
 
               <div className={classes["input-box"]}>
-                <span className="signinspan">First Name</span>
+                <span className={classes.signinspan}>First Name</span>
                 <input
                   type="text"
                   name="first_name"
@@ -54,41 +101,44 @@ const User_Signup = ({ submitForm }) => {
                 />
               </div>
               <div className={classes["input-box"]}>
-                <span className="signinspan">Last Name</span>
+                <span className={classes.signinspan}>Last Name</span>
                 <input
                   type="text"
-                  name="first_name"
-                  value={values.first_name}
+                  name="last_name"
+                  value={values.last_name}
                   onChange={handleChange}
                   placeholder="Enter your last name"
                 />
               </div>
 
               <div className={classes["input-box"]}>
-                <span className="signinspan">Password</span>
+                <span className={classes.signinspan}>Password</span>
                 <input
                   type="password"
-                  name="last_name"
-                  value={values.last_name}
+                  name="password"
+                  value={values.password}
                   onChange={handleChange}
                   placeholder="Enter your password"
                 />
-                {errors.password && (
-                  <p className={msg.error}>{errors.password}</p>
+                {message.password && (
+                  <p className={msg.error}>{message.password}</p>
+                )}
+                {error && error.password && (
+                  <p className={msg.error}>{error.password}</p>
                 )}
               </div>
 
               <div className={classes["input-box"]}>
-                <span className="signinspan">Confirm Password</span>
+                <span className={classes.signinspan}>Confirm Password</span>
                 <input
                   type="password"
-                  name="last_name"
+                  name="conpass"
                   value={values.conpass}
                   onChange={handleChange}
                   placeholder="Confirm your password"
                 />
-                {errors.conpass && (
-                  <p className={msg.error}>{errors.conpass}</p>
+                {message.conpass && (
+                  <p className={msg.error}>{message.conpass}</p>
                 )}
               </div>
             </div>
@@ -96,7 +146,10 @@ const User_Signup = ({ submitForm }) => {
               <input type="submit" value="Register" />
             </div>
             <div className={classes["input-box"]}>
-              Already Registered ? <Link to="/userlogin"> Login</Link>
+              <p className={classes.signinspan}>
+                {" "}
+                Already Registered ? <Link to="/userlogin"> Login</Link>
+              </p>
             </div>
           </form>
         </div>
