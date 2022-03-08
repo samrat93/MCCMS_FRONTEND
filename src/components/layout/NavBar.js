@@ -1,11 +1,21 @@
 import classes from "../../css/layout_css/NavBar.module.css";
 import logo from "../../Static/images/logo.png";
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/actions/userActions";
+
 const Navbar = () => {
   const [showMediaIcons, setShowMediaIcons] = useState(false);
+  const userSignin = useSelector((state) => state.userSignin);
+  const { loading, error, userInfo } = userSignin;
+  const dispatch = useDispatch();
+
+  const logoutHandler = (e) => {
+    dispatch(logout());
+  };
+
   return (
     <div>
       <nav className={classes["main-nav"]}>
@@ -22,14 +32,12 @@ const Navbar = () => {
         {/* 2nd menu part  */}
         <div
           className={
-            showMediaIcons
-              ? classes["menu-link mobile-menu-link"]
-              : classes["menu-link"]
+            showMediaIcons ? classes["mobile-menu-link"] : classes["menu-link"]
           }
         >
           <ul>
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/homepage">Home</NavLink>
             </li>
             <li>
               <NavLink to="/about">about</NavLink>
@@ -40,9 +48,18 @@ const Navbar = () => {
             <li>
               <NavLink to="/contact">contact</NavLink>
             </li>
-            <li>
-              <NavLink to="/userlogin">Login</NavLink>
-            </li>
+            {userInfo ? (
+              <li>
+                <Link to="/">
+                  <a onClick={logoutHandler}>Logout</a>
+                </Link>
+                {/* <button>Logout</button> */}
+              </li>
+            ) : (
+              <li>
+                <NavLink to="/userlogin">Login</NavLink>
+              </li>
+            )}
           </ul>
         </div>
 

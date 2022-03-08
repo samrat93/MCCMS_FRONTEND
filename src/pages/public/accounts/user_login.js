@@ -1,21 +1,44 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import classes from "../../../css/account_css/UserAccount.module.css";
 import msg from "../../../css/msg/msg.module.css";
 import validate from "../../../components/accounts/user/validateUserLogin";
-import UseUserLoginForm from "../../../components/accounts/user/UseUserLoginForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../../redux/actions/userActions";
 
-const User_login = ({ submitLoginForm }) => {
-  const { handleChange, handleSubmit, values, errors } = UseUserLoginForm(
-    submitLoginForm,
-    validate
-  );
+const User_login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userSignin = useSelector((state) => state.userSignin);
+  const { loading, error, userInfo } = userSignin;
+  const submitForm = (e) => {
+    e.preventDefault();
+    const values = { username, password };
+
+    const mess = validate(values);
+    if (Object.keys(mess).length !== 0) {
+      setMessage(mess);
+    } else {
+      dispatch(userLogin(values));
+    }
+  };
+  console.log(userInfo);
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [userInfo, navigate]);
+
   return (
     <div className={classes.signupBody}>
       <div className={classes.container}>
         <div className={classes.title}>Login</div>
         <div className={classes.content}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submitForm}>
             <div className={classes["user-details"]}>
               <div className={classes["input-box"]}>
                 <span className={classes.signinspan}>Username</span>
@@ -23,11 +46,14 @@ const User_login = ({ submitLoginForm }) => {
                   type="text"
                   name="username"
                   placeholder="Enter your username"
-                  value={values.username}
-                  onChange={handleChange}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
-                {errors.username && (
-                  <p className={msg.error}>{errors.username}</p>
+                {message.username && (
+                  <p className={msg.error}>{message.username}</p>
+                )}
+                {error && error.login_error && (
+                  <p className={msg.error}>{error.login_error}</p>
                 )}
               </div>
             </div>
@@ -38,13 +64,14 @@ const User_login = ({ submitLoginForm }) => {
                 <input
                   type="password"
                   name="password"
-                  value={values.password}
+                  value={password}
                   placeholder="Enter your password"
-                  onChange={handleChange}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                {errors.password && (
-                  <p className={msg.error}>{errors.password}</p>
+                {message.password && (
+                  <p className={msg.error}>{message.password}</p>
                 )}
+                {/* {error && <p className={msg.error}>{error}</p>} */}
               </div>
             </div>
 

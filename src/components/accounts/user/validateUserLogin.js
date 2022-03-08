@@ -1,7 +1,7 @@
 const ValidateLoginForm = (values) => {
   let errors = {};
 
-  if (!values.username.trim()) {
+  if (!values.username) {
     errors.username = "Username required";
   }
 

@@ -2,7 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { userLoginReducer, userRegisterReducer } from "./userAuthReducer";
 
 const reducers = combineReducers({
-  userLogin: userLoginReducer,
+  userSignin: userLoginReducer,
   userRegister: userRegisterReducer,
 });
 

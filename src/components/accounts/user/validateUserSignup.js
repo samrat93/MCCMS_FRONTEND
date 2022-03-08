@@ -1,7 +1,7 @@
 const ValidateSignupForm = (values) => {
   let errors = {};
 
-  if (!values.username.trim()) {
+  if (!values.username) {
     errors.username = "Username required";
   }
   // else if (!/^[A-Za-z]+/.test(values.name.trim())) {
