@@ -33,11 +33,11 @@ const User_Signup = () => {
     });
   };
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate("/userlogin");
-    }
-  }, [userInfo, navigate]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     navigate("/userlogin");
+  //   }
+  // }, [userInfo, navigate]);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ const User_Signup = () => {
       setMessage(mess);
     } else {
       dispatch(userSignup(values));
-      // setValues("");
+      navigate("/userlogin");
     }
   };
 

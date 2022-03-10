@@ -53,6 +53,26 @@ form .user-details .input-box {
   border-bottom-width: 2px;
   transition: all 0.3s ease;
 }
+
+/* This is for login page  */
+form .user-details .input-box-login {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.user-details .input-box-login input {
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #ccc;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
+/* This is for login page  */
+
 .user-details .input-box input:focus,
 .user-details .input-box input:valid {
   border-color: #9b59b6;

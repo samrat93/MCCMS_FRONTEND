@@ -29,7 +29,7 @@ const User_login = () => {
   console.log(userInfo);
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate("/adminDashboard");
     }
   }, [userInfo, navigate]);
 
@@ -40,7 +40,7 @@ const User_login = () => {
         <div className={classes.content}>
           <form onSubmit={submitForm}>
             <div className={classes["user-details"]}>
-              <div className={classes["input-box"]}>
+              <div className={classes["input-box-login"]}>
                 <span className={classes.signinspan}>Username</span>
                 <input
                   type="text"
@@ -59,7 +59,7 @@ const User_login = () => {
             </div>
 
             <div className={classes["user-details"]}>
-              <div className={classes["input-box"]}>
+              <div className={classes["input-box-login"]}>
                 <span className={classes.signinspan}>Password</span>
                 <input
                   type="password"
@@ -74,9 +74,12 @@ const User_login = () => {
                 {/* {error && <p className={msg.error}>{error}</p>} */}
               </div>
             </div>
-
-            <div className={classes.button}>
-              <input type="submit" value="Login" />
+            <div className={classes["user-details"]}>
+              <div className={classes["input-box-login"]}>
+                <div className={classes.button}>
+                  <input type="submit" value="Login" />
+                </div>
+              </div>
             </div>
             <div className={classes["input-box"]}>
               <p className={classes.signinspan}>

@@ -18,7 +18,7 @@ export const userSignup = (values) => async (dispatch) => {
       config
     );
     dispatch({
-      type: UserActionType.USER_LOGIN_SUCCESS,
+      type: UserActionType.USER_REGISTER_SUCCESS,
       payload: data,
     });
     // localStorage.setItem("userInfo", JSON.stringify(data));
@@ -55,11 +55,45 @@ export const userLogin = (values) => async (dispatch) => {
     });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
-    console.log("mmmmmmmmmmmmmmmmm", error.response.data.non_field_errors[0]);
     const login_error = error.response.data.non_field_errors[0];
     dispatch({
       type: UserActionType.USER_LOGIN_FAIL,
       payload: { login_error },
+    });
+  }
+};
+
+export const readalluser = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UserActionType.USER_LIST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        "content-type": "application/json",
+      },
+    };
+    const { data } = await axios.get(
+      "http://127.0.0.1:8000/api/register/",
+      config
+    );
+    dispatch({
+      type: UserActionType.USER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UserActionType.USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
