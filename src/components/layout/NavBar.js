@@ -16,28 +16,28 @@ const Navbar = () => {
     dispatch(logout());
   };
 
-  const userAuth = () => {
-    if (!userInfo) {
-      return (
-        <li>
-          <NavLink to="/userlogin">Login</NavLink>
-        </li>
-      );
-    } else {
-      return (
-        <>
-          <li>
-            <Link onClick={logoutHandler} to="/homepage">
-              Logout
-            </Link>
-          </li>
-          {/* <li>
-            <Link to="/adminDashboard">Dashboard</Link>
-          </li> */}
-        </>
-      );
-    }
-  };
+  // const userAuth = () => {
+  //   if (!userInfo) {
+  //     return (
+  //       <li>
+  //         <NavLink to="/userlogin">Login</NavLink>
+  //       </li>
+  //     );
+  //   } else {
+  //     return (
+  //       <>
+  //         <li>
+  //           <Link onClick={logoutHandler} to="/homepage">
+  //             Logout
+  //           </Link>
+  //         </li>
+  //         {/* <li>
+  //           <Link to="/adminDashboard">Dashboard</Link>
+  //         </li> */}
+  //       </>
+  //     );
+  //   }
+  // };
 
   return (
     <div>
@@ -72,7 +72,9 @@ const Navbar = () => {
             <li>
               <NavLink to="/contact">contact</NavLink>
             </li>
-            {userAuth()}
+            <li>
+              <NavLink to="/userlogin">Login</NavLink>
+            </li>
           </ul>
         </div>
 

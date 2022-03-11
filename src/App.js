@@ -17,11 +17,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/adminDashboard" element={<AdminDashboard />}>
-          <Route
-            path="/adminDashboard"
-            element={<Navigate replace to="userlist" />}
-          />
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route path="/admin" element={<Navigate replace to="userlist" />} />
           <Route path="userlist" element={<UserList />} />
           <Route path="municipalityList" element={<MunicipalityList />} />
         </Route>

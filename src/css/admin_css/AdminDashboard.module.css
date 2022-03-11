@@ -43,9 +43,7 @@
   text-decoration: none;
   transition: all 0.4s ease;
 }
-.sidebar .nav-links li a.active {
-  background: #081d45;
-}
+
 .sidebar .nav-links li a:hover {
   background: #081d45;
 }
@@ -57,9 +55,10 @@
 }
 .sidebar .nav-links li a .links_name {
   color: #fff;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 400;
   white-space: nowrap;
+  margin-left: 15px;
 }
 .sidebar .nav-links .log_out {
   position: absolute;
@@ -407,4 +406,7 @@ nav .profile-details i {
   .sidebar.active ~ .home-section nav .profile-details {
     display: none;
   }
+}
+.active {
+  background: #081d45;
 }

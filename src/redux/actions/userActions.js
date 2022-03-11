@@ -64,18 +64,14 @@ export const userLogin = (values) => async (dispatch) => {
 };
 
 export const readalluser = () => async (dispatch, getState) => {
+  console.log("dfasdfasd");
+
   try {
     dispatch({
       type: UserActionType.USER_LIST_REQUEST,
     });
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
         "content-type": "application/json",
       },
     };
@@ -90,6 +86,45 @@ export const readalluser = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UserActionType.USER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const UserAprroval = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UserActionType.USER_APPROVAL_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        "content-type": "application/json",
+      },
+    };
+
+    //console.log(isAdmin)
+    const { data } = await axios.put(
+      `http://127.0.0.1:8000/api/register/${user.id}`,
+      user,
+      config
+    );
+
+    dispatch({
+      type: UserActionType.USER_APPROVAL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UserActionType.USER_APPROVAL_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
