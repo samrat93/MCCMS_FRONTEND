@@ -15,6 +15,7 @@ const User_login = () => {
   const navigate = useNavigate();
   const userSignin = useSelector((state) => state.userSignin);
   const { loading, error, userInfo } = userSignin;
+
   const submitForm = (e) => {
     e.preventDefault();
     const values = { username, password };
@@ -26,10 +27,10 @@ const User_login = () => {
       dispatch(userLogin(values));
     }
   };
-  console.log(userInfo);
+
   useEffect(() => {
     if (userInfo) {
-      navigate("/adminDashboard");
+      navigate("/admin");
     }
   }, [userInfo, navigate]);
 

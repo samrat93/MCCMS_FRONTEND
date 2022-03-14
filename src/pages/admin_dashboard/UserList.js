@@ -1,14 +1,14 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
-
-import React from "react";
-import { readalluser, UserAprroval } from "../../redux/actions/userActions";
+import msg from "../../css/msg/msg.module.css";
+import React, { useState } from "react";
+import { readalluser, UserAprroval } from "../../redux/actions/adminActions";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import tbl from "../../css/admin_css/table.module.css";
 import VerifiedIcon from "@mui/icons-material/Verified";
-// import { Approval } from "@mui/icons-material";
-// import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
+import UserConfirmForm from "./UserConfForm";
+import UserVerifyFormContent from "./PopFormContent";
 
 const UserList = () => {
   // const [userAList, setUserAList] = useState(null);
@@ -32,6 +32,26 @@ const UserList = () => {
     }
   }, [dispatch, userInfo]);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [currId, setCurrID] = useState(0);
+  const [currUser, setCurrUser] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setCurrUser((prev) => {
+        return users.find((userObj) => {
+          return userObj.id === currId;
+        });
+      });
+    }
+  }, [currId]);
+
+  const togglePopup = (e) => {
+    console.log("user-id", e.target.value);
+    setCurrID(+e.target.value);
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <div className={classes["home-content"]}>
@@ -51,42 +71,54 @@ const UserList = () => {
                     <th>Active Status</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {users?.map((user) => (
-                    <tr key={user.id}>
-                      <td>{user.username}</td>
-                      <td>{user.email}</td>
-                      <td>{user.first_name}</td>
-                      <td>{user.last_name}</td>
-                      <td>{user.created}</td>
-                      <td>
-                        {user.is_active ? (
-                          <VerifiedIcon
-                            sx={{
-                              fontSize: "30px",
-                              color: "#0087bd",
-                            }}
-                          />
-                        ) : (
-                          // <DoNotDisturbOnIcon
-                          //   sx={{
-                          //     fontSize: "30px",
-                          //     color: "#cd5c5c",
-                          //   }}
-                          // />
-                          <button
-                            value={user.id}
-                            onClick={approvalHandler}
-                            className={tbl.tbl_button}
-                          >
-                            Verify Now
-                          </button>
-                        )}
+                {error ? (
+                  <tbody>
+                    <tr>
+                      <td colSpan={6} className={msg.error}>
+                        Sorry 😢 Something Went Wrong !
                       </td>
                     </tr>
-                  ))}
-                </tbody>
+                  </tbody>
+                ) : (
+                  <tbody>
+                    {users?.map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.username}</td>
+                        <td>{user.email}</td>
+                        <td>{user.first_name}</td>
+                        <td>{user.last_name}</td>
+                        <td>{user.created}</td>
+                        <td>
+                          {user.is_active ? (
+                            <VerifiedIcon
+                              sx={{
+                                fontSize: "30px",
+                                color: "#0087bd",
+                              }}
+                            />
+                          ) : (
+                            <button
+                              value={user.id}
+                              onClick={togglePopup}
+                              className={tbl.tbl_button}
+                            >
+                              Verify Now
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
               </table>
+              {isOpen && currUser && (
+                <div>
+                  <UserConfirmForm
+                    content={<UserVerifyFormContent userData={currUser} />}
+                    handleClose={togglePopup}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

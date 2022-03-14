@@ -85,10 +85,7 @@ const AdminDashboard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/adminDashboard/municipalityList"
-              className={classes.links_name}
-            >
+            <NavLink to="/admin/add-country" className={classes.links_name}>
               <FlagOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
@@ -96,10 +93,7 @@ const AdminDashboard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/adminDashboard/municipalityList"
-              className={classes.links_name}
-            >
+            <NavLink to="/admin/add-state" className={classes.links_name}>
               <LocationCityOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
@@ -107,10 +101,7 @@ const AdminDashboard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/adminDashboard/municipalityList"
-              className={classes.links_name}
-            >
+            <NavLink to="/admin/complaint-list" className={classes.links_name}>
               <AssuredWorkloadOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
@@ -118,10 +109,7 @@ const AdminDashboard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/adminDashboard/municipalityList"
-              className={classes.links_name}
-            >
+            <NavLink to="/admin/add-country" className={classes.links_name}>
               <FeedbackOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
@@ -129,10 +117,7 @@ const AdminDashboard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/adminDashboard/municipalityList"
-              className={classes.links_name}
-            >
+            <NavLink to="/admin/change-password" className={classes.links_name}>
               <SettingsOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />

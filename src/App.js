@@ -12,6 +12,10 @@ import HomePage from "./pages/homepage";
 import AdminDashboard from "./pages/admin_dashboard";
 import UserList from "./pages/admin_dashboard/UserList";
 import MunicipalityList from "./pages/admin_dashboard/MunicipalityList";
+import AddCountry from "./pages/admin_dashboard/AddCountry";
+import AddState from "./pages/admin_dashboard/AddState";
+import ChangePassword from "./pages/admin_dashboard/ChangePassword";
+import ComplaintList from "./pages/admin_dashboard/ViewComplaints";
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
           <Route path="/admin" element={<Navigate replace to="userlist" />} />
           <Route path="userlist" element={<UserList />} />
           <Route path="municipalityList" element={<MunicipalityList />} />
+          <Route path="add-country" element={<AddCountry />} />
+          <Route path="add-state" element={<AddState />} />
+          <Route path="complaint-list" element={<ComplaintList />} />
+          <Route path="change-password" element={<ChangePassword />} />
         </Route>
       </Routes>
       <Layout>
