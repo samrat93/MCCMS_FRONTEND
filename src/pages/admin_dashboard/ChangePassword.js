@@ -1,7 +1,42 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
 import formclasses from "../../css/account_css/UserAccount.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { ChangePasswordAction } from "../../redux/actions/adminActions";
+import msg from "../../css/msg/msg.module.css";
+import validate from "../../components/admin/validatePasswordChange";
 
 const ChangePassword = () => {
+  const dispatch = useDispatch();
+  const passwordChangeRedu = useSelector((state) => state.passwordChangeRedu);
+  const { loading, error, success } = passwordChangeRedu;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  const [values, setValues] = useState({
+    old_password: "",
+    new_password: "",
+    conf_password: "",
+  });
+  const [message, setMessage] = useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const mess = validate(values);
+    if (Object.keys(mess).length !== 0) {
+      setMessage(mess);
+    } else {
+      dispatch(ChangePasswordAction(values));
+    }
+  };
   return (
     <div>
       <div className={classes["home-content"]}>
@@ -11,7 +46,7 @@ const ChangePassword = () => {
               <div className={formclasses.container}>
                 <div className={formclasses.title}>Change Password</div>
                 <div className={formclasses.content}>
-                  <form>
+                  <form onSubmit={submitHandler}>
                     <div className={formclasses["user-details"]}>
                       <div className={formclasses["input-box-login"]}>
                         <span className={formclasses.signinspan}>
@@ -21,7 +56,15 @@ const ChangePassword = () => {
                           type="password"
                           name="old_password"
                           placeholder="Enter your old password"
+                          value={values.old_password}
+                          onChange={handleChange}
                         />
+                        {message.old_password && (
+                          <p className={msg.error}>{message.old_password}</p>
+                        )}
+                        {error && error.old_password && (
+                          <p className={msg.error}>{error.old_password}</p>
+                        )}
                       </div>
                     </div>
 
@@ -33,10 +76,17 @@ const ChangePassword = () => {
                         <input
                           type="password"
                           name="new_password"
+                          value={values.new_password}
                           placeholder="Enter your New password"
+                          onChange={handleChange}
                         />
 
-                        {/* {error && <p className={msg.error}>{error}</p>} */}
+                        {message.new_password && (
+                          <p className={msg.error}>{message.new_password}</p>
+                        )}
+                        {error && error.new_password && (
+                          <p className={msg.error}>{error.new_password}</p>
+                        )}
                       </div>
                     </div>
                     <div className={formclasses["user-details"]}>
@@ -47,10 +97,17 @@ const ChangePassword = () => {
                         <input
                           type="password"
                           name="conf_password"
+                          value={values.conf_password}
                           placeholder="Confirm your New password"
+                          onChange={handleChange}
                         />
 
-                        {/* {error && <p className={msg.error}>{error}</p>} */}
+                        {message.conf_password && (
+                          <p className={msg.error}>{message.conf_password}</p>
+                        )}
+                        {error && error.conf_password && (
+                          <p className={msg.error}>{error.conf_password}</p>
+                        )}
                       </div>
                     </div>
                     <div className={formclasses["user-details"]}>

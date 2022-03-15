@@ -7,17 +7,28 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AddCountryAction } from "../../redux/actions/adminActions";
-import validate from "../../components/admin/countryAndStateValidator";
+import {
+  AddCountryAction,
+  ListCountryAction,
+} from "../../redux/actions/adminActions";
+import countryAndStateValidator from "../../components/admin/countryAndStateValidator";
 
 const AddCountry = () => {
   const dispatch = useDispatch();
   const addCountry = useSelector((state) => state.addCountry);
-  const { loading, error } = addCountry;
+  const { loading, error, countryInfo } = addCountry;
+
+  const listCountry = useSelector((state) => state.listCountry);
+  const { countries } = listCountry;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const [values, setValues] = useState({
     country_name: "",
     country_desc: "",
   });
+
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -28,13 +39,25 @@ const AddCountry = () => {
     });
   };
 
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(ListCountryAction());
+    } else {
+      setMessage("No Record Found");
+    }
+  }, [dispatch, userInfo]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    const mess = validate(values);
+
+    const mess = countryAndStateValidator(values);
+    console.log(Object.keys(mess).length);
     if (Object.keys(mess).length !== 0) {
       setMessage(mess);
     } else {
+      console.log("values", values);
       dispatch(AddCountryAction(values));
+      // setValues("");
     }
   };
   return (
@@ -59,8 +82,8 @@ const AddCountry = () => {
                           value={values.country_name}
                           onChange={handleChange}
                         />
-                        {message.name && (
-                          <p className={msg.error}>{message.name}</p>
+                        {message.country_name && (
+                          <p className={msg.error}>{message.country_name}</p>
                         )}
                       </div>
 
@@ -83,6 +106,10 @@ const AddCountry = () => {
                     <div className={formclasses.button}>
                       <input type="submit" value="Add Country" />
                     </div>
+                    {countryInfo && (
+                      <p className={msg.success}>{countryInfo}</p>
+                    )}
+                    {error && <p className={msg.error}>{error}</p>}
                   </form>
                 </div>
               </div>
@@ -100,31 +127,33 @@ const AddCountry = () => {
               </thead>
 
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>India</td>
-                  <td>India is amazing</td>
-                  <td>
-                    <button className={tbl.tbl_button}>
-                      <EditRoadIcon
-                        sx={{
-                          fontSize: "30px",
-                          color: "#b705f7",
-                        }}
-                      />
-                    </button>
-                  </td>
-                  <td>
-                    <button className={tbl.tbl_button}>
-                      <DeleteIcon
-                        sx={{
-                          fontSize: "30px",
-                          color: "#b705f7",
-                        }}
-                      />
-                    </button>
-                  </td>
-                </tr>
+                {countries?.map((country) => (
+                  <tr key={country.id}>
+                    <td>{country.id}</td>
+                    <td>{country.country_name}</td>
+                    <td>{country.country_desc}</td>
+                    <td>
+                      <button className={tbl.tbl_button}>
+                        <EditRoadIcon
+                          sx={{
+                            fontSize: "30px",
+                            color: "#b705f7",
+                          }}
+                        />
+                      </button>
+                    </td>
+                    <td>
+                      <button className={tbl.tbl_button}>
+                        <DeleteIcon
+                          sx={{
+                            fontSize: "30px",
+                            color: "#b705f7",
+                          }}
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

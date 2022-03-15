@@ -5,7 +5,13 @@ import {
   userApprovalReducer,
   userListReducer,
 } from "./userAuthReducer";
-import { addCountryReducer, listCountryReducer } from "./adminReducer";
+import {
+  addCountryReducer,
+  listCountryReducer,
+  addStateReducer,
+  listStateReducer,
+  changePasswordReducer,
+} from "./adminReducer";
 
 const reducers = combineReducers({
   userSignin: userLoginReducer,
@@ -14,6 +20,9 @@ const reducers = combineReducers({
   userApproval: userApprovalReducer,
   addCountry: addCountryReducer,
   listCountry: listCountryReducer,
+  addStateRedu: addStateReducer,
+  listStateRedu: listStateReducer,
+  passwordChangeRedu: changePasswordReducer,
 });
 
 export default reducers;
