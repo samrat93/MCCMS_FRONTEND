@@ -11,13 +11,13 @@ import {
   AddCountryAction,
   ListCountryAction,
 } from "../../redux/actions/adminActions";
-import countryAndStateValidator from "../../components/admin/countryAndStateValidator";
+import validator from "../../components/admin/countryValidator";
 
 const AddCountry = () => {
   const dispatch = useDispatch();
   const addCountry = useSelector((state) => state.addCountry);
   const { loading, error, countryInfo } = addCountry;
-
+  console.log("all errors", error);
   const listCountry = useSelector((state) => state.listCountry);
   const { countries } = listCountry;
 
@@ -42,24 +42,25 @@ const AddCountry = () => {
   useEffect(() => {
     if (userInfo) {
       dispatch(ListCountryAction());
-    } else {
-      setMessage("No Record Found");
     }
   }, [dispatch, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    const mess = countryAndStateValidator(values);
-    console.log(Object.keys(mess).length);
+    const mess = validator(values);
+    // console.log("msg length : ", Object.keys(mess).length !== 0);
     if (Object.keys(mess).length !== 0) {
       setMessage(mess);
     } else {
-      console.log("values", values);
+      // console.log("......................");
       dispatch(AddCountryAction(values));
-      // setValues("");
+      setValues({
+        country_name: "",
+        country_desc: "",
+      });
     }
   };
+
   return (
     <div>
       <div className={classes["home-content"]}>
@@ -85,11 +86,12 @@ const AddCountry = () => {
                         {message.country_name && (
                           <p className={msg.error}>{message.country_name}</p>
                         )}
+                        {error && error.country_exist && (
+                          <p className={msg.error}>
+                            {"Country with this country name already exists."}
+                          </p>
+                        )}
                       </div>
-
-                      {/* {message.is_active && (
-                  <p className={msg.error}>{message.is_active}</p>
-                )}*/}
                     </div>
                     <div className={formclasses["input-textarea"]}>
                       <span className={formclasses.signinspan}>
@@ -107,9 +109,10 @@ const AddCountry = () => {
                       <input type="submit" value="Add Country" />
                     </div>
                     {countryInfo && (
-                      <p className={msg.success}>{countryInfo}</p>
+                      <p className={msg.success}>
+                        {"Country Add Successfully"}
+                      </p>
                     )}
-                    {error && <p className={msg.error}>{error}</p>}
                   </form>
                 </div>
               </div>

@@ -36,20 +36,21 @@ export const UserAprroval = (user) => async (dispatch, getState) => {
       type: AdminActionType.USER_APPROVAL_REQUEST,
     });
 
+    console.log("verify data in action : ", user.is_active);
+    console.log("user id data in action : ", user.id);
     const {
-      userLogin: { userInfo },
+      userSignin: { userInfo },
     } = getState();
-    console.log("Tooooooooooooooookeeeeeeeeeeeeen", userInfo);
+
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-        "content-type": "application/json",
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     };
 
-    console.log("Tooooooooooooooookeeeeeeeeeeeeen", userInfo.token);
-
-    const { data } = await axios.post(
+    const { data } = await axios.put(
       `http://127.0.0.1:8000/api/user-approve/${user.id}`,
       user,
       config
@@ -60,6 +61,7 @@ export const UserAprroval = (user) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    console.log("error in approve : ", error.response.data);
     dispatch({
       type: AdminActionType.USER_APPROVAL_FAIL,
       payload:
@@ -76,17 +78,18 @@ export const AddCountryAction = (values) => async (dispatch, getState) => {
       type: AdminActionType.COUNTRY_ADD_REQUEST,
     });
 
-    // const {
-    //   userLogin: { userInfo },
-    // } = getState();
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.token}`,
-        "content-type": "application/json",
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     };
-    console.log("Data save successfully");
+
     const { data } = await axios.post(
       "http://127.0.0.1:8000/api/country/",
       values,
@@ -97,13 +100,10 @@ export const AddCountryAction = (values) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error.response.data);
+    const country_exist = error.response.data.country_name;
     dispatch({
       type: AdminActionType.COUNTRY_ADD_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: { country_exist },
     });
   }
 };
@@ -114,14 +114,15 @@ export const ListCountryAction = () => async (dispatch, getState) => {
       type: AdminActionType.COUNTRY_LIST_REQUEST,
     });
 
-    // const {
-    //   userLogin: { userInfo },
-    // } = getState();
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.token}`,
-        "content-type": "application/json",
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.get(
@@ -148,9 +149,16 @@ export const AddStateAction = (values) => async (dispatch, getState) => {
     dispatch({
       type: AdminActionType.STATE_ADD_REQUEST,
     });
+
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        "content-type": "application/json",
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
@@ -161,15 +169,15 @@ export const AddStateAction = (values) => async (dispatch, getState) => {
 
     dispatch({
       type: AdminActionType.STATE_ADD_SUCCESS,
-      payload: data.msg,
+      payload: data,
     });
   } catch (error) {
+    const state_exist = error.response.data.state_name;
+    const other_error = error.response.data;
+    console.log("state other error : ", other_error);
     dispatch({
       type: AdminActionType.STATE_ADD_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: { state_exist },
     });
   }
 };
@@ -180,14 +188,15 @@ export const ListStateAction = () => async (dispatch, getState) => {
       type: AdminActionType.STATE_LIST_REQUEST,
     });
 
-    // const {
-    //   userLogin: { userInfo },
-    // } = getState();
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.token}`,
-        "content-type": "application/json",
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     };
     const { data } = await axios.get(
@@ -218,15 +227,19 @@ export const ChangePasswordAction = (values) => async (dispatch, getState) => {
     const {
       userSignin: { userInfo },
     } = getState();
+
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-        "content-type": "application/json",
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     };
+
     console.log("user_id", userInfo.user_Info.id);
     console.log("token", userInfo.token);
-    const { data } = await axios.post(
+
+    const { data } = await axios.put(
       `http://127.0.0.1:8000/api/change_password/${userInfo.user_Info.id}`,
       values,
       config
@@ -237,13 +250,12 @@ export const ChangePasswordAction = (values) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error.response.data);
-    const new_password = error.response.data.new_password;
-    const old_password = error.response.data.old_password;
-    const conf_password = error.response.data.conf_password;
+    const npassword = error.response.data.new_password;
+    const opassword = error.response.data.old_password;
+    const cpassword = error.response.data.password;
     dispatch({
       type: AdminActionType.CHANGE_PASSWORD_FAIL,
-      payload: { new_password, old_password, conf_password },
+      payload: { npassword, opassword, cpassword },
     });
   }
 };

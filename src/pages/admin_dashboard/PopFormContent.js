@@ -4,22 +4,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserAprroval } from "../../redux/actions/adminActions";
 import msg from "../../css/msg/msg.module.css";
 import chkboxcss from "../../css/layout_css/CheckBox.module.css";
-// import validate from "../../components/admin/userVerifyValidator";
+import swal from "sweetalert";
+import { readalluser } from "../../redux/actions/adminActions";
+import { useNavigate } from "react-router-dom";
 
 const UserVerifyFormContent = ({ userData }) => {
-  const [is_active, setIs_Active] = useState("");
-
-  // const [message, setMessage] = useState("");
+  const [is_active, setIs_Active] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   const userApproval = useSelector((state) => state.userApproval);
-  const { loading, error, userInfo } = userApproval;
+  const { loading, error, success } = userApproval;
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (success) {
+      navigate("/admin/userlist");
+    }
+    if (userInfo) {
+      dispatch(readalluser());
+    } else {
+      navigate("/userlogin");
+    }
+  }, [dispatch, userInfo, success]);
 
   const UserVerifyFormHandler = (e) => {
     e.preventDefault();
-    dispatch(UserAprroval(is_active));
+    const id = userData.id;
+    dispatch(UserAprroval({ is_active, id: id }));
+    swal("User Verified", " ", "success");
   };
 
   return (
@@ -74,9 +89,10 @@ const UserVerifyFormContent = ({ userData }) => {
                   <input
                     className={chkboxcss.toggle_input}
                     type="checkbox"
-                    name="is_active"
-                    defaultChecked={is_active}
-                    onChange={(e) => setIs_Active(e.target.value)}
+                    name="verify"
+                    value={is_active}
+                    onChange={(e) => setIs_Active(e.target.checked)}
+                    required
                   />
                   <span className={chkboxcss.toggle_label}>
                     <span className={chkboxcss.toggle_text}>Verify User</span>

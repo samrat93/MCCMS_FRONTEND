@@ -78,14 +78,14 @@ export const listStateReducer = (state = { states: [] }, action) => {
   }
 };
 
-export const changePasswordReducer = (state = { states: [] }, action) => {
+export const changePasswordReducer = (state = {}, action) => {
   switch (action.type) {
     case AdminActionType.CHANGE_PASSWORD_REQUEST:
       return { loading: true };
     case AdminActionType.CHANGE_PASSWORD_SUCCESS:
       return { loading: false, success: action.payload };
     case AdminActionType.CHANGE_PASSWORD_FAIL:
-      return { loadin: false, error: action.payload };
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

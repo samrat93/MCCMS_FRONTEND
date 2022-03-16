@@ -11,20 +11,13 @@ import UserConfirmForm from "./UserConfForm";
 import UserVerifyFormContent from "./PopFormContent";
 
 const UserList = () => {
-  // const [userAList, setUserAList] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userList = useSelector((state) => state.userList);
-  // console.log("userlist", userList);
+
   const { loading, error, users } = userList;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-
-  const approvalHandler = (e) => {
-    const id = e.target.value;
-    dispatch(UserAprroval({ id: id, is_active: true }));
-    console.log(id);
-  };
 
   useEffect(() => {
     if (userInfo) {

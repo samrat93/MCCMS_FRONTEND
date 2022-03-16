@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import msg from "../../css/msg/msg.module.css";
-import validate from "../../components/admin/countryAndStateValidator";
+import validate from "../../components/admin/stateValidator";
 import {
   AddStateAction,
   ListStateAction,
@@ -18,6 +18,7 @@ const AddState = () => {
   const addStateRedu = useSelector((state) => state.addStateRedu);
   const { loading, error, stateInfo } = addStateRedu;
 
+  console.log("state info : ", stateInfo);
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { states } = listStateRedu;
 
@@ -41,8 +42,6 @@ const AddState = () => {
   useEffect(() => {
     if (userInfo) {
       dispatch(ListStateAction());
-    } else {
-      setMessage("Something went wrong");
     }
   }, [dispatch, userInfo]);
 
@@ -54,7 +53,10 @@ const AddState = () => {
       setMessage(mess);
     } else {
       dispatch(AddStateAction(values));
-      setValues("");
+      setValues({
+        state_desc: "",
+        state_name: "",
+      });
     }
   };
 
@@ -77,10 +79,16 @@ const AddState = () => {
                         <input
                           type="text"
                           name="state_name"
+                          value={values.state_name}
                           onChange={handleChange}
                         />
                         {message.state_name && (
                           <p className={msg.error}>{message.state_name}</p>
+                        )}
+                        {error && error.state_exist && (
+                          <p className={msg.error}>
+                            {"State with this state name already exists."}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -91,11 +99,16 @@ const AddState = () => {
                       <textarea
                         className={formclasses.textarea}
                         name="state_desc"
+                        value={values.state_desc}
                         onChange={handleChange}
                       />
                     </div>
-                    {stateInfo && <p className={msg.success}>{stateInfo}</p>}
-                    {error && <p className={msg.error}>{error}</p>}
+                    {stateInfo && (
+                      <p className={msg.success}>
+                        {"State Added Successfully."}
+                      </p>
+                    )}
+
                     <div className={formclasses.button}>
                       <input type="submit" value="Add State" />
                     </div>

@@ -35,6 +35,11 @@ const ChangePassword = () => {
       setMessage(mess);
     } else {
       dispatch(ChangePasswordAction(values));
+      setValues({
+        old_password: "",
+        new_password: "",
+        conf_password: "",
+      });
     }
   };
   return (
@@ -50,7 +55,7 @@ const ChangePassword = () => {
                     <div className={formclasses["user-details"]}>
                       <div className={formclasses["input-box-login"]}>
                         <span className={formclasses.signinspan}>
-                          Old Username
+                          Old Password
                         </span>
                         <input
                           type="password"
@@ -62,8 +67,8 @@ const ChangePassword = () => {
                         {message.old_password && (
                           <p className={msg.error}>{message.old_password}</p>
                         )}
-                        {error && error.old_password && (
-                          <p className={msg.error}>{error.old_password}</p>
+                        {error && error.opassword && (
+                          <p className={msg.error}>{error.opassword}</p>
                         )}
                       </div>
                     </div>
@@ -84,8 +89,8 @@ const ChangePassword = () => {
                         {message.new_password && (
                           <p className={msg.error}>{message.new_password}</p>
                         )}
-                        {error && error.new_password && (
-                          <p className={msg.error}>{error.new_password}</p>
+                        {error && error.npassword && (
+                          <p className={msg.error}>{error.npassword}</p>
                         )}
                       </div>
                     </div>
@@ -105,8 +110,13 @@ const ChangePassword = () => {
                         {message.conf_password && (
                           <p className={msg.error}>{message.conf_password}</p>
                         )}
-                        {error && error.conf_password && (
-                          <p className={msg.error}>{error.conf_password}</p>
+                        {error && error.cpassword && (
+                          <p className={msg.error}>{error.cpassword}</p>
+                        )}
+                        {success && (
+                          <p className={msg.success}>
+                            {"Password Change Successfully"}
+                          </p>
                         )}
                       </div>
                     </div>
