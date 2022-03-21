@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userSignup } from "../../../redux/actions/userActions";
+import { userSignup } from "../../../redux/actions/userActions/userAuthAction";
 import classes from "../../../css/account_css/UserAccount.module.css";
 import validate from "../../../components/accounts/user/validateUserSignup";
 import msg from "../../../css/msg/msg.module.css";

@@ -4,7 +4,7 @@ import msg from "../../../css/msg/msg.module.css";
 import validate from "../../../components/accounts/user/validateUserLogin";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogin } from "../../../redux/actions/userActions";
+import { userLogin } from "../../../redux/actions/userActions/userAuthAction";
 
 const User_login = () => {
   const [username, setUsername] = useState("");

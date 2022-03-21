@@ -1,80 +1,83 @@
-import formclasses from "../../css/account_css/UserAccount.module.css";
 import classes from "../../css/admin_css/AdminDashboard.module.css";
-import msg from "../../css/msg/msg.module.css";
+import formclasses from "../../css/account_css/UserAccount.module.css";
 import tbl from "../../css/admin_css/table.module.css";
 import EditRoadIcon from "@mui/icons-material/EditRoad";
 import DeleteIcon from "@mui/icons-material/Delete";
-import React, { useState, useEffect, useRef } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import DialogCountry from "../../components/admin/delete_popup/deleteCountry";
+import { useEffect, useState, useRef } from "react";
+import msg from "../../css/msg/msg.module.css";
 import {
-  AddCountryAction,
-  ListCountryAction,
-} from "../../redux/actions/adminActions/CountryActions";
-import validator from "../../components/admin/countryValidator";
+  AddComplaintCategoryAction,
+  ListComplaintCategoryAction,
+} from "../../redux/actions/adminActions/ComplaintCategoryAction";
+import DeleteCategoryDialog from "../../components/admin/delete_popup/deleteCategory";
+import ValidateComplaintCategory from "../../components/admin/complaintCategoryValidator";
 
-const AddCountry = () => {
+const AddComplaintCategory = () => {
   const dispatch = useDispatch();
-  const addCountry = useSelector((state) => state.addCountry);
-  const { loading, error, countryInfo } = addCountry;
-  console.log("all errors", error);
-  const listCountry = useSelector((state) => state.listCountry);
-  const { countries } = listCountry;
+  const addComplaintCategoryR = useSelector(
+    (state) => state.addComplaintCategoryR
+  );
+  const { loading, error, success } = addComplaintCategoryR;
+  const listComplaintCategoryR = useSelector(
+    (state) => state.listComplaintCategoryR
+  );
+  const { catList } = listComplaintCategoryR;
+  console.log("complaint category", catList);
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const [values, setValues] = useState({
+    category_name: "",
+    category_desc: "",
+  });
+  const { message, setMessage } = useState("");
+
   //--------------> Delete Popup code Start <----------------------
-  const [country, setCountry] = useState(countryInfo);
+  const [category, setCategory] = useState(success);
 
   const [dialog, setDialog] = useState({
     dialogMessage: "",
     isLoading: false,
     //update
-    nameCountry: "",
+    cname: "",
     cid: "",
   });
-  const idCountryRef = useRef();
-  const handleDialog = (dialogMessage, isLoading, nameCountry, cid) => {
+  const idCategoryRef = useRef();
+  const handleDialog = (dialogMessage, isLoading, cname, cid) => {
     setDialog({
       dialogMessage,
       isLoading,
       //update
-      nameCountry,
+      cname,
       cid,
     });
   };
   const handleDelete = (id) => {
     var f;
-    const index = countries.find(function (item, index) {
+    const index = catList.find(function (item, index) {
       f = index;
       return item.id === id;
     });
     handleDialog(
       "Are you sure want to delete?",
       true,
-      countries[f].country_name,
-      countries[f].id
+      catList[f].category_name,
+      catList[f].id
     );
-    idCountryRef.current = id;
+    idCategoryRef.current = id;
   };
 
   const areUSureDelete = (choose) => {
     if (choose) {
-      setCountry(country.filter((p) => p.id !== idCountryRef.current));
+      setCategory(catList.filter((p) => p.id !== idCategoryRef.current));
       handleDialog("", false);
     } else {
       handleDialog("", false);
     }
   };
   //--------------> Delete Popup code End <----------------------
-
-  const [values, setValues] = useState({
-    country_name: "",
-    country_desc: "",
-  });
-
-  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,35 +86,33 @@ const AddCountry = () => {
       [name]: value,
     });
   };
-
   useEffect(() => {
     if (userInfo) {
-      dispatch(ListCountryAction());
+      dispatch(ListComplaintCategoryAction());
     }
   }, [dispatch, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const mess = validator(values);
+    const mess = ValidateComplaintCategory(values);
     if (Object.keys(mess).length !== 0) {
       setMessage(mess);
     } else {
-      dispatch(AddCountryAction(values));
+      dispatch(AddComplaintCategoryAction(values));
       setValues({
-        country_name: "",
-        country_desc: "",
+        category_name: "",
+        category_desc: "",
       });
     }
   };
-
   return (
     <div>
       <div className={classes["home-content"]}>
         <div className={classes["sales-boxes"]}>
           <div className={classes["recent-sales"]}>
             {dialog.isLoading && (
-              <DialogCountry
-                nameCountry={dialog.nameCountry}
+              <DeleteCategoryDialog
+                cname={dialog.cname}
                 onDialog={areUSureDelete}
                 dialogMessage={dialog.dialogMessage}
                 cid={dialog.cid}
@@ -119,73 +120,73 @@ const AddCountry = () => {
             )}
             <div className={classes.Admin_panel_content_Body}>
               <div className={formclasses.container}>
-                <div className={formclasses.title}>Add New Country</div>
+                <div className={formclasses.title}>Add Complaint Category</div>
                 <div className={formclasses.content}>
                   <form onSubmit={submitHandler}>
                     <div className={formclasses["user-details"]}>
                       {/* {loading && <p>Loading...</p>} */}
                       <div className={formclasses["input-box-login"]}>
                         <span className={formclasses.signinspan}>
-                          Country Name
+                          Complaint Category Name
                         </span>
                         <input
                           type="text"
-                          name="country_name"
-                          value={values.country_name}
+                          name="category_name"
+                          value={values.category_name}
                           onChange={handleChange}
+                          required
                         />
-                        {message.country_name && (
-                          <p className={msg.error}>{message.country_name}</p>
-                        )}
-                        {error && error.country_exist && (
+
+                        {error && error.complaint_exist && (
                           <p className={msg.error}>
-                            {"Country with this country name already exists."}
+                            {
+                              "Complain Category with this name is already exists."
+                            }
                           </p>
                         )}
                       </div>
                     </div>
                     <div className={formclasses["input-textarea"]}>
                       <span className={formclasses.signinspan}>
-                        Country Desctiption
+                        Complaint Category Desctiption
                       </span>
                       <textarea
                         className={formclasses.textarea}
-                        name="country_desc"
-                        value={values.country_desc}
+                        name="category_desc"
+                        value={values.category_desc}
                         onChange={handleChange}
                       />
                     </div>
-
-                    <div className={formclasses.button}>
-                      <input type="submit" value="Add Country" />
-                    </div>
-                    {countryInfo && (
+                    {success && (
                       <p className={msg.success}>
-                        {"Country Add Successfully"}
+                        {"Complaint Category Added Successfully."}
                       </p>
                     )}
+
+                    <div className={formclasses.button}>
+                      <input type="submit" value="Add Complain Category" />
+                    </div>
                   </form>
                 </div>
               </div>
             </div>
-
             <table className={tbl.table}>
-              <caption>Country Details</caption>
+              <caption>Complaint Category Details</caption>
               <thead>
                 <tr>
                   <th>S.N</th>
-                  <th>Country Name</th>
-                  <th>Country Desctiption</th>
-                  <th colSpan={2}>Actions</th>
+                  <th>Complaint Category Name</th>
+                  <th>omplaint Category Desctiption</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
               <tbody>
-                {countries?.map((country) => (
-                  <tr key={country.id}>
-                    <td>{country.id}</td>
-                    <td>{country.country_name}</td>
-                    <td>{country.country_desc}</td>
+                {catList?.map((s) => (
+                  <tr key={s.id}>
+                    <td>{s.id}</td>
+                    <td>{s.category_name}</td>
+                    <td>{s.category_desc}</td>
                     <td>
                       <button className={tbl.tbl_button}>
                         <EditRoadIcon
@@ -195,12 +196,10 @@ const AddCountry = () => {
                           }}
                         />
                       </button>
-                    </td>
-                    <td>
+
                       <button
-                        // value={country.id}
                         className={tbl.tbl_button}
-                        onClick={() => handleDelete(country.id)}
+                        onClick={() => handleDelete(s.id)}
                       >
                         <DeleteIcon
                           sx={{
@@ -221,4 +220,4 @@ const AddCountry = () => {
   );
 };
 
-export default AddCountry;
+export default AddComplaintCategory;

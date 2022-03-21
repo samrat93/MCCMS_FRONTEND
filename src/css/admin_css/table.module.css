@@ -96,6 +96,7 @@ table th {
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
+  margin-left: 10px;
 }
 
 .tbl_button:hover {

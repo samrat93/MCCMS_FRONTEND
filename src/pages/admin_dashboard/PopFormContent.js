@@ -1,11 +1,11 @@
 import formclasses from "../../css/account_css/UserAccount.module.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UserAprroval } from "../../redux/actions/adminActions";
+import { UserAprroval } from "../../redux/actions/adminActions/ManageUserAction";
 import msg from "../../css/msg/msg.module.css";
 import chkboxcss from "../../css/layout_css/CheckBox.module.css";
-import swal from "sweetalert";
-import { readalluser } from "../../redux/actions/adminActions";
+// import swal from "sweetalert";
+import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import { useNavigate } from "react-router-dom";
 
 const UserVerifyFormContent = ({ userData }) => {
@@ -22,6 +22,7 @@ const UserVerifyFormContent = ({ userData }) => {
   useEffect(() => {
     if (success) {
       navigate("/admin/userlist");
+      // swal("User Verified", " ", "success");
     }
     if (userInfo) {
       dispatch(readalluser());
@@ -34,7 +35,6 @@ const UserVerifyFormContent = ({ userData }) => {
     e.preventDefault();
     const id = userData.id;
     dispatch(UserAprroval({ is_active, id: id }));
-    swal("User Verified", " ", "success");
   };
 
   return (
@@ -98,11 +98,11 @@ const UserVerifyFormContent = ({ userData }) => {
                     <span className={chkboxcss.toggle_text}>Verify User</span>
                   </span>
                 </label>
-                {/* {message.is_active && (
-                  <p className={msg.error}>{message.is_active}</p>
-                )}*/}
               </div>
               {error ? <p className={msg.error}>{error}</p> : ""}
+              {success && (
+                <p className={msg.success}>{"User Verified Successfully."}</p>
+              )}
               <div className={formclasses.button}>
                 <input type="submit" value="Save Changes" />
               </div>

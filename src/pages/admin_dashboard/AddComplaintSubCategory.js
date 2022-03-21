@@ -6,65 +6,76 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import msg from "../../css/msg/msg.module.css";
-import validate from "../../components/admin/stateValidator";
 import {
-  AddStateAction,
-  ListStateAction,
-} from "../../redux/actions/adminActions/StateActions";
-import DeleteStateDialog from "../../components/admin/delete_popup/deleteState";
+  AddComplaintSubCategoryAction,
+  ListComplaintSubCategoryAction,
+} from "../../redux/actions/adminActions/ComplaintSubCategoryAction";
+import { ListComplaintCategoryAction } from "../../redux/actions/adminActions/ComplaintCategoryAction";
 
-const AddState = () => {
+import DeleteCategoryDialog from "../../components/admin/delete_popup/deleteCategory";
+import ValidateComplaintSubCategory from "../../components/admin/complaintSubCatValidator";
+
+const AddComplaintSubCategory = () => {
   const dispatch = useDispatch();
+  const addComplaintSubCR = useSelector((state) => state.addComplaintSubCR);
+  const { loading, error, success } = addComplaintSubCR;
 
-  const addStateRedu = useSelector((state) => state.addStateRedu);
-  const { loading, error, stateInfo } = addStateRedu;
+  const listComplaintSubCR = useSelector((state) => state.listComplaintSubCR);
+  const { SubcatList } = listComplaintSubCR;
 
-  console.log("state info : ", stateInfo);
-  const listStateRedu = useSelector((state) => state.listStateRedu);
-  const { states } = listStateRedu;
+  const listComplaintCategoryR = useSelector(
+    (state) => state.listComplaintCategoryR
+  );
+  const { catList } = listComplaintCategoryR;
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const [values, setValues] = useState({
+    category_id: "",
+    sub_category_name: "",
+    sub_category_desc: "",
+  });
+  const { message, setMessage } = useState("");
+
   //--------------> Delete Popup code Start <----------------------
-  const [country, setState] = useState(stateInfo);
+  const [category, setCategory] = useState(success);
 
   const [dialog, setDialog] = useState({
     dialogMessage: "",
     isLoading: false,
     //update
-    nameState: "",
-    sid: "",
+    cname: "",
+    cid: "",
   });
-  const idStateRef = useRef();
-
-  const handleDialog = (dialogMessage, isLoading, nameState, sid) => {
+  const idCategoryRef = useRef();
+  const handleDialog = (dialogMessage, isLoading, cname, cid) => {
     setDialog({
       dialogMessage,
       isLoading,
       //update
-      nameState,
-      sid,
+      cname,
+      cid,
     });
   };
   const handleDelete = (id) => {
     var f;
-    const index = states.find(function (item, index) {
+    const index = SubcatList.find(function (item, index) {
       f = index;
       return item.id === id;
     });
     handleDialog(
       "Are you sure want to delete?",
       true,
-      states[f].state_name,
-      states[f].id
+      SubcatList[f].sub_category_name,
+      SubcatList[f].id
     );
-    idStateRef.current = id;
+    idCategoryRef.current = id;
   };
 
   const areUSureDelete = (choose) => {
     if (choose) {
-      setState(states.filter((p) => p.id !== idStateRef.current));
+      setCategory(SubcatList.filter((p) => p.id !== idCategoryRef.current));
       handleDialog("", false);
     } else {
       handleDialog("", false);
@@ -72,122 +83,140 @@ const AddState = () => {
   };
   //--------------> Delete Popup code End <----------------------
 
-  const [values, setValues] = useState({
-    state_name: "",
-    state_desc: "",
-  });
-  const [message, setMessage] = useState("");
-
   const handleChange = (e) => {
+    console.log(e.target.value);
     const { name, value } = e.target;
     setValues({
       ...values,
       [name]: value,
     });
   };
-
   useEffect(() => {
     if (userInfo) {
-      dispatch(ListStateAction());
+      dispatch(ListComplaintSubCategoryAction());
+      dispatch(ListComplaintCategoryAction());
     }
   }, [dispatch, userInfo]);
 
-  const SubmitFormHandler = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-
-    const mess = validate(values);
+    const mess = ValidateComplaintSubCategory(values);
     if (Object.keys(mess).length !== 0) {
       setMessage(mess);
     } else {
-      dispatch(AddStateAction(values));
+      dispatch(AddComplaintSubCategoryAction(values));
       setValues({
-        state_desc: "",
-        state_name: "",
+        category_id: "",
+        sub_category_name: "",
+        sub_category_desc: "",
       });
     }
   };
-
   return (
     <div>
       <div className={classes["home-content"]}>
         <div className={classes["sales-boxes"]}>
           <div className={classes["recent-sales"]}>
             {dialog.isLoading && (
-              <DeleteStateDialog
-                nameState={dialog.nameState}
+              <DeleteCategoryDialog
+                cname={dialog.cname}
                 onDialog={areUSureDelete}
                 dialogMessage={dialog.dialogMessage}
-                sid={dialog.sid}
+                cid={dialog.cid}
               />
             )}
             <div className={classes.Admin_panel_content_Body}>
               <div className={formclasses.container}>
-                <div className={formclasses.title}>Add New State</div>
+                <div className={formclasses.title}>
+                  Add Complaint Sub Category
+                </div>
                 <div className={formclasses.content}>
-                  <form onSubmit={SubmitFormHandler}>
+                  <form onSubmit={submitHandler}>
                     <div className={formclasses["user-details"]}>
                       {/* {loading && <p>Loading...</p>} */}
                       <div className={formclasses["input-box-login"]}>
                         <span className={formclasses.signinspan}>
-                          State Name
+                          Select Complaint Category
+                        </span>
+
+                        <select
+                          name="category_id"
+                          onChange={handleChange}
+                          className={formclasses.selectValue}
+                        >
+                          <option>Select a Category</option>
+                          {catList?.map((cat) => (
+                            <option key={cat.id} value={cat.id}>
+                              {cat.category_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className={formclasses["user-details"]}>
+                      {/* {loading && <p>Loading...</p>} */}
+                      <div className={formclasses["input-box-login"]}>
+                        <span className={formclasses.signinspan}>
+                          Complaint Sub Category Name
                         </span>
                         <input
                           type="text"
-                          name="state_name"
-                          value={values.state_name}
+                          name="sub_category_name"
+                          value={values.sub_category_name}
                           onChange={handleChange}
+                          required
                         />
-                        {message.state_name && (
-                          <p className={msg.error}>{message.state_name}</p>
-                        )}
-                        {error && error.state_exist && (
+
+                        {error && error.complaint_exist && (
                           <p className={msg.error}>
-                            {"State with this state name already exists."}
+                            {"Sub Category with this name is already exists."}
                           </p>
                         )}
                       </div>
                     </div>
                     <div className={formclasses["input-textarea"]}>
                       <span className={formclasses.signinspan}>
-                        State Desctiption
+                        Complaint Category Desctiption
                       </span>
                       <textarea
                         className={formclasses.textarea}
-                        name="state_desc"
-                        value={values.state_desc}
+                        name="sub_category_desc"
+                        value={values.sub_category_desc}
                         onChange={handleChange}
                       />
                     </div>
-                    {stateInfo && (
+                    {success && (
                       <p className={msg.success}>
-                        {"State Added Successfully."}
+                        {"Complaint Category Added Successfully."}
                       </p>
                     )}
 
                     <div className={formclasses.button}>
-                      <input type="submit" value="Add State" />
+                      <input type="submit" value="Add Complain Category" />
                     </div>
                   </form>
                 </div>
               </div>
             </div>
             <table className={tbl.table}>
-              <caption>State Details</caption>
+              <caption>Complaint Category Details</caption>
               <thead>
                 <tr>
                   <th>S.N</th>
-                  <th>State Name</th>
-                  <th>State Desctiption</th>
-                  <th colSpan={2}>Actions</th>
+                  <th>Category Name</th>
+                  <th>Sub Category Name</th>
+                  <th>Sub Category Desctiption</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
               <tbody>
-                {states?.map((s) => (
+                {SubcatList?.map((s) => (
                   <tr key={s.id}>
                     <td>{s.id}</td>
-                    <td>{s.state_name}</td>
-                    <td>{s.state_desc}</td>
+                    <td>{s.category_id}</td>
+                    <td>{s.sub_category_name}</td>
+                    <td>{s.sub_category_desc}</td>
                     <td>
                       <button className={tbl.tbl_button}>
                         <EditRoadIcon
@@ -197,8 +226,7 @@ const AddState = () => {
                           }}
                         />
                       </button>
-                    </td>
-                    <td>
+
                       <button
                         className={tbl.tbl_button}
                         onClick={() => handleDelete(s.id)}
@@ -222,4 +250,4 @@ const AddState = () => {
   );
 };
 
-export default AddState;
+export default AddComplaintSubCategory;

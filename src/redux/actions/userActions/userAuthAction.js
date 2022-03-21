@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserActionType } from "../constants/userActionType";
+import { UserActionType } from "../../constants/userActionType";
 
 export const userSignup = (values) => async (dispatch) => {
   try {

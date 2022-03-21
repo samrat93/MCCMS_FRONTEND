@@ -1,8 +1,8 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
 import formclasses from "../../css/account_css/UserAccount.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
-import { ChangePasswordAction } from "../../redux/actions/adminActions";
+import React, { useState } from "react";
+import { ChangePasswordAction } from "../../redux/actions/adminActions/ChangePasswordAction";
 import msg from "../../css/msg/msg.module.css";
 import validate from "../../components/admin/validatePasswordChange";
 

@@ -16,6 +16,8 @@ import AddCountry from "./pages/admin_dashboard/AddCountry";
 import AddState from "./pages/admin_dashboard/AddState";
 import ChangePassword from "./pages/admin_dashboard/ChangePassword";
 import ComplaintList from "./pages/admin_dashboard/ViewComplaints";
+import AddComplaintCategory from "./pages/admin_dashboard/AddComplainCategory";
+import AddComplaintSubCategory from "./pages/admin_dashboard/AddComplaintSubCategory";
 
 function App() {
   return (
@@ -28,6 +30,14 @@ function App() {
           <Route path="add-country" element={<AddCountry />} />
           <Route path="add-state" element={<AddState />} />
           <Route path="complaint-list" element={<ComplaintList />} />
+          <Route
+            path="addComplaintCategory"
+            element={<AddComplaintCategory />}
+          />
+          <Route
+            path="addComplaintSubCategory"
+            element={<AddComplaintSubCategory />}
+          />
           <Route path="change-password" element={<ChangePassword />} />
         </Route>
       </Routes>

@@ -2,9 +2,9 @@ import classes from "../../css/layout_css/NavBar.module.css";
 import logo from "../../Static/images/logo.png";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/actions/userActions";
+import { logout } from "../../redux/actions/userActions/userAuthAction";
 
 const Navbar = () => {
   const [showMediaIcons, setShowMediaIcons] = useState(false);

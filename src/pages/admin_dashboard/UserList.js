@@ -1,7 +1,7 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
 import msg from "../../css/msg/msg.module.css";
 import React, { useState } from "react";
-import { readalluser, UserAprroval } from "../../redux/actions/adminActions";
+import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,4 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
@@ -10,10 +9,14 @@ import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import LocationCityOutlinedIcon from "@mui/icons-material/LocationCityOutlined";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import CategoryIcon from "@mui/icons-material/Category";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/actions/userActions";
+import { logout } from "../../redux/actions/userActions/userAuthAction";
 import adminImg from "../../Static/images/admin.jfif";
+import dropcss from "../../css/admin_css/dropdownNav.module.css";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 
 const AdminDashboard = () => {
   const location = useLocation();
@@ -22,7 +25,6 @@ const AdminDashboard = () => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  console.log("jjjjjjjjjjjj", userInfo.user_Info.username);
 
   const logoutHandler = (e) => {
     dispatch(logout());
@@ -100,20 +102,43 @@ const AdminDashboard = () => {
               <span className={classes.links_name}>Add State</span>
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/admin/complaint-list" className={classes.links_name}>
               <AssuredWorkloadOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
               <span className={classes.links_name}>View Complaint</span>
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to="/admin/add-country" className={classes.links_name}>
               <FeedbackOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
               <span className={classes.links_name}>View Feedback</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/admin/addComplaintCategory"
+              className={classes.links_name}
+            >
+              <CategoryIcon
+                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
+              />
+              <span className={classes.links_name}>Complaint Category</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/admin/addComplaintSubCategory"
+              className={classes.links_name}
+            >
+              <CategoryIcon
+                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
+              />
+              <span className={classes.links_name}>Comp-Sub Category</span>
             </NavLink>
           </li>
           <li>
