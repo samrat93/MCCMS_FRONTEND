@@ -60,7 +60,7 @@ const AdminDashboard = () => {
         </div>
         <ul className={classes["nav-links"]}>
           <li>
-            <NavLink to="/admin/userlist">
+            <NavLink to="/admin/dashboard">
               <DashboardOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />

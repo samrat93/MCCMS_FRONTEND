@@ -27,6 +27,7 @@ const User_login = () => {
       dispatch(userLogin(values));
     }
   };
+  console.log(userInfo);
 
   useEffect(() => {
     if (userInfo) {

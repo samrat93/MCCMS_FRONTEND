@@ -104,6 +104,7 @@ const UserList = () => {
                   </tbody>
                 )}
               </table>
+
               {isOpen && currUser && (
                 <div>
                   <UserConfirmForm

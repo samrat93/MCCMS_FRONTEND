@@ -13,9 +13,11 @@ import {
   ListCountryAction,
 } from "../../redux/actions/adminActions/CountryActions";
 import validator from "../../components/admin/countryValidator";
+import { useNavigate } from "react-router-dom";
 
 const AddCountry = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const addCountry = useSelector((state) => state.addCountry);
   const { loading, error, countryInfo } = addCountry;
   console.log("all errors", error);
@@ -176,7 +178,7 @@ const AddCountry = () => {
                   <th>S.N</th>
                   <th>Country Name</th>
                   <th>Country Desctiption</th>
-                  <th colSpan={2}>Actions</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
@@ -187,7 +189,12 @@ const AddCountry = () => {
                     <td>{country.country_name}</td>
                     <td>{country.country_desc}</td>
                     <td>
-                      <button className={tbl.tbl_button}>
+                      <button
+                        className={tbl.tbl_button}
+                        onClick={() =>
+                          navigate(`/admin/editCountry/${country.id}`)
+                        }
+                      >
                         <EditRoadIcon
                           sx={{
                             fontSize: "30px",
@@ -195,8 +202,7 @@ const AddCountry = () => {
                           }}
                         />
                       </button>
-                    </td>
-                    <td>
+
                       <button
                         // value={country.id}
                         className={tbl.tbl_button}

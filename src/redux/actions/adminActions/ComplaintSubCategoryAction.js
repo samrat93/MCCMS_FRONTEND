@@ -88,6 +88,7 @@ export const DeleteComplaintSubCategoryAction =
       const {
         userSignin: { userInfo },
       } = getState();
+
       console.log("State-id in delete: ", cid);
       const config = {
         headers: {

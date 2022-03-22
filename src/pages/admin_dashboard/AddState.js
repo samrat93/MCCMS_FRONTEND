@@ -178,7 +178,7 @@ const AddState = () => {
                   <th>S.N</th>
                   <th>State Name</th>
                   <th>State Desctiption</th>
-                  <th colSpan={2}>Actions</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
@@ -197,8 +197,7 @@ const AddState = () => {
                           }}
                         />
                       </button>
-                    </td>
-                    <td>
+
                       <button
                         className={tbl.tbl_button}
                         onClick={() => handleDelete(s.id)}

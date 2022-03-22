@@ -12,7 +12,7 @@ import {
 } from "../../redux/actions/adminActions/ComplaintSubCategoryAction";
 import { ListComplaintCategoryAction } from "../../redux/actions/adminActions/ComplaintCategoryAction";
 
-import DeleteCategoryDialog from "../../components/admin/delete_popup/deleteCategory";
+import DeleteSubCategoryDialog from "../../components/admin/delete_popup/deleteSubCategory";
 import ValidateComplaintSubCategory from "../../components/admin/complaintSubCatValidator";
 
 const AddComplaintSubCategory = () => {
@@ -118,7 +118,7 @@ const AddComplaintSubCategory = () => {
         <div className={classes["sales-boxes"]}>
           <div className={classes["recent-sales"]}>
             {dialog.isLoading && (
-              <DeleteCategoryDialog
+              <DeleteSubCategoryDialog
                 cname={dialog.cname}
                 onDialog={areUSureDelete}
                 dialogMessage={dialog.dialogMessage}

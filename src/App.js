@@ -18,16 +18,20 @@ import ChangePassword from "./pages/admin_dashboard/ChangePassword";
 import ComplaintList from "./pages/admin_dashboard/ViewComplaints";
 import AddComplaintCategory from "./pages/admin_dashboard/AddComplainCategory";
 import AddComplaintSubCategory from "./pages/admin_dashboard/AddComplaintSubCategory";
+import EditCountry from "./pages/admin_dashboard/UpdatePages/EditCountry";
+import AdminDashboardPage from "./pages/admin_dashboard/dashboard";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/admin" element={<AdminDashboard />}>
-          <Route path="/admin" element={<Navigate replace to="userlist" />} />
+          <Route path="/admin" element={<Navigate replace to="dashboard" />} />
+          <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="userlist" element={<UserList />} />
           <Route path="municipalityList" element={<MunicipalityList />} />
           <Route path="add-country" element={<AddCountry />} />
+          <Route path="editCountry" element={<EditCountry />} />
           <Route path="add-state" element={<AddState />} />
           <Route path="complaint-list" element={<ComplaintList />} />
           <Route

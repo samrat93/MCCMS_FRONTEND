@@ -32,7 +32,7 @@ const DialogCountry = ({ dialogMessage, onDialog, nameCountry, cid }) => {
         <div>
           <h3 className={classes.title}>{dialogMessage}</h3>
           <h2 className={classes.country_name}>{nameCountry}</h2>
-          <p>{cid}</p>
+
           <button
             className={classes.deleteButton_no}
             onClick={() => onDialog(false)}
