@@ -20,6 +20,11 @@ import AddComplaintCategory from "./pages/admin_dashboard/AddComplainCategory";
 import AddComplaintSubCategory from "./pages/admin_dashboard/AddComplaintSubCategory";
 import EditCountry from "./pages/admin_dashboard/UpdatePages/EditCountry";
 import AdminDashboardPage from "./pages/admin_dashboard/dashboard";
+import PublicDashboard from "./pages/public/public_dashboard";
+import LodgeComplaint from "./pages/public/public_dashboard/LodgeComplaint";
+import ComplaintHistory from "./pages/public/public_dashboard/ComplaintHistory";
+import PublicProfile from "./pages/public/public_dashboard/PublicProfile";
+import ChangePasswordPublic from "./pages/public/public_dashboard/ChangePassword";
 
 function App() {
   return (
@@ -43,6 +48,17 @@ function App() {
             element={<AddComplaintSubCategory />}
           />
           <Route path="change-password" element={<ChangePassword />} />
+        </Route>
+
+        <Route path="/public" element={<PublicDashboard />}>
+          <Route path="LodgeComplaint" exact element={<LodgeComplaint />} />
+          <Route path="ComplaintHistory" exact element={<ComplaintHistory />} />
+          <Route path="PublicProfile" exact element={<PublicProfile />} />
+          <Route
+            path="ChangePasswordP"
+            exact
+            element={<ChangePasswordPublic />}
+          />
         </Route>
       </Routes>
       <Layout>

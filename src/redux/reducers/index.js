@@ -20,6 +20,7 @@ import {
   DeleteComplainCategoryReducer,
   DeleteComplainSubCategoryReducer,
 } from "./adminReducer";
+import { complaintReducer, profileAddReducer } from "./userReducer";
 
 const reducers = combineReducers({
   userSignin: userLoginReducer,
@@ -39,6 +40,8 @@ const reducers = combineReducers({
   addComplaintSubCR: addComplainSubCategoryReducer,
   listComplaintSubCR: ListComplainSubCategoryReducer,
   deleteComplaintSubCR: DeleteComplainSubCategoryReducer,
+  complaintReducer: complaintReducer,
+  profileAddRedu: profileAddReducer,
 });
 
 export default reducers;

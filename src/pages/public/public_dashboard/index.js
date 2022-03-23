@@ -1,31 +1,27 @@
-import classes from "../../css/admin_css/AdminDashboard.module.css";
+import classes from "../../../css/public_css/publicDashboard.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-// import UserList from "./UserList";
 import { Outlet, useLocation, useNavigate, NavLink } from "react-router-dom";
-import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
-import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
-import LocationCityOutlinedIcon from "@mui/icons-material/LocationCityOutlined";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import CategoryIcon from "@mui/icons-material/Category";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/actions/userActions/userAuthAction";
-import adminImg from "../../Static/images/admin.jfif";
-import dropcss from "../../css/admin_css/dropdownNav.module.css";
+import { logout } from "../../../redux/actions/userActions/userAuthAction";
+import adminImg from "../../../Static/images/admin.jfif";
+import dropcss from "../../../css/admin_css/dropdownNav.module.css";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import RateReviewIcon from "@mui/icons-material/RateReview";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import HistoryIcon from "@mui/icons-material/History";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
-const AdminDashboard = () => {
+const PublicDashboard = () => {
   const location = useLocation();
   const navigation = useNavigate();
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  console.log(userInfo.user_Info.is_superuser);
+  //   console.log(userInfo.user_Info.is_superuser);
 
   const logoutHandler = (e) => {
     dispatch(logout());
@@ -61,46 +57,38 @@ const AdminDashboard = () => {
         </div>
         <ul className={classes["nav-links"]}>
           <li>
-            <NavLink to="/admin/dashboard">
+            <NavLink to="/public/index">
               <DashboardOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Dashboard</span>
+              <span className={classes.links_name}>Public Dashboard</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/admin/userlist" className={classes.links_name}>
-              <GroupOutlinedIcon
+            <NavLink to="/public/LodgeComplaint" className={classes.links_name}>
+              <ReportProblemIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>User List</span>
+              <span className={classes.links_name}>Lodge Complaint</span>
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin/municipalityList"
+              to="/public/ComplaintHistory"
               className={classes.links_name}
             >
-              <AssuredWorkloadOutlinedIcon
+              <HistoryIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Municipality list</span>
+              <span className={classes.links_name}>Complaint History</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/admin/add-country" className={classes.links_name}>
-              <FlagOutlinedIcon
+            <NavLink to="/public/PublicProfile" className={classes.links_name}>
+              <AccountBoxIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Add Country</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/admin/add-state" className={classes.links_name}>
-              <LocationCityOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
-              <span className={classes.links_name}>Add State</span>
+              <span className={classes.links_name}>Profile</span>
             </NavLink>
           </li>
           {/* <li>
@@ -119,31 +107,11 @@ const AdminDashboard = () => {
               <span className={classes.links_name}>View Feedback</span>
             </NavLink>
           </li>
-
           <li>
             <NavLink
-              to="/admin/addComplaintCategory"
+              to="/public/ChangePasswordP"
               className={classes.links_name}
             >
-              <CategoryIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
-              <span className={classes.links_name}>Complaint Category</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/admin/addComplaintSubCategory"
-              className={classes.links_name}
-            >
-              <CategoryIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
-              <span className={classes.links_name}>Comp-Sub Category</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/admin/change-password" className={classes.links_name}>
               <SettingsOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
@@ -172,10 +140,11 @@ const AdminDashboard = () => {
             {/* <KeyboardArrowDownIcon /> */}
           </div>
         </nav>
+        dsfasdfasdfsad
         <Outlet />
       </section>
     </div>
   );
 };
 
-export default AdminDashboard;
+export default PublicDashboard;

@@ -4,6 +4,7 @@ import msg from "../../../css/msg/msg.module.css";
 import validate from "../../../components/accounts/user/validateUserLogin";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+// import { readalluser } from "../../../redux/actions/adminActions/ManageUserAction";
 import { userLogin } from "../../../redux/actions/userActions/userAuthAction";
 
 const User_login = () => {
@@ -13,8 +14,11 @@ const User_login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const userSignin = useSelector((state) => state.userSignin);
   const { loading, error, userInfo } = userSignin;
+  // const userList = useSelector((state) => state.userList);
+  // const { users } = userList;
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -27,11 +31,10 @@ const User_login = () => {
       dispatch(userLogin(values));
     }
   };
-  console.log(userInfo);
-
   useEffect(() => {
     if (userInfo) {
-      navigate("/admin");
+      // dispatch(readalluser());
+      navigate("/public");
     }
   }, [userInfo, navigate]);
 
