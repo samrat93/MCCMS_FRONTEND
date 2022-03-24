@@ -109,7 +109,7 @@ const PublicDashboard = () => {
           </li>
           <li>
             <NavLink
-              to="/public/ChangePasswordP"
+              to="/public/ChangePasswordPublic"
               className={classes.links_name}
             >
               <SettingsOutlinedIcon

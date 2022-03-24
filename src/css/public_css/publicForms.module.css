@@ -57,7 +57,7 @@ form .user-details .input-box {
 /* This is for login page  */
 form .user-details .input-box-login {
   margin-bottom: 15px;
-  width: 100%;
+  width: calc(100% / 3 - 20px);
 }
 
 .user-details .input-box-login input {
@@ -230,4 +230,15 @@ form .user-details .input-textarea {
   border-bottom-width: 2px;
   transition: all 0.3s ease;
   border-radius: 20px;
+}
+.ChangePasswordBody {
+  margin-top: 50px;
+  margin-left: 50px;
+  width: auto;
+  background-color: #fff;
+  padding: 20px 30px 0px 30px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+
+  /* background: linear-gradient(135deg, #71b7e6, #9b59b6); */
 }

@@ -15,6 +15,10 @@ const LodgeComplaint = () => {
   const listComplaintSubCR = useSelector((state) => state.listComplaintSubCR);
   const { SubcatList } = listComplaintSubCR;
 
+  const complaintReducer = useSelector((state) => state.complaintReducer);
+  const { compList } = complaintReducer;
+  // console.log("msg for success: ", compList);
+
   const listComplaintCategoryR = useSelector(
     (state) => state.listComplaintCategoryR
   );
@@ -24,7 +28,7 @@ const LodgeComplaint = () => {
   const { userInfo } = userSignin;
 
   const c_id = userInfo.user_Info.id;
-  console.log("current_user", userInfo.user_Info.id);
+  // console.log("current_user", userInfo.user_Info.id);
 
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { states } = listStateRedu;
@@ -33,15 +37,17 @@ const LodgeComplaint = () => {
     complaint_category: "",
     complaint_sub_category: "",
     state: "",
+    complaint_file: null,
     complaint_subject: "",
     complaint_details: "",
     user_id: "",
   });
-  const [picture, setPicture] = useState("");
 
   const onChangePicture = (e) => {
-    console.log("picture: ", picture);
-    setPicture(URL.createObjectURL(e.target.files[0]));
+    setValues({
+      ...values,
+      complaint_file: e.target.files[0],
+    });
   };
 
   const [message, setMessage] = useState("");
@@ -58,6 +64,10 @@ const LodgeComplaint = () => {
       dispatch(ListComplaintSubCategoryAction());
       dispatch(ListStateAction());
     }
+    setValues({
+      ...values,
+      user_id: userInfo.user_Info.id,
+    });
   }, [dispatch, userInfo]);
 
   const submitHandler = (e) => {
@@ -67,7 +77,28 @@ const LodgeComplaint = () => {
     if (Object.keys(mess).length !== 0) {
       setMessage(mess);
     } else {
-      dispatch(registerComplaintAction(values));
+      let form_data = new FormData();
+      form_data.append("complaint_category", values.complaint_category);
+      form_data.append("complaint_sub_category", values.complaint_sub_category);
+      form_data.append("state", values.state);
+      form_data.append(
+        "complaint_file",
+        values.complaint_file,
+        values.complaint_file.name
+      );
+      form_data.append("complaint_subject", values.complaint_subject);
+      form_data.append("complaint_details", values.complaint_details);
+      form_data.append("user_id", values.user_id);
+      // console.log(values);
+      dispatch(registerComplaintAction(form_data));
+      setValues({
+        complaint_category: "",
+        complaint_sub_category: "",
+        state: "",
+        complaint_file: null,
+        complaint_subject: "",
+        complaint_details: "",
+      });
     }
   };
   return (
@@ -179,7 +210,7 @@ const LodgeComplaint = () => {
                           className={classes["file-upload"]}
                           type="file"
                           name="complaint_file"
-                          value={values.complaint_file || ""}
+                          accept="image/png, image/jpeg"
                           onChange={onChangePicture}
                         />
                       </div>
@@ -201,6 +232,11 @@ const LodgeComplaint = () => {
                         )}
                       </div>
                     </div>
+                    {compList && (
+                      <p className={msg.success}>
+                        {"Your Complaint Registered Successfully."}
+                      </p>
+                    )}
                     <div className={classes.btndiv}>
                       <div className={classes.singleBtnDiv}>
                         <div className={classes.button}>

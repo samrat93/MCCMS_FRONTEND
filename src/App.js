@@ -55,7 +55,7 @@ function App() {
           <Route path="ComplaintHistory" exact element={<ComplaintHistory />} />
           <Route path="PublicProfile" exact element={<PublicProfile />} />
           <Route
-            path="ChangePasswordP"
+            path="ChangePasswordPublic"
             exact
             element={<ChangePasswordPublic />}
           />

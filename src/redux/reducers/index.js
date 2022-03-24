@@ -20,7 +20,12 @@ import {
   DeleteComplainCategoryReducer,
   DeleteComplainSubCategoryReducer,
 } from "./adminReducer";
-import { complaintReducer, profileAddReducer } from "./userReducer";
+import {
+  complaintReducer,
+  listComplaintReducer,
+  profileAddReducer,
+  changeUserPasswordReducer,
+} from "./userReducer";
 
 const reducers = combineReducers({
   userSignin: userLoginReducer,
@@ -41,7 +46,9 @@ const reducers = combineReducers({
   listComplaintSubCR: ListComplainSubCategoryReducer,
   deleteComplaintSubCR: DeleteComplainSubCategoryReducer,
   complaintReducer: complaintReducer,
+  listComplaintRedu: listComplaintReducer,
   profileAddRedu: profileAddReducer,
+  changePasswordUserR: changeUserPasswordReducer,
 });
 
 export default reducers;
