@@ -92,8 +92,14 @@ const ChangePasswordPublic = () => {
                           {message.new_password && (
                             <p className={msg.error}>{message.new_password}</p>
                           )}
-                          {error && error.npassword && (
-                            <p className={msg.error}>{error.npassword}</p>
+                          {error && error.npassword1 && (
+                            <p className={msg.error}>{error.npassword1}</p>
+                          )}
+                          {error && error.npassword2 && (
+                            <p className={msg.error}>{error.npassword2}</p>
+                          )}
+                          {error && error.npassword3 && (
+                            <p className={msg.error}>{error.npassword3}</p>
                           )}
                         </div>
                       </div>

@@ -5,6 +5,8 @@ import tbl from "../../../css/admin_css/table.module.css";
 import { listComplaintAction } from "../../../redux/actions/userActions/complaintAction";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect, Fragment } from "react";
+import ComplaintHistForm from "./complaintHistForm";
+import ComplaintHistFormContent from "./complaintHistoryView";
 
 const ComplaintHistory = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,26 @@ const ComplaintHistory = () => {
   const complaintUser = compList?.filter((data) => {
     return data.user_id === user;
   });
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [compId, setCompId] = useState(0);
+  const [compData, setCompData] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setCompData((prev) => {
+        return compList.find((compObj) => {
+          return compObj.id === compId;
+        });
+      });
+    }
+  }, [compId]);
+
+  const togglePopup = (e) => {
+    setCompId(+e.target.value);
+    setIsOpen(!isOpen);
+  };
 
   const ComplaintStatus = (props) => {
     if (props.status === "1") {
@@ -83,7 +105,11 @@ const ComplaintHistory = () => {
                               <ComplaintStatus status={comp.complaint_status} />
                             </Fragment>
                             <td>
-                              <button className={tbl.tbl_button}>
+                              <button
+                                className={tbl.tbl_button}
+                                value={comp.id}
+                                onClick={togglePopup}
+                              >
                                 View Details
                               </button>
                             </td>
@@ -91,6 +117,16 @@ const ComplaintHistory = () => {
                         ))}
                       </tbody>
                     </table>
+                    {isOpen && compData && (
+                      <div>
+                        <ComplaintHistForm
+                          content={
+                            <ComplaintHistFormContent userData={compData} />
+                          }
+                          handleClose={togglePopup}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

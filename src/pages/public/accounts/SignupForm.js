@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import User_Signup from "./user_signup";
 import { useNavigate } from "react-router-dom";
+import Layout from "../../../components/layout/Layout";
 
 const SignupForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -11,13 +12,15 @@ const SignupForm = () => {
 
   return (
     <>
-      <div>
-        {!isSubmitted ? (
-          <User_Signup submitForm={submitForm} />
-        ) : (
-          navigate("/userlogin")
-        )}
-      </div>
+      <Layout>
+        <div>
+          {!isSubmitted ? (
+            <User_Signup submitForm={submitForm} />
+          ) : (
+            navigate("/userlogin")
+          )}
+        </div>
+      </Layout>
     </>
   );
 };

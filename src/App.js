@@ -11,7 +11,7 @@ import SignupForm from "./pages/public/accounts/SignupForm";
 import HomePage from "./pages/homepage";
 import AdminDashboard from "./pages/admin_dashboard";
 import UserList from "./pages/admin_dashboard/UserList";
-import MunicipalityList from "./pages/admin_dashboard/MunicipalityList";
+import ManageUserComplaint from "./pages/admin_dashboard/ManageUserComplaints";
 import AddCountry from "./pages/admin_dashboard/AddCountry";
 import AddState from "./pages/admin_dashboard/AddState";
 import ChangePassword from "./pages/admin_dashboard/ChangePassword";
@@ -25,16 +25,28 @@ import LodgeComplaint from "./pages/public/public_dashboard/LodgeComplaint";
 import ComplaintHistory from "./pages/public/public_dashboard/ComplaintHistory";
 import PublicProfile from "./pages/public/public_dashboard/PublicProfile";
 import ChangePasswordPublic from "./pages/public/public_dashboard/ChangePassword";
+import PendingComplaints from "./pages/admin_dashboard/PendingComplaint";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/"
+          element={<Navigate replace to="/homepage" />}
+          exact
+        ></Route>
+        <Route path="/homepage" element={<HomePage />}></Route>
+        <Route path="/userlogin" element={<User_login />}></Route>
+        <Route path="/usersignup" element={<SignupForm />}></Route>
+
         <Route path="/admin" element={<AdminDashboard />}>
           <Route path="/admin" element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="userlist" element={<UserList />} />
-          <Route path="municipalityList" element={<MunicipalityList />} />
+          <Route path="manageUserComplaint" element={<ManageUserComplaint />}>
+            <Route path="pendingComplaints" element={<PendingComplaints />} />
+          </Route>
           <Route path="add-country" element={<AddCountry />} />
           <Route path="editCountry" element={<EditCountry />} />
           <Route path="add-state" element={<AddState />} />
@@ -61,15 +73,6 @@ function App() {
           />
         </Route>
       </Routes>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Navigate replace to="/homepage" />} exact />
-          <Route path="/homepage" element={<HomePage />}></Route>
-          <Route path="/userlogin" element={<User_login />}></Route>
-          <Route path="/usersignup" element={<SignupForm />}></Route>
-          {/* <Route path="/adminDashboard" element={<AdminDashboard />}></Route> */}
-        </Routes>
-      </Layout>
     </Router>
   );
 }

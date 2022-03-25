@@ -200,6 +200,7 @@ nav .profile-details i {
 .home-content .box .indicator {
   display: flex;
   align-items: center;
+  margin-right: 5px;
 }
 .home-content .box .indicator i {
   height: 20px;
@@ -210,13 +211,15 @@ nav .profile-details i {
   border-radius: 50%;
   color: #fff;
   font-size: 20px;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .box .indicator i.down {
   background: #e87d88;
 }
 .home-content .box .indicator .text {
   font-size: 12px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 .home-content .box .cart {
   display: inline-block;
@@ -419,4 +422,19 @@ nav .profile-details i {
   padding: 50px;
 
   /* background: linear-gradient(135deg, #71b7e6, #9b59b6); */
+}
+.overview-boxes .box2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 3 - 100px);
+  background: #fff;
+  padding: 7px 6px;
+  margin: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(8, 8, 8, 0.1);
+}
+.overview-boxes .box-topic2 {
+  font-size: 20px;
+  font-weight: 500;
 }

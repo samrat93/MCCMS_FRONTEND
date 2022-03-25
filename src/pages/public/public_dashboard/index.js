@@ -104,7 +104,7 @@ const PublicDashboard = () => {
               <FeedbackOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>View Feedback</span>
+              <span className={classes.links_name}>Give Feedback</span>
             </NavLink>
           </li>
           <li>

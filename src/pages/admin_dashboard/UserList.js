@@ -40,7 +40,7 @@ const UserList = () => {
   }, [currId]);
 
   const togglePopup = (e) => {
-    console.log("user-id", e.target.value);
+    // console.log("user-id", e.target.value);
     setCurrID(+e.target.value);
     setIsOpen(!isOpen);
   };

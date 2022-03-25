@@ -123,6 +123,7 @@ form .button input {
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 1px;
+  /* margin-bottom: 50px; */
   cursor: pointer;
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #71b7e6, #9b59b6);
@@ -241,4 +242,38 @@ form .user-details .input-textarea {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 
   /* background: linear-gradient(135deg, #71b7e6, #9b59b6); */
+}
+.hrTitle {
+  margin: 10px;
+  width: 100%;
+  border-top: 1px solid #9b59b6;
+}
+.complaintSummeryDiv {
+  margin: 15px;
+  padding-bottom: 15px;
+}
+.complaint_span {
+  display: block;
+  color: #8e3aaf;
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  display: inline;
+  margin-left: 5px;
+}
+.complaint_para {
+  display: block;
+  /* color: #9b59b6; */
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+}
+.file_span {
+  display: block;
+  color: #f77308;
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  display: inline;
+  margin-left: 5px;
 }

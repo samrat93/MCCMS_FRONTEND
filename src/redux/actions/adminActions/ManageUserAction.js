@@ -6,8 +6,13 @@ export const readalluser = () => async (dispatch, getState) => {
     dispatch({
       type: AdminActionType.USER_LIST_REQUEST,
     });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
+        Authorization: `Token ${userInfo.token}`,
         "content-type": "application/json",
       },
     };

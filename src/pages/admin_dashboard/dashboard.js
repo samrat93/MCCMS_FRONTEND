@@ -4,8 +4,34 @@ import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import UserList from "./UserList";
+import { useSelector, useDispatch } from "react-redux";
+import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
+import { useEffect } from "react";
+import { listComplaintAction } from "../../redux/actions/userActions/complaintAction";
+// import {userList}
 
 const AdminDashboardPage = () => {
+  const dispatch = useDispatch();
+  const userList = useSelector((state) => state.userList);
+  const { users } = userList;
+
+  const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
+  const { compList } = listComplaintRedu;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  const usersCount = users?.length;
+  const complaintCount = compList?.length;
+  // console.log("total users", usersCount);
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(readalluser());
+      dispatch(listComplaintAction());
+    }
+  }, [dispatch, userInfo]);
+
   return (
     <div>
       <div className={classes["home-content"]}>
@@ -13,7 +39,7 @@ const AdminDashboardPage = () => {
           <div className={classes.box}>
             <div className={classes["right-side"]}>
               <div className={classes["box-topic"]}>Total User</div>
-              <div className={classes.number}>40,876</div>
+              <div className={classes.number}>{usersCount}</div>
               <div className={classes.indicator}>
                 <PersonIcon
                   sx={{
@@ -34,7 +60,7 @@ const AdminDashboardPage = () => {
           <div className={classes.box}>
             <div className={classes["right-side"]}>
               <div className={classes["box-topic"]}>Total Complaint</div>
-              <div className={classes.number}>38,876</div>
+              <div className={classes.number}>{complaintCount}</div>
               <div className={classes.indicator}>
                 <ReportProblemIcon
                   sx={{

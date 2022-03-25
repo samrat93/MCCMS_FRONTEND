@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { readalluser } from "../../../redux/actions/adminActions/ManageUserAction";
 import { userLogin } from "../../../redux/actions/userActions/userAuthAction";
+import Layout from "../../../components/layout/Layout";
 
 const User_login = () => {
   const [username, setUsername] = useState("");
@@ -34,67 +35,69 @@ const User_login = () => {
   useEffect(() => {
     if (userInfo) {
       // dispatch(readalluser());
-      navigate("/public");
+      navigate("/admin");
     }
   }, [userInfo, navigate]);
 
   return (
-    <div className={classes.signupBody}>
-      <div className={classes.container}>
-        <div className={classes.title}>Login</div>
-        <div className={classes.content}>
-          <form onSubmit={submitForm}>
-            <div className={classes["user-details"]}>
-              <div className={classes["input-box-login"]}>
-                <span className={classes.signinspan}>Username</span>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Enter your username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                {message.username && (
-                  <p className={msg.error}>{message.username}</p>
-                )}
-                {error && error.login_error && (
-                  <p className={msg.error}>{error.login_error}</p>
-                )}
-              </div>
-            </div>
-
-            <div className={classes["user-details"]}>
-              <div className={classes["input-box-login"]}>
-                <span className={classes.signinspan}>Password</span>
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  placeholder="Enter your password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {message.password && (
-                  <p className={msg.error}>{message.password}</p>
-                )}
-                {/* {error && <p className={msg.error}>{error}</p>} */}
-              </div>
-            </div>
-            <div className={classes["user-details"]}>
-              <div className={classes["input-box-login"]}>
-                <div className={classes.button}>
-                  <input type="submit" value="Login" />
+    <Layout>
+      <div className={classes.signupBody}>
+        <div className={classes.container}>
+          <div className={classes.title}>Login</div>
+          <div className={classes.content}>
+            <form onSubmit={submitForm}>
+              <div className={classes["user-details"]}>
+                <div className={classes["input-box-login"]}>
+                  <span className={classes.signinspan}>Username</span>
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  {message.username && (
+                    <p className={msg.error}>{message.username}</p>
+                  )}
+                  {error && error.login_error && (
+                    <p className={msg.error}>{error.login_error}</p>
+                  )}
                 </div>
               </div>
-            </div>
-            <div className={classes["input-box"]}>
-              <p className={classes.signinspan}>
-                Not Registered Yet. <Link to="/usersignup"> Register</Link>
-              </p>
-            </div>
-          </form>
+
+              <div className={classes["user-details"]}>
+                <div className={classes["input-box-login"]}>
+                  <span className={classes.signinspan}>Password</span>
+                  <input
+                    type="password"
+                    name="password"
+                    value={password}
+                    placeholder="Enter your password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  {message.password && (
+                    <p className={msg.error}>{message.password}</p>
+                  )}
+                  {/* {error && <p className={msg.error}>{error}</p>} */}
+                </div>
+              </div>
+              <div className={classes["user-details"]}>
+                <div className={classes["input-box-login"]}>
+                  <div className={classes.button}>
+                    <input type="submit" value="Login" />
+                  </div>
+                </div>
+              </div>
+              <div className={classes["input-box"]}>
+                <p className={classes.signinspan}>
+                  Not Registered Yet. <Link to="/usersignup"> Register</Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

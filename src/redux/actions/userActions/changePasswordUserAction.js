@@ -34,14 +34,16 @@ export const ChangePasswordUserAction =
         payload: data,
       });
     } catch (error) {
-      console.log("extra error: ", error.response.data.new_password);
+      console.log("extra error: ", error.response.data);
       //   console.log("extra error: ", error.response.data.password);
-      const npassword = error.response.data.new_password;
+      const npassword1 = error.response.data.new_password[0];
+      const npassword2 = error.response.data.new_password[1];
+      const npassword3 = error.response.data.new_password[2];
       const opassword = error.response.data.old_password.old_password;
       //   const cpassword = error.response.data.password;
       dispatch({
         type: UserActionType.CHANGE_PASSWORD_FAIL,
-        payload: { npassword, opassword },
+        payload: { npassword1, npassword2, npassword3, opassword },
       });
     }
   };

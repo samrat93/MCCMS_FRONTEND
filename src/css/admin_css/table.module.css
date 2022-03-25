@@ -26,6 +26,7 @@ table tr:hover {
 table th,
 table td {
   padding: 0.625em;
+  /* margin-right: 10px; */
   /* text-align: center; */
 }
 
@@ -69,6 +70,7 @@ table th {
     display: block;
     font-size: 0.8em;
     text-align: right;
+    margin-right: 10px;
   }
 
   table td::before {
@@ -124,6 +126,7 @@ table th {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   margin-left: 10px;
+  margin-right: 10px;
 }
 .tbl_button_processing {
   transition-duration: 0.4s;
@@ -141,6 +144,7 @@ table th {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   margin-left: 10px;
+  margin-right: 10px;
 }
 .tbl_button_closed {
   transition-duration: 0.4s;
@@ -157,5 +161,6 @@ table th {
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
+  margin-right: 10px;
   margin-left: 10px;
 }

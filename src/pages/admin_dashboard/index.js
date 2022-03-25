@@ -4,7 +4,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 // import UserList from "./UserList";
 import { Outlet, useLocation, useNavigate, NavLink } from "react-router-dom";
-import AssuredWorkloadOutlinedIcon from "@mui/icons-material/AssuredWorkloadOutlined";
+import ErrorIcon from "@mui/icons-material/Error";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import LocationCityOutlinedIcon from "@mui/icons-material/LocationCityOutlined";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  console.log(userInfo.user_Info.is_superuser);
+  // console.log(userInfo.user_Info.is_superuser);
 
   const logoutHandler = (e) => {
     dispatch(logout());
@@ -78,15 +78,16 @@ const AdminDashboard = () => {
           </li>
           <li>
             <NavLink
-              to="/admin/municipalityList"
+              to="/admin/manageUserComplaint"
               className={classes.links_name}
             >
-              <AssuredWorkloadOutlinedIcon
+              <ErrorIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Municipality list</span>
+              <span className={classes.links_name}>Manage Complaint</span>
             </NavLink>
           </li>
+
           <li>
             <NavLink to="/admin/add-country" className={classes.links_name}>
               <FlagOutlinedIcon
@@ -95,6 +96,7 @@ const AdminDashboard = () => {
               <span className={classes.links_name}>Add Country</span>
             </NavLink>
           </li>
+
           <li>
             <NavLink to="/admin/add-state" className={classes.links_name}>
               <LocationCityOutlinedIcon
@@ -128,7 +130,7 @@ const AdminDashboard = () => {
               <CategoryIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Complaint Category</span>
+              <span className={classes.links_name}>Add Category</span>
             </NavLink>
           </li>
           <li>
@@ -139,7 +141,7 @@ const AdminDashboard = () => {
               <CategoryIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Comp-Sub Category</span>
+              <span className={classes.links_name}>Add Sub Category</span>
             </NavLink>
           </li>
           <li>
