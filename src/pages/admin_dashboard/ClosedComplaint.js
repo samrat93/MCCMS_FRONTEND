@@ -7,9 +7,8 @@ import { listComplaintAction } from "../../redux/actions/userActions/complaintAc
 import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import ComplaintActionForm from "./complaint_action/ComplaintActionForm";
 import ComplaintActionFormContent from "./complaint_action/ComplaintActionFormContent";
-import { ListComplaintRemarksAction } from "../../redux/actions/adminActions/ManageComplaintAction";
 
-const PendingComplaints = () => {
+const ClosedComplaints = () => {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -17,10 +16,6 @@ const PendingComplaints = () => {
   const { compList } = listComplaintRedu;
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
-  const ListComplaintRemarksR = useSelector(
-    (state) => state.ListComplaintRemarksR
-  );
-  const { lcr } = ListComplaintRemarksR;
 
   let newCompList = compList?.map((compObj) => {
     return {
@@ -31,9 +26,8 @@ const PendingComplaints = () => {
   });
 
   const pendingComplaint = newCompList?.filter((data) => {
-    return data.complaint_status === "1";
+    return data.complaint_status === "3";
   });
-
   const [isOpen, setIsOpen] = useState(false);
   const [compId, setCompId] = useState(0);
   const [compData, setCompData] = useState(null);
@@ -55,13 +49,11 @@ const PendingComplaints = () => {
     if (userInfo) {
       dispatch(listComplaintAction());
       dispatch(readalluser());
-      dispatch(ListComplaintRemarksAction());
     }
   }, [dispatch, userInfo]);
-
   return (
     <div>
-      <div className={formclasses.title}>Pending Complaint</div>
+      <div className={formclasses.title}>Closed Complaint</div>
       <hr className={formclasses.hrTitle} />
       <div className={tbl.tbl_scroll}>
         <table className={tbl.table}>
@@ -93,7 +85,7 @@ const PendingComplaints = () => {
                 <td>{p.complaint_subject}</td>
                 <td>{p.complaint_date}</td>
                 <td>
-                  <button className={tbl.tbl_button_pending}>Pending</button>
+                  <button className={tbl.tbl_button_closed}>Closed</button>
                 </td>
                 <td>
                   <button
@@ -120,4 +112,4 @@ const PendingComplaints = () => {
     </div>
   );
 };
-export default PendingComplaints;
+export default ClosedComplaints;

@@ -26,7 +26,8 @@ import ComplaintHistory from "./pages/public/public_dashboard/ComplaintHistory";
 import PublicProfile from "./pages/public/public_dashboard/PublicProfile";
 import ChangePasswordPublic from "./pages/public/public_dashboard/ChangePassword";
 import PendingComplaints from "./pages/admin_dashboard/PendingComplaint";
-
+import ProcessingComplaints from "./pages/admin_dashboard/ProcessingComplaint";
+import ClosedComplaints from "./pages/admin_dashboard/ClosedComplaint";
 function App() {
   return (
     <Router>
@@ -45,7 +46,17 @@ function App() {
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="userlist" element={<UserList />} />
           <Route path="manageUserComplaint" element={<ManageUserComplaint />}>
+            <Route
+              path="manageUserComplaint"
+              element={<Navigate replace to="pendingComplaints" />}
+              exact
+            />
             <Route path="pendingComplaints" element={<PendingComplaints />} />
+            <Route
+              path="processingComplaints"
+              element={<ProcessingComplaints />}
+            />
+            <Route path="closedComplaints" element={<ClosedComplaints />} />
           </Route>
           <Route path="add-country" element={<AddCountry />} />
           <Route path="editCountry" element={<EditCountry />} />

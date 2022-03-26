@@ -196,3 +196,40 @@ export const DeleteComplainCategoryReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const AddComplaintRemarksReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AdminActionType.ADD_COMPLAINT_REMARKS_REQUEST:
+      return { loading: true };
+    case AdminActionType.ADD_COMPLAINT_REMARKS_SUCCESS:
+      return { loading: false, success: action.payload };
+    case AdminActionType.ADD_COMPLAINT_REMARKS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const ListComplaintRemarksReducer = (state = { lcr: [] }, action) => {
+  switch (action.type) {
+    case AdminActionType.LIST_COMPLAINT_REMARKS_REQUEST:
+      return { loading: true };
+    case AdminActionType.LIST_COMPLAINT_REMARKS_SUCCESS:
+      return { loading: false, success: action.payload };
+    case AdminActionType.LIST_COMPLAINT_REMARKS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const updateComplaintRemarksReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AdminActionType.COMPLAINT_REMARKS_UPDATE_REQUEST:
+      return { loading: true };
+    case AdminActionType.COMPLAINT_REMARKS_UPDATE_SUCCESS:
+      return { loading: false, success: action.payload };
+    case AdminActionType.COMPLAINT_REMARKS_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

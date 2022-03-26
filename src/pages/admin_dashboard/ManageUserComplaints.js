@@ -4,7 +4,7 @@ import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
-import { Outlet, useLocation, useNavigate, NavLink } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
 const ManageUserComplaint = () => {
   return (
@@ -58,12 +58,14 @@ const ManageUserComplaint = () => {
                     <span className={classes.text}>Process Ongoing </span>
                   </div>
                 </div>
-                <PendingActionsIcon
-                  sx={{
-                    fontSize: "50px",
-                    color: "#437c17",
-                  }}
-                />
+                <NavLink to="processingComplaints">
+                  <PendingActionsIcon
+                    sx={{
+                      fontSize: "50px",
+                      color: "#0096FF",
+                    }}
+                  />
+                </NavLink>
               </div>
               <div className={classes.box2}>
                 <div className={classes["right-side"]}>
@@ -82,19 +84,17 @@ const ManageUserComplaint = () => {
                     <span className={classes.text}>Processed Yet</span>
                   </div>
                 </div>
-                <AssignmentTurnedInIcon
-                  sx={{
-                    fontSize: "50px",
-                    color: "#437c17",
-                  }}
-                />
+                <NavLink to="closedComplaints">
+                  <AssignmentTurnedInIcon
+                    sx={{
+                      fontSize: "50px",
+                      color: "#437c17",
+                    }}
+                  />
+                </NavLink>
               </div>
             </div>
             <Outlet />
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat
           </div>
         </div>
       </div>
