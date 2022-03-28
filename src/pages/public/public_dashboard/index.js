@@ -100,7 +100,7 @@ const PublicDashboard = () => {
             </NavLink>
           </li> */}
           <li>
-            <NavLink to="/admin/add-country" className={classes.links_name}>
+            <NavLink to="/public/publicFeedback" className={classes.links_name}>
               <FeedbackOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />

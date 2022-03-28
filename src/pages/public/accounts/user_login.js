@@ -36,6 +36,7 @@ const User_login = () => {
     if (userInfo) {
       // dispatch(readalluser());
       navigate("/admin");
+      // navigate("/public");
     }
   }, [userInfo, navigate]);
 

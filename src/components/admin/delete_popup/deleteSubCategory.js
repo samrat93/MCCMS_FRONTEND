@@ -7,7 +7,6 @@ import {
 } from "../../../redux/actions/adminActions/ComplaintSubCategoryAction";
 
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const DeleteSubCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
   const dispatch = useDispatch();
@@ -15,9 +14,6 @@ const DeleteSubCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
     (state) => state.deleteComplaintSubCR
   );
   const { loading, success } = deleteComplaintSubCR;
-  // const navigate = useNavigate();
-  // const userSignin = useSelector((state) => state.userSignin);
-  // const { userInfo } = userSignin;
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -31,9 +27,9 @@ const DeleteSubCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
   }, [dispatch, success]);
 
   return (
-    <div onClick={() => onDialog(false)} className={classes.deleteBody}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <div>
+    <div className={classes.popup_box}>
+      <div className={classes.deleteBody}>
+        <div onClick={(e) => e.stopPropagation()}>
           <h3 className={classes.title}>{dialogMessage}</h3>
           <h2 className={classes.country_name}>{cname}</h2>
           <button
@@ -42,14 +38,9 @@ const DeleteSubCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
           >
             No
           </button>
-          <button
-            className={classes.deleteButton_yes}
-            // onClick={() => onDialog(true)}
-            onClick={deleteHandler}
-          >
+          <button className={classes.deleteButton_yes} onClick={deleteHandler}>
             Yes
           </button>
-          <p></p>
         </div>
       </div>
     </div>

@@ -214,7 +214,7 @@ export const ListComplaintRemarksReducer = (state = { lcr: [] }, action) => {
     case AdminActionType.LIST_COMPLAINT_REMARKS_REQUEST:
       return { loading: true };
     case AdminActionType.LIST_COMPLAINT_REMARKS_SUCCESS:
-      return { loading: false, success: action.payload };
+      return { loading: false, lcr: action.payload };
     case AdminActionType.LIST_COMPLAINT_REMARKS_FAIL:
       return { loading: false, error: action.payload };
     default:

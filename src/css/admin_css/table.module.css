@@ -8,6 +8,7 @@ table {
   width: 100%;
   table-layout: fixed;
   border-radius: 5px;
+  overflow-x: scroll;
 }
 
 table caption {
@@ -26,6 +27,8 @@ table tr:hover {
 table th,
 table td {
   padding: 0.625em;
+  word-wrap: break-word;
+
   /* margin-right: 10px; */
   /* text-align: center; */
 }
@@ -70,7 +73,7 @@ table th {
     display: block;
     font-size: 0.8em;
     text-align: right;
-    margin-right: 10px;
+    word-wrap: break-word;
   }
 
   table td::before {
@@ -94,8 +97,7 @@ table th {
   cursor: pointer;
   align-self: center;
   font-size: 1rem;
-  width: 100%;
-  min-width: 50px;
+  width: auto;
   line-height: 1;
   padding: 0.8em 1em;
   text-align: center;
@@ -103,13 +105,40 @@ table th {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   margin-left: 10px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+.tbl_button_edit {
+  transition-duration: 0.4s;
+  border: 2px solid #e74c3c;
+  border-radius: 0.6em;
+  background-color: transparent;
+  color: #fff;
+  background-color: #1397e9;
+  cursor: pointer;
+  align-self: center;
+  font-size: 1rem;
+  width: auto;
+  line-height: 1;
+  padding: 0.8em 1em;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  margin-left: 10px;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .tbl_button:hover {
   box-shadow: 0 0 10px 0 #0a2558 inset, 0 0 10px 4px #3498db;
 }
+.tbl_button_edit:hover {
+  box-shadow: 0 0 10px 0 #0a2558 inset, 0 0 10px 4px #3498db;
+}
 .tbl_scroll {
-  overflow-x: auto;
+  overflow-x: scroll;
+  width: 100%;
 }
 
 .tbl_button_pending {
@@ -121,32 +150,32 @@ table th {
   align-self: center;
   font-size: 1.3rem;
   padding: 0.1em;
-  height: 30px;
+  height: auto;
   width: 100%;
   text-align: center;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  margin-left: 10px;
-  margin-right: 10px;
+  white-space: normal;
+  word-wrap: break-word;
 }
 .tbl_button_processing {
   transition-duration: 0.4s;
   border: 2px solid;
   border-radius: 0.6em;
-  background-color: #1397e9;
+  background-color: #fc8d0f;
   color: #fff;
   width: 100%;
   align-self: center;
   font-size: 1.3rem;
   padding: 0.1em;
-  height: 30px;
+  height: auto;
   text-align: center;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  margin-left: 10px;
-  margin-right: 10px;
+  white-space: normal;
+  word-wrap: break-word;
 }
 .tbl_button_closed {
   transition-duration: 0.4s;
@@ -157,12 +186,12 @@ table th {
   align-self: center;
   font-size: 1.3rem;
   padding: 0.1em;
-  height: 30px;
+  height: auto;
   width: 100%;
   text-align: center;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  margin-right: 10px;
-  margin-left: 10px;
+  white-space: normal;
+  word-wrap: break-word;
 }

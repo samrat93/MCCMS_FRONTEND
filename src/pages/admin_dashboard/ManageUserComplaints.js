@@ -5,8 +5,25 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
 import { Outlet, NavLink } from "react-router-dom";
+// import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const ManageUserComplaint = () => {
+  const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
+  const { compList } = listComplaintRedu;
+
+  const pending = compList?.filter((data) => {
+    return data.complaint_status === "1";
+  }).length;
+
+  const processing = compList?.filter((data) => {
+    return data.complaint_status === "2";
+  }).length;
+
+  const complete = compList?.filter((data) => {
+    return data.complaint_status === "3";
+  }).length;
+
   return (
     <>
       <div className={classes["home-content"]}>
@@ -19,7 +36,7 @@ const ManageUserComplaint = () => {
                   <div className={classes["box-topic2"]}>
                     Total Pending Complaint
                   </div>
-                  <div className={classes.number}>555</div>
+                  <div className={classes.number}>{pending}</div>
                   <div className={classes.indicator}>
                     <AssignmentLateIcon
                       sx={{
@@ -35,7 +52,7 @@ const ManageUserComplaint = () => {
                   <AssignmentLateIcon
                     sx={{
                       fontSize: "50px",
-                      color: "#bc544b",
+                      color: "#e74c3c",
                     }}
                   />
                 </NavLink>
@@ -44,9 +61,9 @@ const ManageUserComplaint = () => {
               <div className={classes.box2}>
                 <div className={classes["right-side"]}>
                   <div className={classes["box-topic2"]}>
-                    Complaint On Processing
+                    Total Ongoing Complaint
                   </div>
-                  <div className={classes.number}>$12,876</div>
+                  <div className={classes.number}>{processing}</div>
                   <div className={classes.indicator}>
                     <PendingActionsIcon
                       sx={{
@@ -62,7 +79,7 @@ const ManageUserComplaint = () => {
                   <PendingActionsIcon
                     sx={{
                       fontSize: "50px",
-                      color: "#0096FF",
+                      color: "#fc8d0f",
                     }}
                   />
                 </NavLink>
@@ -72,7 +89,7 @@ const ManageUserComplaint = () => {
                   <div className={classes["box-topic2"]}>
                     Total Closed Complaint
                   </div>
-                  <div className={classes.number}>11,086</div>
+                  <div className={classes.number}>{complete}</div>
                   <div className={classes.indicator}>
                     <AssignmentTurnedInIcon
                       sx={{

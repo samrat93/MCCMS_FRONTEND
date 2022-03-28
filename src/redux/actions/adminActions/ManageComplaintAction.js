@@ -80,8 +80,8 @@ export const UpdateRemarksAction = (remarks) => async (dispatch, getState) => {
       type: AdminActionType.COMPLAINT_REMARKS_UPDATE_REQUEST,
     });
 
-    console.log("verify data in action : ", remarks.us);
-    console.log("user id data in action : ", remarks.cid);
+    // console.log("verify data in action : ", remarks.comp_status);
+    // console.log("complaint id data in action : ", remarks.cid);
     const {
       userSignin: { userInfo },
     } = getState();
@@ -94,9 +94,11 @@ export const UpdateRemarksAction = (remarks) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.patch(
+    const { data } = await axios.put(
       `http://127.0.0.1:8000/api/complaint_remarks_update/${remarks.cid}`,
-      remarks,
+      {
+        complaint_status: remarks.comp_status,
+      },
       config
     );
 

@@ -1,8 +1,6 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
 import formclasses from "../../css/account_css/UserAccount.module.css";
 import tbl from "../../css/admin_css/table.module.css";
-import EditRoadIcon from "@mui/icons-material/EditRoad";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import msg from "../../css/msg/msg.module.css";
@@ -19,7 +17,6 @@ const AddState = () => {
   const addStateRedu = useSelector((state) => state.addStateRedu);
   const { loading, error, stateInfo } = addStateRedu;
 
-  console.log("state info : ", stateInfo);
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { states } = listStateRedu;
 
@@ -183,31 +180,19 @@ const AddState = () => {
               </thead>
 
               <tbody>
-                {states?.map((s) => (
-                  <tr key={s.id}>
-                    <td>{s.id}</td>
+                {states?.map((s, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
                     <td>{s.state_name}</td>
                     <td>{s.state_desc}</td>
                     <td>
-                      <button className={tbl.tbl_button}>
-                        <EditRoadIcon
-                          sx={{
-                            fontSize: "30px",
-                            color: "#b705f7",
-                          }}
-                        />
-                      </button>
+                      <button className={tbl.tbl_button_edit}>Update</button>
 
                       <button
                         className={tbl.tbl_button}
                         onClick={() => handleDelete(s.id)}
                       >
-                        <DeleteIcon
-                          sx={{
-                            fontSize: "30px",
-                            color: "#b705f7",
-                          }}
-                        />
+                        delete
                       </button>
                     </td>
                   </tr>

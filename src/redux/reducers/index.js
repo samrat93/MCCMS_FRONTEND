@@ -28,6 +28,8 @@ import {
   listComplaintReducer,
   profileAddReducer,
   changeUserPasswordReducer,
+  addFeedbackReducer,
+  ListFeedbackReducer,
 } from "./userReducer";
 
 const reducers = combineReducers({
@@ -55,6 +57,8 @@ const reducers = combineReducers({
   AddComplaintRemarksR: AddComplaintRemarksReducer,
   ListComplaintRemarksR: ListComplaintRemarksReducer,
   updateRemarksRedu: updateComplaintRemarksReducer,
+  AddFeedbackR: addFeedbackReducer,
+  ListFeedbackR: ListFeedbackReducer,
 });
 
 export default reducers;

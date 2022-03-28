@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import tbl from "../../css/admin_css/table.module.css";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import EditAttributesIcon from "@mui/icons-material/EditAttributes";
 import UserConfirmForm from "./UserConfForm";
 import UserVerifyFormContent from "./PopFormContent";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -84,6 +86,8 @@ const UserList = () => {
                         <td>
                           {user.is_active ? (
                             <VerifiedIcon
+                              value={user.id}
+                              onClick={togglePopup}
                               sx={{
                                 fontSize: "30px",
                                 color: "#0087bd",

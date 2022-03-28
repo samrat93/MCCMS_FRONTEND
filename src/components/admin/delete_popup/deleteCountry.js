@@ -27,27 +27,24 @@ const DialogCountry = ({ dialogMessage, onDialog, nameCountry, cid }) => {
   }, [dispatch, success]);
 
   return (
-    <div onClick={() => onDialog(false)} className={classes.deleteBody}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <div>
-          <h3 className={classes.title}>{dialogMessage}</h3>
-          <h2 className={classes.country_name}>{nameCountry}</h2>
+    <div className={classes.popup_box}>
+      <div className={classes.deleteBody}>
+        <h3 className={classes.title}>{dialogMessage}</h3>
+        <h2 className={classes.country_name}>{nameCountry}</h2>
 
-          <button
-            className={classes.deleteButton_no}
-            onClick={() => onDialog(false)}
-          >
-            No
-          </button>
-          <button
-            className={classes.deleteButton_yes}
-            // onClick={() => onDialog(true)}
-            onClick={deleteHandler}
-          >
-            Yes
-          </button>
-          <p></p>
-        </div>
+        <button
+          className={classes.deleteButton_no}
+          onClick={() => onDialog(false)}
+        >
+          No
+        </button>
+        <button
+          className={classes.deleteButton_yes}
+          // onClick={() => onDialog(true)}
+          onClick={deleteHandler}
+        >
+          Yes
+        </button>
       </div>
     </div>
   );

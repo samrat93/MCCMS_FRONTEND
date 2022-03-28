@@ -24,9 +24,9 @@ const DeleteStateDialog = ({ dialogMessage, onDialog, nameState, sid }) => {
   }, [dispatch, success]);
 
   return (
-    <div onClick={() => onDialog(false)} className={classes.deleteBody}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <div>
+    <div className={classes.popup_box}>
+      <div className={classes.deleteBody}>
+        <div onClick={(e) => e.stopPropagation()}>
           <h3 className={classes.title}>{dialogMessage}</h3>
           <h2 className={classes.country_name}>{nameState}</h2>
           <button
@@ -42,7 +42,6 @@ const DeleteStateDialog = ({ dialogMessage, onDialog, nameState, sid }) => {
           >
             Yes
           </button>
-          <p></p>
         </div>
       </div>
     </div>

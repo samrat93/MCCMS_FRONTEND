@@ -2,8 +2,6 @@ import formclasses from "../../css/account_css/UserAccount.module.css";
 import classes from "../../css/admin_css/AdminDashboard.module.css";
 import msg from "../../css/msg/msg.module.css";
 import tbl from "../../css/admin_css/table.module.css";
-import EditRoadIcon from "@mui/icons-material/EditRoad";
-import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState, useEffect, useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -20,9 +18,10 @@ const AddCountry = () => {
   const navigate = useNavigate();
   const addCountry = useSelector((state) => state.addCountry);
   const { loading, error, countryInfo } = addCountry;
-  console.log("all errors", error);
+
   const listCountry = useSelector((state) => state.listCountry);
   const { countries } = listCountry;
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -90,7 +89,7 @@ const AddCountry = () => {
     if (userInfo) {
       dispatch(ListCountryAction());
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, countryInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -183,24 +182,19 @@ const AddCountry = () => {
               </thead>
 
               <tbody>
-                {countries?.map((country) => (
-                  <tr key={country.id}>
-                    <td>{country.id}</td>
+                {countries?.map((country, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
                     <td>{country.country_name}</td>
                     <td>{country.country_desc}</td>
                     <td>
                       <button
-                        className={tbl.tbl_button}
+                        className={tbl.tbl_button_edit}
                         onClick={() =>
                           navigate(`/admin/editCountry/${country.id}`)
                         }
                       >
-                        <EditRoadIcon
-                          sx={{
-                            fontSize: "30px",
-                            color: "#b705f7",
-                          }}
-                        />
+                        update
                       </button>
 
                       <button
@@ -208,12 +202,7 @@ const AddCountry = () => {
                         className={tbl.tbl_button}
                         onClick={() => handleDelete(country.id)}
                       >
-                        <DeleteIcon
-                          sx={{
-                            fontSize: "30px",
-                            color: "#b705f7",
-                          }}
-                        />
+                        delete
                       </button>
                     </td>
                   </tr>

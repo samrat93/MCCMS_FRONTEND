@@ -29,9 +29,9 @@ const DeleteCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
   }, [dispatch, success]);
 
   return (
-    <div onClick={() => onDialog(false)} className={classes.deleteBody}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <div>
+    <div className={classes.popup_box}>
+      <div className={classes.deleteBody}>
+        <div onClick={(e) => e.stopPropagation()}>
           <h3 className={classes.title}>{dialogMessage}</h3>
           <h2 className={classes.country_name}>{cname}</h2>
           <button
@@ -47,7 +47,6 @@ const DeleteCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
           >
             Yes
           </button>
-          <p></p>
         </div>
       </div>
     </div>

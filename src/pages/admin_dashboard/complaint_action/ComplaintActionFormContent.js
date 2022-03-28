@@ -85,9 +85,14 @@ const ComplaintActionFormContent = ({ compData }) => {
       setMessage(mess);
     } else {
       const cid = compData.id;
-      const us = values.complaint_status;
+      const comp_status = values.complaint_status;
       dispatch(addComplaintAction(values));
-      dispatch(UpdateRemarksAction({ us, cid: cid }));
+      dispatch(UpdateRemarksAction({ comp_status, cid: cid }));
+      setValues({
+        complaint_status: "",
+        remarks: "",
+        complaint_number: "",
+      });
     }
   };
 
@@ -198,7 +203,6 @@ const ComplaintActionFormContent = ({ compData }) => {
                     onChange={handleChange}
                   >
                     <option>Select Complaint Status</option>
-                    <option value="1">Pending</option>
                     <option value="2">Processing</option>
                     <option value="3">Closed</option>
                   </select>

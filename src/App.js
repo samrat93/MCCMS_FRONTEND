@@ -28,6 +28,8 @@ import ChangePasswordPublic from "./pages/public/public_dashboard/ChangePassword
 import PendingComplaints from "./pages/admin_dashboard/PendingComplaint";
 import ProcessingComplaints from "./pages/admin_dashboard/ProcessingComplaint";
 import ClosedComplaints from "./pages/admin_dashboard/ClosedComplaint";
+import PublicFeedback from "./pages/public/public_dashboard/PublicFeedBack";
+
 function App() {
   return (
     <Router>
@@ -77,6 +79,7 @@ function App() {
           <Route path="LodgeComplaint" exact element={<LodgeComplaint />} />
           <Route path="ComplaintHistory" exact element={<ComplaintHistory />} />
           <Route path="PublicProfile" exact element={<PublicProfile />} />
+          <Route path="publicFeedback" exact element={<PublicFeedback />} />
           <Route
             path="ChangePasswordPublic"
             exact

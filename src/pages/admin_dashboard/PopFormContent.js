@@ -92,7 +92,6 @@ const UserVerifyFormContent = ({ userData }) => {
                     name="verify"
                     value={is_active}
                     onChange={(e) => setIs_Active(e.target.checked)}
-                    required
                   />
                   <span className={chkboxcss.toggle_label}>
                     <span className={chkboxcss.toggle_text}>Verify User</span>
