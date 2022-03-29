@@ -65,6 +65,19 @@ export const deleteCountryReducer = (state = {}, action) => {
   }
 };
 
+export const updateCountryReducer = (state = { cdata: [] }, action) => {
+  switch (action.type) {
+    case AdminActionType.COUNTRY_UPDATE_REQUEST:
+      return { loading: true };
+    case AdminActionType.COUNTRY_UPDATE_SUCCESS:
+      return { loading: false, cdata: action.payload };
+    case AdminActionType.COUNTRY_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const addStateReducer = (state = {}, action) => {
   switch (action.type) {
     case AdminActionType.STATE_ADD_REQUEST:
@@ -98,6 +111,19 @@ export const deleteStateReducer = (state = {}, action) => {
     case AdminActionType.STATE_ADD_SUCCESS:
       return { loading: false, success: action.payload };
     case AdminActionType.STATE_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateStateReducer = (state = { statedata: [] }, action) => {
+  switch (action.type) {
+    case AdminActionType.STATE_UPDATE_REQUEST:
+      return { loading: true };
+    case AdminActionType.STATE_UPDATE_SUCCESS:
+      return { loading: false, statedata: action.payload };
+    case AdminActionType.STATE_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

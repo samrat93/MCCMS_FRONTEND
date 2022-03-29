@@ -52,7 +52,7 @@ const UserList = () => {
       <div className={classes["home-content"]}>
         <div className={classes["sales-boxes"]}>
           <div className={classes["recent-sales"]}>
-            <div className={classes.title}>User Details</div>
+            {/* <div className={classes.title}>User Details</div> */}
             <div className={tbl.tbl_scroll}>
               <table className={tbl.table}>
                 <caption>Total Registered Users</caption>

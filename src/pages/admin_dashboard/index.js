@@ -8,7 +8,8 @@ import ErrorIcon from "@mui/icons-material/Error";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import LocationCityOutlinedIcon from "@mui/icons-material/LocationCityOutlined";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+// import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import SecurityIcon from "@mui/icons-material/Security";
 import CategoryIcon from "@mui/icons-material/Category";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
@@ -78,7 +79,7 @@ const AdminDashboard = () => {
           </li>
           <li>
             <NavLink
-              to="/admin/manageUserComplaint"
+              to="/admin/manageUserComplaint/pendingComplaints"
               className={classes.links_name}
             >
               <ErrorIcon
@@ -105,16 +106,11 @@ const AdminDashboard = () => {
               <span className={classes.links_name}>Add State</span>
             </NavLink>
           </li>
-          {/* <li>
-            <NavLink to="/admin/complaint-list" className={classes.links_name}>
-              <AssuredWorkloadOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
-              <span className={classes.links_name}>View Complaint</span>
-            </NavLink>
-          </li> */}
           <li>
-            <NavLink to="/admin/add-country" className={classes.links_name}>
+            <NavLink
+              to="/admin/userFeedbackView"
+              className={classes.links_name}
+            >
               <FeedbackOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
@@ -146,10 +142,10 @@ const AdminDashboard = () => {
           </li>
           <li>
             <NavLink to="/admin/change-password" className={classes.links_name}>
-              <SettingsOutlinedIcon
+              <SecurityIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Setting</span>
+              <span className={classes.links_name}>Change Password</span>
             </NavLink>
           </li>
           {adminAuth()}
@@ -157,9 +153,7 @@ const AdminDashboard = () => {
       </div>
       <section className={classes["home-section"]}>
         <nav>
-          <span className={classes.dashboard}>
-            Municipal Corporation Complaint Management System
-          </span>
+          <span className={classes.dashboard}>Municipal Corporation CMS</span>
           <div className={classes["search-box"]}>
             <input type="text" placeholder="Search..." />
             <i className={classes["bx-search"]}>

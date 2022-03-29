@@ -82,7 +82,7 @@ export const DeleteCountryAction = (cid) => async (dispatch, getState) => {
     const {
       userSignin: { userInfo },
     } = getState();
-    console.log("User-id in delete: ", cid);
+
     const config = {
       headers: {
         Authorization: `Token ${userInfo.token}`,
@@ -102,6 +102,46 @@ export const DeleteCountryAction = (cid) => async (dispatch, getState) => {
     console.log("error_in_delete_country : ", error.response.data);
     dispatch({
       type: AdminActionType.COUNTRY_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const UpdateCountryAction = (values) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: AdminActionType.COUNTRY_UPDATE_REQUEST,
+    });
+
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
+    console.log("country-id in update: ", values.country_name);
+
+    const config = {
+      headers: {
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.patch(
+      `http://127.0.0.1:8000/api/country/${values.cid}/`,
+      values,
+      config
+    );
+    dispatch({
+      type: AdminActionType.COUNTRY_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error_in_delete_country : ", error.response.data);
+    dispatch({
+      type: AdminActionType.COUNTRY_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

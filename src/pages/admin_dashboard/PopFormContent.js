@@ -9,6 +9,7 @@ import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import { useNavigate } from "react-router-dom";
 
 const UserVerifyFormContent = ({ userData }) => {
+  // console.log(userData);
   const [is_active, setIs_Active] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();

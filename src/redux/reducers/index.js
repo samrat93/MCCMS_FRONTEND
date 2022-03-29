@@ -22,6 +22,8 @@ import {
   AddComplaintRemarksReducer,
   ListComplaintRemarksReducer,
   updateComplaintRemarksReducer,
+  updateCountryReducer,
+  updateStateReducer,
 } from "./adminReducer";
 import {
   complaintReducer,
@@ -59,6 +61,8 @@ const reducers = combineReducers({
   updateRemarksRedu: updateComplaintRemarksReducer,
   AddFeedbackR: addFeedbackReducer,
   ListFeedbackR: ListFeedbackReducer,
+  UpdateStateR: updateStateReducer,
+  UpdateCountryR: updateCountryReducer,
 });
 
 export default reducers;

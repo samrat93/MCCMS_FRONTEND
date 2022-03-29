@@ -91,6 +91,8 @@
   padding: 0 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.5s ease;
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
 }
 .sidebar.active ~ .home-section nav {
   left: 60px;
@@ -187,6 +189,18 @@ nav .profile-details i {
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
+
+.overview-boxes .box2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 4 - 15px);
+  background: #fff;
+  padding: 15px 14px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
 .overview-boxes .box-topic {
   font-size: 20px;
   font-weight: 500;
@@ -423,17 +437,22 @@ nav .profile-details i {
 
   /* background: linear-gradient(135deg, #71b7e6, #9b59b6); */
 }
-.overview-boxes .box2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: calc(100% / 3 - 100px);
-  background: #fff;
-  padding: 7px 6px;
-  margin: 15px;
-  border-radius: 12px;
-  box-shadow: 0 5px 10px rgba(8, 8, 8, 0.1);
+@media (max-width: 1000px) {
+  .overview-boxes .box2 {
+    width: calc(100% / 3 - 100px);
+    margin-bottom: 15px;
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; */
+  }
 }
+@media (max-width: 550px) {
+  .overview-boxes .box2 {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
+
 .overview-boxes .box-topic2 {
   font-size: 20px;
   font-weight: 500;

@@ -18,7 +18,7 @@ import ChangePassword from "./pages/admin_dashboard/ChangePassword";
 import ComplaintList from "./pages/admin_dashboard/ViewComplaints";
 import AddComplaintCategory from "./pages/admin_dashboard/AddComplainCategory";
 import AddComplaintSubCategory from "./pages/admin_dashboard/AddComplaintSubCategory";
-import EditCountry from "./pages/admin_dashboard/UpdatePages/EditCountry";
+// import EditCountry from "./pages/admin_dashboard/UpdatePages/EditCountry";
 import AdminDashboardPage from "./pages/admin_dashboard/dashboard";
 import PublicDashboard from "./pages/public/public_dashboard";
 import LodgeComplaint from "./pages/public/public_dashboard/LodgeComplaint";
@@ -29,6 +29,7 @@ import PendingComplaints from "./pages/admin_dashboard/PendingComplaint";
 import ProcessingComplaints from "./pages/admin_dashboard/ProcessingComplaint";
 import ClosedComplaints from "./pages/admin_dashboard/ClosedComplaint";
 import PublicFeedback from "./pages/public/public_dashboard/PublicFeedBack";
+import UserFeedBackView from "./pages/admin_dashboard/FeedbackView";
 
 function App() {
   return (
@@ -49,9 +50,8 @@ function App() {
           <Route path="userlist" element={<UserList />} />
           <Route path="manageUserComplaint" element={<ManageUserComplaint />}>
             <Route
-              path="manageUserComplaint"
+              path="manageUserComplaint/pendingComplaints"
               element={<Navigate replace to="pendingComplaints" />}
-              exact
             />
             <Route path="pendingComplaints" element={<PendingComplaints />} />
             <Route
@@ -61,7 +61,7 @@ function App() {
             <Route path="closedComplaints" element={<ClosedComplaints />} />
           </Route>
           <Route path="add-country" element={<AddCountry />} />
-          <Route path="editCountry" element={<EditCountry />} />
+          {/* <Route path="editCountry" element={<EditCountry />} /> */}
           <Route path="add-state" element={<AddState />} />
           <Route path="complaint-list" element={<ComplaintList />} />
           <Route
@@ -73,6 +73,7 @@ function App() {
             element={<AddComplaintSubCategory />}
           />
           <Route path="change-password" element={<ChangePassword />} />
+          <Route path="userFeedbackView" element={<UserFeedBackView />} />
         </Route>
 
         <Route path="/public" element={<PublicDashboard />}>

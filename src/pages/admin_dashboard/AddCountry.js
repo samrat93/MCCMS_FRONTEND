@@ -12,6 +12,8 @@ import {
 } from "../../redux/actions/adminActions/CountryActions";
 import validator from "../../components/admin/countryValidator";
 import { useNavigate } from "react-router-dom";
+import CountryUpdateContent from "./UpdatePages/CountryUpdateContent";
+import UpdateCountryForm from "./UpdatePages/UpdateCountryForm";
 
 const AddCountry = () => {
   const dispatch = useDispatch();
@@ -70,6 +72,10 @@ const AddCountry = () => {
   };
   //--------------> Delete Popup code End <----------------------
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [cid, setCid] = useState(0);
+  const [cdata, setCData] = useState(null);
+
   const [values, setValues] = useState({
     country_name: "",
     country_desc: "",
@@ -103,6 +109,23 @@ const AddCountry = () => {
         country_desc: "",
       });
     }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      setCData((prev) => {
+        return countries.find((cobj) => {
+          return cobj.id === cid;
+        });
+      });
+    } else {
+      setCData(null);
+    }
+  }, [cid]);
+
+  const togglePopup = (e) => {
+    setCid(+e.target.value);
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -183,16 +206,15 @@ const AddCountry = () => {
 
               <tbody>
                 {countries?.map((country, index) => (
-                  <tr key={index}>
+                  <tr key={country.id}>
                     <td>{index + 1}</td>
                     <td>{country.country_name}</td>
                     <td>{country.country_desc}</td>
                     <td>
                       <button
                         className={tbl.tbl_button_edit}
-                        onClick={() =>
-                          navigate(`/admin/editCountry/${country.id}`)
-                        }
+                        value={country.id}
+                        onClick={togglePopup}
                       >
                         update
                       </button>
@@ -209,6 +231,14 @@ const AddCountry = () => {
                 ))}
               </tbody>
             </table>
+            {isOpen && cdata && (
+              <div>
+                <UpdateCountryForm
+                  content={<CountryUpdateContent countryData={cdata} />}
+                  handleClose={togglePopup}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
