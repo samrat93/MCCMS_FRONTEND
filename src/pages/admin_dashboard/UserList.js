@@ -1,23 +1,22 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
 import msg from "../../css/msg/msg.module.css";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import tbl from "../../css/admin_css/table.module.css";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import EditAttributesIcon from "@mui/icons-material/EditAttributes";
 import UserConfirmForm from "./UserConfForm";
 import UserVerifyFormContent from "./PopFormContent";
-import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import Loading from "../../components/layout/LoadingScreen";
 
 const UserList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userList = useSelector((state) => state.userList);
-
   const { loading, error, users } = userList;
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -54,61 +53,67 @@ const UserList = () => {
           <div className={classes["recent-sales"]}>
             {/* <div className={classes.title}>User Details</div> */}
             <div className={tbl.tbl_scroll}>
-              <table className={tbl.table}>
-                <caption>Total Registered Users</caption>
-                <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Registered Date</th>
-                    <th>Active Status</th>
-                  </tr>
-                </thead>
-                {error ? (
-                  <tbody>
+              {loading ? (
+                <div className={classes.loadingDiv}>
+                  <Loading />
+                </div>
+              ) : (
+                <table className={tbl.table}>
+                  <caption>Total Registered Users</caption>
+                  <thead>
                     <tr>
-                      <td colSpan={6} className={msg.error}>
-                        Sorry 😢 Something Went Wrong !
-                      </td>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Registered Date</th>
+                      <th>Active Status</th>
                     </tr>
-                  </tbody>
-                ) : (
-                  <tbody>
-                    {users?.map((user) => (
-                      <tr key={user.id}>
-                        <td>{user.username}</td>
-                        <td>{user.email}</td>
-                        <td>{user.first_name}</td>
-                        <td>{user.last_name}</td>
-                        <td>{user.created}</td>
-                        <td>
-                          {user.is_active ? (
-                            <VerifiedIcon
-                              value={user.id}
-                              onClick={togglePopup}
-                              sx={{
-                                fontSize: "30px",
-                                color: "#0087bd",
-                              }}
-                            />
-                          ) : (
-                            <button
-                              value={user.id}
-                              onClick={togglePopup}
-                              className={tbl.tbl_button}
-                            >
-                              Verify Now
-                            </button>
-                          )}
+                  </thead>
+                  {error ? (
+                    <tbody>
+                      <tr>
+                        <td colSpan={6} className={msg.error}>
+                          Sorry 😢 Something Went Wrong !
                         </td>
                       </tr>
-                    ))}
-                  </tbody>
-                )}
-              </table>
-
+                    </tbody>
+                  ) : (
+                    <tbody>
+                      {users?.map((user) => (
+                        <tr key={user.id}>
+                          <td>{user.username}</td>
+                          <td>{user.email}</td>
+                          <td>{user.first_name}</td>
+                          <td>{user.last_name}</td>
+                          <td>{user.created}</td>
+                          <td>
+                            {user.is_active ? (
+                              <Fragment>
+                                <button
+                                  className={tbl.tbl_button_edit}
+                                  value={user.id}
+                                  onClick={togglePopup}
+                                >
+                                  User Verified
+                                </button>
+                              </Fragment>
+                            ) : (
+                              <button
+                                value={user.id}
+                                onClick={togglePopup}
+                                className={tbl.tbl_button}
+                              >
+                                Verify Now
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  )}
+                </table>
+              )}
               {isOpen && currUser && (
                 <div>
                   <UserConfirmForm

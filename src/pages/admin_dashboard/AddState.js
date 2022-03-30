@@ -10,21 +10,23 @@ import {
   ListStateAction,
 } from "../../redux/actions/adminActions/StateActions";
 import DeleteStateDialog from "../../components/admin/delete_popup/deleteState";
+import Loading from "../../components/layout/LoadingScreen";
 
 const AddState = () => {
   const dispatch = useDispatch();
 
   const addStateRedu = useSelector((state) => state.addStateRedu);
-  const { loading, error, stateInfo } = addStateRedu;
+  const { error, stateInfo } = addStateRedu;
 
   const listStateRedu = useSelector((state) => state.listStateRedu);
-  const { states } = listStateRedu;
+  const { loading, states } = listStateRedu;
+  console.log(loading);
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
   //--------------> Delete Popup code Start <----------------------
-  const [country, setState] = useState(stateInfo);
+  const [state, setState] = useState(stateInfo);
 
   const [dialog, setDialog] = useState({
     dialogMessage: "",
@@ -61,7 +63,7 @@ const AddState = () => {
 
   const areUSureDelete = (choose) => {
     if (choose) {
-      setState(states.filter((p) => p.id !== idStateRef.current));
+      setState(state.filter((p) => p.id !== idStateRef.current));
       handleDialog("", false);
     } else {
       handleDialog("", false);
@@ -87,7 +89,7 @@ const AddState = () => {
     if (userInfo) {
       dispatch(ListStateAction());
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, stateInfo]);
 
   const SubmitFormHandler = (e) => {
     e.preventDefault();
@@ -168,37 +170,43 @@ const AddState = () => {
                 </div>
               </div>
             </div>
-            <table className={tbl.table}>
-              <caption>State Details</caption>
-              <thead>
-                <tr>
-                  <th>S.N</th>
-                  <th>State Name</th>
-                  <th>State Desctiption</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {states?.map((s, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{s.state_name}</td>
-                    <td>{s.state_desc}</td>
-                    <td>
-                      <button className={tbl.tbl_button_edit}>Update</button>
-
-                      <button
-                        className={tbl.tbl_button}
-                        onClick={() => handleDelete(s.id)}
-                      >
-                        delete
-                      </button>
-                    </td>
+            {loading === true ? (
+              <div className={classes.loadingDiv}>
+                <Loading />
+              </div>
+            ) : (
+              <table className={tbl.table}>
+                <caption>State Details</caption>
+                <thead>
+                  <tr>
+                    <th>S.N</th>
+                    <th>State Name</th>
+                    <th>State Desctiption</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {states?.map((s, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{s.state_name}</td>
+                      <td>{s.state_desc}</td>
+                      <td>
+                        <button className={tbl.tbl_button_edit}>Update</button>
+
+                        <button
+                          className={tbl.tbl_button}
+                          onClick={() => handleDelete(s.id)}
+                        >
+                          delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>

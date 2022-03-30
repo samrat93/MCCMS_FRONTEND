@@ -1,0 +1,15 @@
+.loadingDiv {
+  /* align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 30%; */
+  position: relative;
+  width: 60%;
+  margin: 0 auto;
+  height: auto;
+  max-height: 70vh;
+  margin-top: calc(100vh - 60vh - 55px);
+  margin-left: calc(80vh);
+  border-radius: 7px;
+  padding: 20px;
+}

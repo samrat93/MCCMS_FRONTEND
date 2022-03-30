@@ -5,15 +5,15 @@ import msg from "../../../css/msg/msg.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import ValidateCountry from "../../../components/admin/countryValidator";
 import { UpdateCountryAction } from "../../../redux/actions/adminActions/CountryActions";
+import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 const CountryUpdateContent = ({ countryData }) => {
-  console.log(countryData);
-
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  // console.log(countryData);
+  const navigate = useNavigate();
 
   const UpdateCountryR = useSelector((state) => state.UpdateCountryR);
-  const { cdata, error } = UpdateCountryR;
+  const { error } = UpdateCountryR;
 
   const dispatch = useDispatch();
 
@@ -46,6 +46,8 @@ const CountryUpdateContent = ({ countryData }) => {
     } else {
       const cid = countryData.id;
       dispatch(UpdateCountryAction({ values, cid: cid }));
+      swal("Country Updated Successfully", " ", "success");
+      // navigate("/admin/add-country");
     }
   };
 
@@ -69,11 +71,6 @@ const CountryUpdateContent = ({ countryData }) => {
                   {message.country_name && (
                     <p className={msg.error}>{message.country_name}</p>
                   )}
-                  {/* {error && error.country_exist && (
-                    <p className={msg.error}>
-                      {"Country with this country name already exists."}
-                    </p>
-                  )} */}
                 </div>
               </div>
               <div className={formclasses["input-textarea"]}>
@@ -86,14 +83,18 @@ const CountryUpdateContent = ({ countryData }) => {
                   value={values.country_desc}
                   onChange={handleChange}
                 />
+                {message.country_desc && (
+                  <p className={msg.error}>{message.country_desc}</p>
+                )}
               </div>
 
               <div className={formclasses.button}>
                 <input type="submit" value="Update Country" />
               </div>
-              {/* {countryInfo && (
-                  <p className={msg.success}>{"Country Add Successfully"}</p>
-                )} */}
+              {/* {cdata && (
+                <p className={msg.success}>{"Country Updated Successfully"}</p>
+              )} */}
+              {error && <p className={msg.error}>{error}</p>}
             </form>
           </div>
         </div>

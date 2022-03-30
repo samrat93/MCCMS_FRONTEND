@@ -115,12 +115,15 @@ export const UpdateCountryAction = (values) => async (dispatch, getState) => {
     dispatch({
       type: AdminActionType.COUNTRY_UPDATE_REQUEST,
     });
+    const country_name = values.values.country_name;
+    const country_desc = values.values.country_desc;
 
     const {
       userSignin: { userInfo },
     } = getState();
 
-    console.log("country-id in update: ", values.country_name);
+    // console.log("country-update-value in update: ", values);
+    // console.log("country-name", values.values.country_name);
 
     const config = {
       headers: {
@@ -131,7 +134,7 @@ export const UpdateCountryAction = (values) => async (dispatch, getState) => {
     };
     const { data } = await axios.patch(
       `http://127.0.0.1:8000/api/country/${values.cid}/`,
-      values,
+      { country_name, country_desc },
       config
     );
     dispatch({

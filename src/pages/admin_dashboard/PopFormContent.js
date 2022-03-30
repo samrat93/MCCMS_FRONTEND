@@ -21,10 +21,6 @@ const UserVerifyFormContent = ({ userData }) => {
   const { loading, error, success } = userApproval;
 
   useEffect(() => {
-    if (success) {
-      navigate("/admin/userlist");
-      // swal("User Verified", " ", "success");
-    }
     if (userInfo) {
       dispatch(readalluser());
     } else {
@@ -91,7 +87,7 @@ const UserVerifyFormContent = ({ userData }) => {
                     className={chkboxcss.toggle_input}
                     type="checkbox"
                     name="verify"
-                    value={is_active}
+                    checked={is_active}
                     onChange={(e) => setIs_Active(e.target.checked)}
                   />
                   <span className={chkboxcss.toggle_label}>

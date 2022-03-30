@@ -14,15 +14,16 @@ import validator from "../../components/admin/countryValidator";
 import { useNavigate } from "react-router-dom";
 import CountryUpdateContent from "./UpdatePages/CountryUpdateContent";
 import UpdateCountryForm from "./UpdatePages/UpdateCountryForm";
+import Loading from "../../components/layout/LoadingScreen";
 
 const AddCountry = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const addCountry = useSelector((state) => state.addCountry);
-  const { loading, error, countryInfo } = addCountry;
+  const { error, countryInfo } = addCountry;
 
   const listCountry = useSelector((state) => state.listCountry);
-  const { countries } = listCountry;
+  const { loading, countries } = listCountry;
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -193,44 +194,50 @@ const AddCountry = () => {
               </div>
             </div>
 
-            <table className={tbl.table}>
-              <caption>Country Details</caption>
-              <thead>
-                <tr>
-                  <th>S.N</th>
-                  <th>Country Name</th>
-                  <th>Country Desctiption</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {countries?.map((country, index) => (
-                  <tr key={country.id}>
-                    <td>{index + 1}</td>
-                    <td>{country.country_name}</td>
-                    <td>{country.country_desc}</td>
-                    <td>
-                      <button
-                        className={tbl.tbl_button_edit}
-                        value={country.id}
-                        onClick={togglePopup}
-                      >
-                        update
-                      </button>
-
-                      <button
-                        // value={country.id}
-                        className={tbl.tbl_button}
-                        onClick={() => handleDelete(country.id)}
-                      >
-                        delete
-                      </button>
-                    </td>
+            {loading ? (
+              <div className={classes.loadingDiv}>
+                <Loading />
+              </div>
+            ) : (
+              <table className={tbl.table}>
+                <caption>Country Details</caption>
+                <thead>
+                  <tr>
+                    <th>S.N</th>
+                    <th>Country Name</th>
+                    <th>Country Desctiption</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {countries?.map((country, index) => (
+                    <tr key={country.id}>
+                      <td>{index + 1}</td>
+                      <td>{country.country_name}</td>
+                      <td>{country.country_desc}</td>
+                      <td>
+                        <button
+                          className={tbl.tbl_button_edit}
+                          value={country.id}
+                          onClick={togglePopup}
+                        >
+                          update
+                        </button>
+
+                        <button
+                          // value={country.id}
+                          className={tbl.tbl_button}
+                          onClick={() => handleDelete(country.id)}
+                        >
+                          delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
             {isOpen && cdata && (
               <div>
                 <UpdateCountryForm
