@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import formclasses from "../../css/account_css/UserAccount.module.css";
+import classes from "../../css/admin_css/AdminDashboard.module.css";
 import tbl from "../../css/admin_css/table.module.css";
 import msg from "../../css/msg/msg.module.css";
 import { listComplaintAction } from "../../redux/actions/userActions/complaintAction";
@@ -8,13 +9,14 @@ import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import ComplaintActionForm from "./complaint_action/ComplaintActionForm";
 import ComplaintActionFormContent from "./complaint_action/ComplaintActionFormContent";
 import { ListComplaintRemarksAction } from "../../redux/actions/adminActions/ManageComplaintAction";
+import Loading from "../../components/layout/LoadingScreen";
 
 const PendingComplaints = () => {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
-  const { compList } = listComplaintRedu;
+  const { loading, compList } = listComplaintRedu;
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
   const ListComplaintRemarksR = useSelector(
@@ -64,20 +66,25 @@ const PendingComplaints = () => {
       <div className={formclasses.title}>Pending Complaint</div>
       <hr className={formclasses.hrTitle} />
       <div className={tbl.tbl_scroll}>
-        <table className={tbl.table}>
-          {/* <caption>Total Registered Users</caption> */}
-          <thead>
-            <tr>
-              <th>Complaint Number</th>
-              <th>Complaint By</th>
-              <th>Complaint Subject</th>
-              <th>Reg Date</th>
-              <th>Complaint Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        {loading === true ? (
+          <div className={classes.loadingDiv}>
+            <Loading />
+          </div>
+        ) : (
+          <table className={tbl.table}>
+            {/* <caption>Total Registered Users</caption> */}
+            <thead>
+              <tr>
+                <th>Complaint Number</th>
+                <th>Complaint By</th>
+                <th>Complaint Subject</th>
+                <th>Reg Date</th>
+                <th>Complaint Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
 
-          {/* <tbody>
+            {/* <tbody>
             <tr>
               <td colSpan={6} className={msg.error}>
                 Sorry 😢 Something Went Wrong !
@@ -85,29 +92,30 @@ const PendingComplaints = () => {
             </tr>
           </tbody> */}
 
-          <tbody>
-            {pendingComplaint?.map((p) => (
-              <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>{p.user_id}</td>
-                <td>{p.complaint_subject}</td>
-                <td>{p.complaint_date}</td>
-                <td>
-                  <button className={tbl.tbl_button_pending}>Pending</button>
-                </td>
-                <td>
-                  <button
-                    value={p.id}
-                    onClick={togglePopup}
-                    className={tbl.tbl_button}
-                  >
-                    View Details
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            <tbody>
+              {pendingComplaint?.map((p) => (
+                <tr key={p.id}>
+                  <td>{p.id}</td>
+                  <td>{p.user_id}</td>
+                  <td>{p.complaint_subject}</td>
+                  <td>{p.complaint_date}</td>
+                  <td>
+                    <button className={tbl.tbl_button_pending}>Pending</button>
+                  </td>
+                  <td>
+                    <button
+                      value={p.id}
+                      onClick={togglePopup}
+                      className={tbl.tbl_button}
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
         {isOpen && compData && (
           <div>
             <ComplaintActionForm

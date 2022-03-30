@@ -1,4 +1,4 @@
-.loadingDiv {
+.loadingdiv {
   /* align-items: center;
   display: flex;
   justify-content: center;
@@ -12,4 +12,16 @@
   margin-left: calc(80vh);
   border-radius: 7px;
   padding: 20px;
+}
+@media (max-width: 550px) {
+  .loadingdiv {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
+@media (max-width: 550px) {
+  .loadingdiv {
+    width: 100%;
+    margin-bottom: 15px;
+  }
 }

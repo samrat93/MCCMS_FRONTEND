@@ -3,16 +3,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import { Outlet, useLocation, useNavigate, NavLink } from "react-router-dom";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/actions/userActions/userAuthAction";
 import adminImg from "../../../Static/images/admin.jfif";
-import dropcss from "../../../css/admin_css/dropdownNav.module.css";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import HistoryIcon from "@mui/icons-material/History";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import SecurityIcon from "@mui/icons-material/Security";
 
 const PublicDashboard = () => {
   const location = useLocation();
@@ -112,10 +110,10 @@ const PublicDashboard = () => {
               to="/public/ChangePasswordPublic"
               className={classes.links_name}
             >
-              <SettingsOutlinedIcon
+              <SecurityIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
-              <span className={classes.links_name}>Setting</span>
+              <span className={classes.links_name}>Change Password</span>
             </NavLink>
           </li>
           {adminAuth()}

@@ -183,6 +183,19 @@ export const DeleteComplainSubCategoryReducer = (state = {}, action) => {
   }
 };
 
+export const UpdateSubCategoryReducer = (state = { subcat: [] }, action) => {
+  switch (action.type) {
+    case AdminActionType.COMPLAINT_SUBCAT_UPDATE_REQUEST:
+      return { loading: true };
+    case AdminActionType.COMPLAINT_SUBCAT_UPDATE_SUCCESS:
+      return { loading: false, subcat: action.payload };
+    case AdminActionType.COMPLAINT_SUBCAT_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const addComplainCategoryReducer = (state = {}, action) => {
   switch (action.type) {
     case AdminActionType.ADD_COMPLAINT_CATEGORY_REQUEST:
@@ -217,6 +230,19 @@ export const DeleteComplainCategoryReducer = (state = {}, action) => {
     case AdminActionType.COMPLAINT_CATEGORY_DELETE_SUCCESS:
       return { loading: false, cCat: action.payload };
     case AdminActionType.COMPLAINT_CATEGORY_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const UpdateCategoryReducer = (state = { cat: [] }, action) => {
+  switch (action.type) {
+    case AdminActionType.COMPLAINT_CATEGORY_UPDATE_REQUEST:
+      return { loading: true };
+    case AdminActionType.COMPLAINT_CATEGORY_UPDATE_SUCCESS:
+      return { loading: false, cat: action.payload };
+    case AdminActionType.COMPLAINT_CATEGORY_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

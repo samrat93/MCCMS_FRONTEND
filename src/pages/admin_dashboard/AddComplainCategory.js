@@ -10,17 +10,20 @@ import {
 } from "../../redux/actions/adminActions/ComplaintCategoryAction";
 import DeleteCategoryDialog from "../../components/admin/delete_popup/deleteCategory";
 import ValidateComplaintCategory from "../../components/admin/complaintCategoryValidator";
+import UpdateCategoryContent from "./UpdatePages/UpdateCategoryContent";
+import UpdateCategoryForm from "./UpdatePages/UpdateCategoryForm";
+import Loading from "../../components/layout/LoadingScreen";
 
 const AddComplaintCategory = () => {
   const dispatch = useDispatch();
   const addComplaintCategoryR = useSelector(
     (state) => state.addComplaintCategoryR
   );
-  const { loading, error, success } = addComplaintCategoryR;
+  const { error, success } = addComplaintCategoryR;
   const listComplaintCategoryR = useSelector(
     (state) => state.listComplaintCategoryR
   );
-  const { catList } = listComplaintCategoryR;
+  const { loading, catList } = listComplaintCategoryR;
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -88,6 +91,27 @@ const AddComplaintCategory = () => {
       dispatch(ListComplaintCategoryAction());
     }
   }, [dispatch, userInfo]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [cid, setCid] = useState(0);
+  const [cdata, setCData] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setCData((prev) => {
+        return catList.find((cobj) => {
+          return cobj.id === cid;
+        });
+      });
+    } else {
+      setCData(null);
+    }
+  }, [cid]);
+
+  const togglePopup = (e) => {
+    setCid(+e.target.value);
+    setIsOpen(!isOpen);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -167,37 +191,57 @@ const AddComplaintCategory = () => {
                 </div>
               </div>
             </div>
-            <table className={tbl.table}>
-              <caption>Complaint Category Details</caption>
-              <thead>
-                <tr>
-                  <th>S.N</th>
-                  <th>Complaint Category Name</th>
-                  <th>omplaint Category Desctiption</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {catList?.map((s, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{s.category_name}</td>
-                    <td>{s.category_desc}</td>
-                    <td>
-                      <button className={tbl.tbl_button_edit}>update</button>
-
-                      <button
-                        className={tbl.tbl_button}
-                        onClick={() => handleDelete(s.id)}
-                      >
-                        delete
-                      </button>
-                    </td>
+            {loading === true ? (
+              <div className={classes.loadingDiv}>
+                <Loading />
+              </div>
+            ) : (
+              <table className={tbl.table}>
+                <caption>Complaint Category Details</caption>
+                <thead>
+                  <tr>
+                    <th>S.N</th>
+                    <th>Complaint Category Name</th>
+                    <th>omplaint Category Desctiption</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {catList?.map((s, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{s.category_name}</td>
+                      <td>{s.category_desc}</td>
+                      <td>
+                        <button
+                          className={tbl.tbl_button_edit}
+                          value={s.id}
+                          onClick={togglePopup}
+                        >
+                          update
+                        </button>
+
+                        <button
+                          className={tbl.tbl_button}
+                          onClick={() => handleDelete(s.id)}
+                        >
+                          delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {isOpen && cdata && (
+              <div>
+                <UpdateCategoryForm
+                  content={<UpdateCategoryContent categoryData={cdata} />}
+                  handleClose={togglePopup}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -113,3 +113,41 @@ export const DeleteComplaintCategoryAction =
       });
     }
   };
+
+export const UpdateCategoryAction = (values) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: AdminActionType.COMPLAINT_CATEGORY_UPDATE_REQUEST,
+    });
+    const category_name = values.values.category_name;
+    const category_desc = values.values.category_desc;
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.patch(
+      `http://127.0.0.1:8000/api/complaint-category/${values.cid}/`,
+      { category_name, category_desc },
+      config
+    );
+    dispatch({
+      type: AdminActionType.COMPLAINT_CATEGORY_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    // console.log(error.response.data);
+    dispatch({
+      type: AdminActionType.COMPLAINT_CATEGORY_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

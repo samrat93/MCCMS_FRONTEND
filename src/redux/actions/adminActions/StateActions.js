@@ -111,3 +111,43 @@ export const DeleteStateAction = (sid) => async (dispatch, getState) => {
     });
   }
 };
+
+export const UpdateStateAction = (values) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: AdminActionType.STATE_UPDATE_REQUEST,
+    });
+    const state_name = values.values.state_name;
+    const state_desc = values.values.state_desc;
+    console.log(state_name, state_desc);
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Token ${userInfo.token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.patch(
+      `http://127.0.0.1:8000/api/state/${values.sid}/`,
+      { state_name, state_desc },
+      config
+    );
+    dispatch({
+      type: AdminActionType.STATE_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error_in_update_state : ", error.response.data);
+    dispatch({
+      type: AdminActionType.STATE_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

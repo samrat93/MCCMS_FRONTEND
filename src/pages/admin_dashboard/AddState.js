@@ -11,6 +11,8 @@ import {
 } from "../../redux/actions/adminActions/StateActions";
 import DeleteStateDialog from "../../components/admin/delete_popup/deleteState";
 import Loading from "../../components/layout/LoadingScreen";
+import UpdateStateContent from "./UpdatePages/StateUpdateContent";
+import UpdateStateForm from "./UpdatePages/UpdateStateForm";
 
 const AddState = () => {
   const dispatch = useDispatch();
@@ -20,7 +22,7 @@ const AddState = () => {
 
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { loading, states } = listStateRedu;
-  console.log(loading);
+  // console.log(loading);
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -104,6 +106,26 @@ const AddState = () => {
         state_name: "",
       });
     }
+  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [sid, setSid] = useState(0);
+  const [stateData, setStateData] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setStateData((prev) => {
+        return states.find((sobj) => {
+          return sobj.id === sid;
+        });
+      });
+    } else {
+      setStateData(null);
+    }
+  }, [sid]);
+
+  const togglePopup = (e) => {
+    setSid(+e.target.value);
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -193,7 +215,13 @@ const AddState = () => {
                       <td>{s.state_name}</td>
                       <td>{s.state_desc}</td>
                       <td>
-                        <button className={tbl.tbl_button_edit}>Update</button>
+                        <button
+                          className={tbl.tbl_button_edit}
+                          value={s.id}
+                          onClick={togglePopup}
+                        >
+                          Update
+                        </button>
 
                         <button
                           className={tbl.tbl_button}
@@ -206,6 +234,15 @@ const AddState = () => {
                   ))}
                 </tbody>
               </table>
+            )}
+
+            {isOpen && stateData && (
+              <div>
+                <UpdateStateForm
+                  content={<UpdateStateContent stateData={stateData} />}
+                  handleClose={togglePopup}
+                />
+              </div>
             )}
           </div>
         </div>

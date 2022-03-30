@@ -4,7 +4,7 @@ import classes from "./Loading.module.css";
 
 export default function Loading() {
   return (
-    <div className={classes.loadingDiv}>
+    <div className={classes.loadingdiv}>
       {/* <ReactLoading type="balls" color="#0000FF" 
           height={100} width={50} />
         <ReactLoading type="bars" color="#0000FF

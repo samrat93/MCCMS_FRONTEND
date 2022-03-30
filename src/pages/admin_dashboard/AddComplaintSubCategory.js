@@ -9,17 +9,20 @@ import {
   ListComplaintSubCategoryAction,
 } from "../../redux/actions/adminActions/ComplaintSubCategoryAction";
 import { ListComplaintCategoryAction } from "../../redux/actions/adminActions/ComplaintCategoryAction";
+import Loading from "../../components/layout/LoadingScreen";
 
 import DeleteSubCategoryDialog from "../../components/admin/delete_popup/deleteSubCategory";
 import ValidateComplaintSubCategory from "../../components/admin/complaintSubCatValidator";
+import UpdateSubCategoryContent from "./UpdatePages/SubCategoryContent";
+import UpdateSubCategoryForm from "./UpdatePages/UpdateSubCategoryForm";
 
 const AddComplaintSubCategory = () => {
   const dispatch = useDispatch();
   const addComplaintSubCR = useSelector((state) => state.addComplaintSubCR);
-  const { loading, error, success } = addComplaintSubCR;
+  const { error, success } = addComplaintSubCR;
 
   const listComplaintSubCR = useSelector((state) => state.listComplaintSubCR);
-  const { SubcatList } = listComplaintSubCR;
+  const { loading, SubcatList } = listComplaintSubCR;
 
   const listComplaintCategoryR = useSelector(
     (state) => state.listComplaintCategoryR
@@ -80,6 +83,26 @@ const AddComplaintSubCategory = () => {
     }
   };
   //--------------> Delete Popup code End <----------------------
+  const [isOpen, setIsOpen] = useState(false);
+  const [subcatid, setSubcatId] = useState(0);
+  const [subCatData, setSubCatData] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSubCatData((prev) => {
+        return SubcatList.find((cobj) => {
+          return cobj.id === subcatid;
+        });
+      });
+    } else {
+      setSubCatData(null);
+    }
+  }, [subcatid]);
+
+  const togglePopup = (e) => {
+    setSubcatId(+e.target.value);
+    setIsOpen(!isOpen);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -109,6 +132,14 @@ const AddComplaintSubCategory = () => {
       });
     }
   };
+  const newCatList = SubcatList?.map((obj) => {
+    return {
+      ...obj,
+      category_id: catList?.find((cat) => cat.id === obj.category_id)
+        .category_name,
+    };
+  });
+
   return (
     <div>
       <div className={classes["home-content"]}>
@@ -195,39 +226,59 @@ const AddComplaintSubCategory = () => {
                 </div>
               </div>
             </div>
-            <table className={tbl.table}>
-              <caption>Complaint Category Details</caption>
-              <thead>
-                <tr>
-                  <th>S.N</th>
-                  <th>Category Name</th>
-                  <th>Sub Category Name</th>
-                  <th>Sub Category Desctiption</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {SubcatList?.map((s) => (
-                  <tr key={s.id}>
-                    <td>{s.id}</td>
-                    <td>{s.category_id}</td>
-                    <td>{s.sub_category_name}</td>
-                    <td>{s.sub_category_desc}</td>
-                    <td>
-                      <button className={tbl.tbl_button_edit}>update</button>
-
-                      <button
-                        className={tbl.tbl_button}
-                        onClick={() => handleDelete(s.id)}
-                      >
-                        delete
-                      </button>
-                    </td>
+            {loading === true ? (
+              <div className={classes.loadingDiv}>
+                <Loading />
+              </div>
+            ) : (
+              <table className={tbl.table}>
+                <caption>Complaint Sub Category Details</caption>
+                <thead>
+                  <tr>
+                    <th>S.N</th>
+                    <th>Category Name</th>
+                    <th>Sub Category Name</th>
+                    <th>Sub Category Desctiption</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {newCatList?.map((s) => (
+                    <tr key={s.id}>
+                      <td>{s.id}</td>
+                      <td>{s.category_id}</td>
+                      <td>{s.sub_category_name}</td>
+                      <td>{s.sub_category_desc}</td>
+                      <td>
+                        <button
+                          className={tbl.tbl_button_edit}
+                          value={s.id}
+                          onClick={togglePopup}
+                        >
+                          update
+                        </button>
+
+                        <button
+                          className={tbl.tbl_button}
+                          onClick={() => handleDelete(s.id)}
+                        >
+                          delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {isOpen && subCatData && (
+              <div>
+                <UpdateSubCategoryForm
+                  content={<UpdateSubCategoryContent subCatData={subCatData} />}
+                  handleClose={togglePopup}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

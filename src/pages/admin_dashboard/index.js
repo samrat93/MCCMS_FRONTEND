@@ -15,9 +15,6 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/userActions/userAuthAction";
 import adminImg from "../../Static/images/admin.jfif";
-import dropcss from "../../css/admin_css/dropdownNav.module.css";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import RateReviewIcon from "@mui/icons-material/RateReview";
 
 const AdminDashboard = () => {
   const location = useLocation();

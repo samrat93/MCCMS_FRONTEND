@@ -23,6 +23,12 @@ const AdminDashboardPage = () => {
 
   const usersCount = users?.length;
   const complaintCount = compList?.length;
+
+  const ListFeedbackR = useSelector((state) => state.ListFeedbackR);
+  const { feedbacks } = ListFeedbackR;
+
+  const feedbackCount = feedbacks?.length;
+
   // console.log("total users", usersCount);
 
   useEffect(() => {
@@ -53,7 +59,7 @@ const AdminDashboardPage = () => {
             <PersonIcon
               sx={{
                 fontSize: "50px",
-                color: "#87CEEB",
+                color: "#5579c4",
               }}
             />
           </div>
@@ -81,7 +87,7 @@ const AdminDashboardPage = () => {
           <div className={classes.box}>
             <div className={classes["right-side"]}>
               <div className={classes["box-topic"]}>Total Feedback</div>
-              <div className={classes.number}>$12,876</div>
+              <div className={classes.number}>{feedbackCount}</div>
               <div className={classes.indicator}>
                 <FeedbackOutlinedIcon
                   sx={{

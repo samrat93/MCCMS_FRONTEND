@@ -193,8 +193,7 @@ const AddCountry = () => {
                 </div>
               </div>
             </div>
-
-            {loading ? (
+            {loading === true ? (
               <div className={classes.loadingDiv}>
                 <Loading />
               </div>
@@ -238,6 +237,7 @@ const AddCountry = () => {
                 </tbody>
               </table>
             )}
+
             {isOpen && cdata && (
               <div>
                 <UpdateCountryForm
