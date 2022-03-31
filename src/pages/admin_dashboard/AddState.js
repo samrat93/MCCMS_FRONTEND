@@ -198,7 +198,7 @@ const AddState = () => {
               </div>
             ) : (
               <table className={tbl.table}>
-                <caption>State Details</caption>
+                {/* <caption>State Details</caption> */}
                 <thead>
                   <tr>
                     <th>S.N</th>

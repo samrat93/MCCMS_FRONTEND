@@ -199,7 +199,7 @@ const AddCountry = () => {
               </div>
             ) : (
               <table className={tbl.table}>
-                <caption>Country Details</caption>
+                {/* <caption>Country Details</caption> */}
                 <thead>
                   <tr>
                     <th>S.N</th>

@@ -197,7 +197,7 @@ const AddComplaintCategory = () => {
               </div>
             ) : (
               <table className={tbl.table}>
-                <caption>Complaint Category Details</caption>
+                {/* <caption>Complaint Category Details</caption> */}
                 <thead>
                   <tr>
                     <th>S.N</th>

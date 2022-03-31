@@ -19,6 +19,8 @@ const PendingComplaints = () => {
   const { loading, compList } = listComplaintRedu;
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
+  const newUser = users?.results;
+  console.log(newUser);
   const ListComplaintRemarksR = useSelector(
     (state) => state.ListComplaintRemarksR
   );
@@ -27,8 +29,8 @@ const PendingComplaints = () => {
   let newCompList = compList?.map((compObj) => {
     return {
       ...compObj,
-      user_id: users?.find((userObj) => userObj.id === compObj.user_id)
-        .username,
+      user_id: newUser?.find((userObj) => userObj.id === compObj.user_id)
+        ?.username,
     };
   });
 

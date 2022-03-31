@@ -27,13 +27,14 @@ const UserFeedBackView = () => {
       <div className={classes["home-content"]}>
         <div className={classes["sales-boxes"]}>
           <div className={classes["recent-sales"]}>
+            <div className={classes.title}>User Feedbacks</div>
             {loading === true ? (
               <div className={classes.loadingDiv}>
                 <Loading />
               </div>
             ) : (
               <table className={tbl.table}>
-                <caption>User Feedbacks</caption>
+                {/* <caption>User Feedbacks</caption> */}
                 <thead>
                   <tr>
                     <th>S.N</th>

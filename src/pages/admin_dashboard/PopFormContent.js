@@ -8,7 +8,7 @@ import chkboxcss from "../../css/layout_css/CheckBox.module.css";
 import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import { useNavigate } from "react-router-dom";
 
-const UserVerifyFormContent = ({ userData }) => {
+const UserVerifyFormContent = ({ userData, serialNo }) => {
   // console.log(userData);
   const [is_active, setIs_Active] = useState(false);
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const UserVerifyFormContent = ({ userData }) => {
 
   useEffect(() => {
     if (userInfo) {
-      dispatch(readalluser());
+      dispatch(readalluser({ Page: serialNo }));
     } else {
       navigate("/userlogin");
     }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
 
-export const readalluser = () => async (dispatch, getState) => {
+export const readalluser = (pageNum) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.USER_LIST_REQUEST,
@@ -9,7 +9,7 @@ export const readalluser = () => async (dispatch, getState) => {
     const {
       userSignin: { userInfo },
     } = getState();
-
+    // console.log("pagenum", pageNum);
     const config = {
       headers: {
         Authorization: `Token ${userInfo.token}`,
@@ -17,7 +17,7 @@ export const readalluser = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      "http://127.0.0.1:8000/api/register/",
+      `http://127.0.0.1:8000/api/register/?page=${pageNum.Page}`,
       config
     );
     dispatch({
@@ -25,6 +25,7 @@ export const readalluser = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    // console.log(error.response.data);
     dispatch({
       type: AdminActionType.USER_LIST_FAIL,
       payload:
@@ -41,8 +42,6 @@ export const UserAprroval = (user) => async (dispatch, getState) => {
       type: AdminActionType.USER_APPROVAL_REQUEST,
     });
 
-    console.log("verify data in action : ", user.is_active);
-    console.log("user id data in action : ", user.id);
     const {
       userSignin: { userInfo },
     } = getState();

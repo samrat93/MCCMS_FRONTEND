@@ -232,7 +232,7 @@ const AddComplaintSubCategory = () => {
               </div>
             ) : (
               <table className={tbl.table}>
-                <caption>Complaint Sub Category Details</caption>
+                {/* <caption>Complaint Sub Category Details</caption> */}
                 <thead>
                   <tr>
                     <th>S.N</th>
