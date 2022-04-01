@@ -30,20 +30,17 @@ import ProcessingComplaints from "./pages/admin_dashboard/ProcessingComplaint";
 import ClosedComplaints from "./pages/admin_dashboard/ClosedComplaint";
 import PublicFeedback from "./pages/public/public_dashboard/PublicFeedBack";
 import UserFeedBackView from "./pages/admin_dashboard/FeedbackView";
-
+import Header from "./components/layout/Header";
+import Contact from "./pages/Contact";
 function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={<Navigate replace to="/homepage" />}
-          exact
-        ></Route>
-        <Route path="/homepage" element={<HomePage />}></Route>
-        <Route path="/userlogin" element={<User_login />}></Route>
-        <Route path="/usersignup" element={<SignupForm />}></Route>
-
+        <Route path="/" element={<Header />}>
+          <Route path="/userlogin" element={<User_login />} />
+          <Route path="/usersignup" element={<SignupForm />} />
+          <Route path="/Contact" element={<Contact />} />
+        </Route>
         <Route path="/admin" element={<AdminDashboard />}>
           <Route path="/admin" element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" element={<AdminDashboardPage />} />

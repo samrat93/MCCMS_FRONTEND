@@ -133,7 +133,7 @@ form .button input:hover {
   /* transform: scale(0.99); */
   background: linear-gradient(-135deg, #71b7e6, #9b59b6);
 }
-@media (max-width: 584px) {
+@media (max-width: 550px) {
   .container {
     max-width: 100%;
   }
@@ -152,7 +152,7 @@ form .button input:hover {
     width: 5px;
   }
 }
-@media (max-width: 459px) {
+@media (max-width: 550px) {
   .container .content .category {
     flex-direction: column;
   }

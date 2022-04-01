@@ -93,6 +93,8 @@
   transition: all 0.5s ease;
   /* overflow: hidden; */
   text-overflow: ellipsis;
+  /* white-space: normal;
+word-wrap: break-word; */
 }
 .sidebar.active ~ .home-section nav {
   left: 60px;
@@ -183,7 +185,7 @@ nav .profile-details i {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(100% / 4 - 15px);
+  width: calc(100% / 3 - 15px);
   background: #fff;
   padding: 15px 14px;
   border-radius: 12px;
@@ -275,7 +277,7 @@ nav .profile-details i {
   height: 100%;
   background: #fff;
   padding: 20px 30px;
-  margin: 0 20px;
+  margin: 5px 20px;
   border-radius: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }

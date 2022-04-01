@@ -3,18 +3,19 @@ import PersonIcon from "@mui/icons-material/Person";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import UserList from "./UserList";
 import ChartAndGraph from "./ChartsAndGraphs";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { listComplaintAction } from "../../redux/actions/userActions/complaintAction";
 import { listFeedbackAction } from "../../redux/actions/userActions/FeedbackAction";
+import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
 import VerifiedIcon from "@mui/icons-material/Verified";
 
 const AdminDashboardPage = () => {
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
+  const Page = 1;
   const userObj = users?.results;
   const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
   const { compList } = listComplaintRedu;
@@ -23,6 +24,7 @@ const AdminDashboardPage = () => {
   const { userInfo } = userSignin;
 
   const usersCount = users?.count;
+  console.log("user-count", users);
   const complaintCount = compList?.length;
 
   const ListFeedbackR = useSelector((state) => state.ListFeedbackR);
@@ -39,6 +41,7 @@ const AdminDashboardPage = () => {
     if (userInfo) {
       dispatch(listComplaintAction());
       dispatch(listFeedbackAction());
+      dispatch(readalluser({ Page: Page }));
     }
   }, [dispatch, userInfo]);
 
@@ -109,7 +112,7 @@ const AdminDashboardPage = () => {
               }}
             />
           </div>
-          <div className={classes.box}>
+          {/* <div className={classes.box}>
             <div className={classes["right-side"]}>
               <div className={classes["box-topic"]}>Total Active User</div>
               <div className={classes.number}>{activeUserCount}</div>
@@ -129,7 +132,7 @@ const AdminDashboardPage = () => {
                 color: "#0096FF",
               }}
             />
-          </div>
+          </div> */}
         </div>
 
         <ChartAndGraph />

@@ -41,9 +41,10 @@ const User_login = () => {
   }, [userInfo, navigate]);
 
   return (
-    <Layout>
+    // <Layout>
+    <>
       <div className={classes.signupBody}>
-        <div className={classes.container}>
+        <div className={classes.containerSign}>
           <div className={classes.title}>Login</div>
           <div className={classes.content}>
             <form onSubmit={submitForm}>
@@ -98,7 +99,8 @@ const User_login = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
+    // </Layout>
   );
 };
 

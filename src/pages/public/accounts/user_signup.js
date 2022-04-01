@@ -53,7 +53,7 @@ const User_Signup = () => {
   return (
     <div>
       <div className={classes.signupBody}>
-        <div className={classes.container}>
+        <div className={classes.containerSign}>
           <div className={classes.title}>Registration</div>
           <div className={classes.content}>
             <form onSubmit={submitForm}>
