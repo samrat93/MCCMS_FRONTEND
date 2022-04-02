@@ -151,12 +151,12 @@ const AdminDashboard = () => {
       <section className={classes["home-section"]}>
         <nav>
           <span className={classes.dashboard}>Municipal Corporation CMS</span>
-          <div className={classes["search-box"]}>
+          {/* <div className={classes["search-box"]}>
             <input type="text" placeholder="Search..." />
             <i className={classes["bx-search"]}>
               <SearchIcon />
             </i>
-          </div>
+          </div> */}
           <div className={classes["profile-details"]}>
             <img src={adminImg} alt="" />
             <span className={classes.admin_name}>

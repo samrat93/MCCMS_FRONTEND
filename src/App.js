@@ -32,14 +32,18 @@ import PublicFeedback from "./pages/public/public_dashboard/PublicFeedBack";
 import UserFeedBackView from "./pages/admin_dashboard/FeedbackView";
 import Header from "./components/layout/Header";
 import Contact from "./pages/Contact";
+import LoginForm from "./pages/Auth/SignIn";
+
+// import NavigationMenu from "./components/layout/NavMenu";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Header />}>
-          <Route path="/userlogin" element={<User_login />} />
+          <Route path="/" element={<Navigate replace to="Home" />} />
+          <Route path="/Home" element={<HomePage />} />
+          <Route path="/userlogin" element={<LoginForm />} />
           <Route path="/usersignup" element={<SignupForm />} />
-          <Route path="/Contact" element={<Contact />} />
         </Route>
         <Route path="/admin" element={<AdminDashboard />}>
           <Route path="/admin" element={<Navigate replace to="dashboard" />} />

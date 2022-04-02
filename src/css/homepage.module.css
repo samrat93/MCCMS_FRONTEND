@@ -1,31 +1,35 @@
 .wrapper {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  padding: 50px;
+  width: 100%;
   background-size: cover;
-  height: 100%;
-
 }
 
 .wrapper .center {
   position: absolute;
   left: 50%;
-  top: 55%;
+  top: 40%;
   transform: translate(-50%, -50%);
   font-family: sans-serif;
-  user-select: none;
+  
 }
 .center h1 {
   color: white;
-  font-size: 70px;
-  width: 900px;
+  font-size: 6rem;
   font-weight: bold;
   text-align: center;
+  word-wrap: break-word;
 }
 .center h2 {
   color: white;
-  font-size: 70px;
+  font-size: 5rem;
   font-weight: bold;
   margin-top: 10px;
-  width: 885px;
   text-align: center;
+  word-wrap: break-word;
 }
 .center .buttons {
   margin: 35px 280px;

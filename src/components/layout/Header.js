@@ -18,18 +18,36 @@ import {
   NavLink,
   Link,
 } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
 import Footer from "./Footer";
 import Contact from "../../pages/Contact";
+import HomePage from "../../pages/homepage";
 
 const Header = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(0);
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+
+  const toolbarStyle = {
+    minHeight: "80px",
+  };
+  const styles = (theme) => ({
+    label: {
+      fontSize: "1.5rem",
+    },
+  });
+  const TabBigger = withStyles(styles)((props) => {
+    return <Tab className={props.classes.label} {...props} />;
+  });
+
+  const classes = useState();
   return (
     <React.Fragment>
       <AppBar sx={{ background: "#063970" }} position="static">
-        <Toolbar>
-          <AccountBalanceIcon sx={{ transform: "scale(2)" }} />
+        <Toolbar style={toolbarStyle}>
+          <Link to="/Home">
+            <AccountBalanceIcon sx={{ transform: "scale(3)" }} />
+          </Link>
 
           {isMatch ? (
             <>
@@ -40,22 +58,21 @@ const Header = () => {
             </>
           ) : (
             <React.Fragment>
-              <Typography sx={{ transform: "scale(1.5)", paddingLeft: "8%" }}>
+              <Typography sx={{ transform: "scale(1.6)", paddingLeft: "10%" }}>
                 Municipal Corporation's Complaint Management System
               </Typography>
               <Tabs
-                sx={{ marginLeft: "auto" }}
+                sx={{
+                  marginLeft: "auto",
+                  marginRight: "5%",
+                }}
                 indicatorColor="secondary"
                 textColor="inherit"
                 value={value}
                 onChange={(e, value) => setValue(value)}
               >
-                {/* <NavLink to={"/userlogin"}> */}
-                <Tab label="Products" />
-                {/* </NavLink> */}
-                <Tab label="Services" />
-                <Tab label="About Us" />
-                <Tab label="Contact" />
+                <TabBigger label="Help" />
+                <TabBigger label="Contact" />
               </Tabs>
               <Link to="/userlogin">
                 <Button sx={{ marginLeft: "auto" }} variant="contained">
@@ -71,7 +88,6 @@ const Header = () => {
           )}
         </Toolbar>
       </AppBar>
-      {value === 2 && <Contact />}
       <Outlet />
       <Footer />
     </React.Fragment>

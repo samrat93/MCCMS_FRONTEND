@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  font-family: sans-serif;
+  font-size: 16px;
+}
 .signupBody {
   height: auto;
   display: flex;
@@ -88,6 +96,10 @@ form .user-details .input-box-login {
   width: 100%;
 }
 
+form .user-details .invalid {
+  margin-bottom: 15px;
+  width: 100%;
+}
 .user-details .input-box-login input {
   height: 45px;
   width: 100%;
@@ -107,6 +119,26 @@ form .user-details .input-box-login {
 .user-details .input-box input:valid {
   border-color: #9b59b6;
 }
+
+.user-details .invalid input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  /* display: inline; */
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px;
+
+  border: 1px solid #fd3604;
+  border-bottom-width: 2px;
+  background-color: #fddddd;
+  transition: all 0.3s ease;
+}
+.user-details .invalid input:focus{
+  border-color: #f5a04b;
+  background-color: #f7eadd;
+}
+
 form .gender-details .gender-title {
   font-size: 20px;
   font-weight: 500;
@@ -157,6 +189,15 @@ form .button input {
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
+form .button input:disabled,
+form .button:disabled:hover,
+form .button:disabled:active{
+  background-color: #ccc;
+  color: #fff;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
 form .button input:hover {
   /* transform: scale(0.99); */
   background: linear-gradient(-135deg, #71b7e6, #9b59b6);

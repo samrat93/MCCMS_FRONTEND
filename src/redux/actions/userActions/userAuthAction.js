@@ -11,7 +11,7 @@ export const userSignup = (values) => async (dispatch) => {
         "content-type": "application/json",
       },
     };
-    console.log("Data save successfully");
+
     const { data } = await axios.post(
       "http://127.0.0.1:8000/api/register/",
       values,
@@ -23,7 +23,6 @@ export const userSignup = (values) => async (dispatch) => {
     });
     // localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
-    console.log(error.response.data);
     const username = error.response.data.username;
     const password = error.response.data.password;
     const email = error.response.data.email;
@@ -39,6 +38,10 @@ export const userLogin = (values) => async (dispatch) => {
     dispatch({
       type: UserActionType.USER_LOGIN_REQUEST,
     });
+
+    const username = values.usernameValue;
+    const password = values.passwordValue;
+    console.log("submit", username, password);
     const config = {
       headers: {
         "content-type": "application/json",
@@ -46,7 +49,7 @@ export const userLogin = (values) => async (dispatch) => {
     };
     const { data } = await axios.post(
       "http://127.0.0.1:8000/api/login/",
-      values,
+      { username, password },
       config
     );
     dispatch({
