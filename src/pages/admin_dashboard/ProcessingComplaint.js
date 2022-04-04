@@ -17,12 +17,13 @@ const ProcessingComplaints = () => {
   const { loading, compList } = listComplaintRedu;
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
+  const newUser = userList?.results;
 
   let newCompList = compList?.map((compObj) => {
     return {
       ...compObj,
-      user_id: users?.find((userObj) => userObj.id === compObj.user_id)
-        .username,
+      user_id: newUser?.find((userObj) => userObj.id === compObj.user_id)
+        ?.username,
     };
   });
 
@@ -36,7 +37,7 @@ const ProcessingComplaints = () => {
   useEffect(() => {
     if (isOpen) {
       setCompData((prev) => {
-        return newCompList.find((compObj) => {
+        return newCompList?.find((compObj) => {
           return compObj.id === compId;
         });
       });

@@ -66,6 +66,7 @@ export const ListComplaintCategoryAction = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    // console.log("error in cat-action:", error.response.data);
     dispatch({
       type: AdminActionType.COMPLAINT_CATEGORY_LIST_FAIL,
       payload:

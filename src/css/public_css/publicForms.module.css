@@ -53,6 +53,27 @@ form .user-details .input-box {
   border-bottom-width: 2px;
   transition: all 0.3s ease;
 }
+form .user-details .invalid {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.user-details .invalid input{
+  height: 45px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 15px;
+  border: 1px solid #fd3604;
+  border-bottom-width: 2px;
+  background-color: #fddddd;
+  transition: all 0.3s ease;
+}
+.user-details .invalid input:focus{
+  border-color: #f5a04b;
+  background-color: #f7eadd;
+}
 
 /* This is for login page  */
 form .user-details .input-box-login {
@@ -168,6 +189,10 @@ form .user-details .input-textarea {
   margin-bottom: 15px;
   width: 100%;
 }
+form .user-details .input-invalid {
+  margin-bottom: 15px;
+  width: 100%;
+}
 
 .textarea {
   margin-top: 10px;
@@ -191,7 +216,34 @@ form .user-details .input-textarea {
   padding: 5px 8px;
   transition: background-color 0.2s ease 0s;
 }
+.invalid_text {
+  margin-top: 10px;
+  width: 100%;
+  height: 150px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background-color: #fddddd;
+  border: 1px solid #fd3604;
+  border-image: none;
+  border-radius: 6px 6px 6px 6px;
+  border-style: none solid solid none;
+  border-width: 1.2px 1.2px 2px 1.2px;
+  box-shadow: 0 1px 2px rgba(177, 12, 253, 0.12) inset;
+  color: black;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+  padding: 5px 8px;
+  transition: background-color 0.2s ease 0s;
+}
 
+.textarea_text:focus {
+  background: none repeat scroll 0 0 #f7eadd;
+  border-color: #f5a04b;
+  outline-width: 0;
+}
 .textarea:focus {
   background: none repeat scroll 0 0 #ffffff;
   outline-width: 0;

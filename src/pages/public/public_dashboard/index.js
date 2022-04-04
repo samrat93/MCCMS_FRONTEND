@@ -13,9 +13,6 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SecurityIcon from "@mui/icons-material/Security";
 
 const PublicDashboard = () => {
-  const location = useLocation();
-  const navigation = useNavigate();
-
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
@@ -55,7 +52,7 @@ const PublicDashboard = () => {
         </div>
         <ul className={classes["nav-links"]}>
           <li>
-            <NavLink to="/public/index">
+            <NavLink to="/public/dashboard">
               <DashboardOutlinedIcon
                 sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
               />
@@ -89,14 +86,6 @@ const PublicDashboard = () => {
               <span className={classes.links_name}>Profile</span>
             </NavLink>
           </li>
-          {/* <li>
-            <NavLink to="/admin/complaint-list" className={classes.links_name}>
-              <AssuredWorkloadOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
-              <span className={classes.links_name}>View Complaint</span>
-            </NavLink>
-          </li> */}
           <li>
             <NavLink to="/public/publicFeedback" className={classes.links_name}>
               <FeedbackOutlinedIcon

@@ -1,6 +1,4 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
-import PersonIcon from "@mui/icons-material/Person";
-import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";

@@ -33,6 +33,8 @@ import UserFeedBackView from "./pages/admin_dashboard/FeedbackView";
 import Header from "./components/layout/Header";
 import Contact from "./pages/Contact";
 import LoginForm from "./pages/Auth/SignIn";
+import UserRegistration from "./pages/Auth/UserRegistration";
+import PublicDashboardPage from "./pages/public/public_dashboard/Dashboard";
 
 // import NavigationMenu from "./components/layout/NavMenu";
 function App() {
@@ -43,7 +45,7 @@ function App() {
           <Route path="/" element={<Navigate replace to="Home" />} />
           <Route path="/Home" element={<HomePage />} />
           <Route path="/userlogin" element={<LoginForm />} />
-          <Route path="/usersignup" element={<SignupForm />} />
+          <Route path="/usersignup" element={<UserRegistration />} />
         </Route>
         <Route path="/admin" element={<AdminDashboard />}>
           <Route path="/admin" element={<Navigate replace to="dashboard" />} />
@@ -78,6 +80,7 @@ function App() {
         </Route>
 
         <Route path="/public" element={<PublicDashboard />}>
+          <Route path="dashboard" exact element={<PublicDashboardPage />} />
           <Route path="LodgeComplaint" exact element={<LodgeComplaint />} />
           <Route path="ComplaintHistory" exact element={<ComplaintHistory />} />
           <Route path="PublicProfile" exact element={<PublicProfile />} />

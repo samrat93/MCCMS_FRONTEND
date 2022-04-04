@@ -29,7 +29,7 @@ const ComplaintHistory = () => {
   useEffect(() => {
     if (isOpen) {
       setCompData((prev) => {
-        return compList.find((compObj) => {
+        return compList?.find((compObj) => {
           return compObj.id === compId;
         });
       });
@@ -44,23 +44,29 @@ const ComplaintHistory = () => {
   const ComplaintStatus = (props) => {
     if (props.status === "1") {
       return (
-        <td>
-          <button className={tbl.tbl_button_pending}>Not Process Yet</button>
-        </td>
+        <>
+          <td>
+            <button className={tbl.tbl_button_pending}>Not Process Yet</button>
+          </td>
+        </>
       );
     }
     if (props.status === "2") {
       return (
-        <td>
-          <button className={tbl.tbl_button_processing}>Processing</button>
-        </td>
+        <>
+          <td>
+            <button className={tbl.tbl_button_processing}>Processing</button>
+          </td>
+        </>
       );
     }
     if (props.status === "3") {
       return (
-        <td>
-          <button className={tbl.tbl_button_closed}>Closed</button>
-        </td>
+        <>
+          <td>
+            <button className={tbl.tbl_button_closed}>Closed</button>
+          </td>
+        </>
       );
     }
   };

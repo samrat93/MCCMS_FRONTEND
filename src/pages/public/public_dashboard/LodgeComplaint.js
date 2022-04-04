@@ -14,6 +14,7 @@ const LodgeComplaint = () => {
 
   const listComplaintSubCR = useSelector((state) => state.listComplaintSubCR);
   const { SubcatList } = listComplaintSubCR;
+  // console.log(SubcatList);
 
   const complaintReducer = useSelector((state) => state.complaintReducer);
   const { compList } = complaintReducer;
@@ -23,6 +24,7 @@ const LodgeComplaint = () => {
     (state) => state.listComplaintCategoryR
   );
   const { catList } = listComplaintCategoryR;
+  // console.log("catlist", catList);
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;

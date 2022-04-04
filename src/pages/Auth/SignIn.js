@@ -1,4 +1,4 @@
-import UseLoginInput from "./hooks/UseLoginInput";
+import UserInput from "./hooks/UserInput";
 import classes from "../../css/account_css/UserAccount.module.css";
 import msg from "../../css/msg/msg.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const LoginForm = (props) => {
     valueChangeHandler: usernameChangedHandler,
     inputBlurHandler: usernameBlurHandler,
     reset: resetUsername,
-  } = UseLoginInput((value) => value.trim() !== "");
+  } = UserInput((value) => value.trim() !== "");
 
   const {
     value: passwordValue,
@@ -28,7 +28,7 @@ const LoginForm = (props) => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPassword,
-  } = UseLoginInput((value) => value.trim() !== "");
+  } = UserInput((value) => value.trim() !== "");
 
   let formIsValid = false;
 

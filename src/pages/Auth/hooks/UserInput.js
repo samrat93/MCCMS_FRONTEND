@@ -1,24 +1,11 @@
 import { useReducer } from "react";
+// import inputStateReducer from "../../../redux/reducers/InputValidatorReducer";
+import {
+  inputStateReducer,
+  initialInputState,
+} from "../../../redux/reducers/InputValidatorReducer";
 
-const initialInputState = {
-  value: "",
-  isTouched: false,
-};
-
-const inputStateReducer = (state, action) => {
-  if (action.type === "INPUT") {
-    return { value: action.value, isTouched: state.isTouched };
-  }
-  if (action.type === "BLUR") {
-    return { isTouched: true, value: state.value };
-  }
-  if (action.type === "RESET") {
-    return { isTouched: false, value: "" };
-  }
-  return inputStateReducer;
-};
-
-const UseLoginInput = (validateValue) => {
+const UserInput = (validateValue) => {
   const [inputState, dispatch] = useReducer(
     inputStateReducer,
     initialInputState
@@ -49,4 +36,4 @@ const UseLoginInput = (validateValue) => {
   };
 };
 
-export default UseLoginInput;
+export default UserInput;

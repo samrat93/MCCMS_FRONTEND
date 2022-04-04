@@ -6,6 +6,14 @@ export const userSignup = (values) => async (dispatch) => {
     dispatch({
       type: UserActionType.USER_REGISTER_REQUEST,
     });
+
+    const username = values.emailValue;
+    const first_name = values.firstNameValue;
+    const email = values.emailValue;
+    const last_name = values.lastNameValue;
+    const password = values.passwordValue;
+    const val = { username, email, first_name, last_name, password };
+
     const config = {
       headers: {
         "content-type": "application/json",
@@ -14,7 +22,7 @@ export const userSignup = (values) => async (dispatch) => {
 
     const { data } = await axios.post(
       "http://127.0.0.1:8000/api/register/",
-      values,
+      val,
       config
     );
     dispatch({

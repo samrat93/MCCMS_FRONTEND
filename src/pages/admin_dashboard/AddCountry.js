@@ -10,15 +10,13 @@ import {
   AddCountryAction,
   ListCountryAction,
 } from "../../redux/actions/adminActions/CountryActions";
-import validator from "../../components/admin/countryValidator";
-import { useNavigate } from "react-router-dom";
 import CountryUpdateContent from "./UpdatePages/CountryUpdateContent";
 import UpdateCountryForm from "./UpdatePages/UpdateCountryForm";
 import Loading from "../../components/layout/LoadingScreen";
+import UserInput from "../Auth/hooks/UserInput";
 
 const AddCountry = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const addCountry = useSelector((state) => state.addCountry);
   const { error, countryInfo } = addCountry;
 
@@ -77,20 +75,25 @@ const AddCountry = () => {
   const [cid, setCid] = useState(0);
   const [cdata, setCData] = useState(null);
 
-  const [values, setValues] = useState({
-    country_name: "",
-    country_desc: "",
-  });
+  const {
+    value: country_name,
+    isValid: countryIsValid,
+    hasError: countryHasError,
+    valueChangeHandler: countryHandler,
+    inputBlurHandler: countryBlur,
+    reset: resetCountry_name,
+  } = UserInput((value) => value !== "");
+  const {
+    value: country_desc,
+    valueChangeHandler: countryDescHandler,
+    reset: resetCountry_desc,
+  } = UserInput((value) => value !== "");
 
-  const [message, setMessage] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+  let formIsValid = false;
+  if (countryIsValid) {
+    formIsValid = true;
+  }
+  const values = { country_name, country_desc };
 
   useEffect(() => {
     if (userInfo) {
@@ -100,17 +103,18 @@ const AddCountry = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const mess = validator(values);
-    if (Object.keys(mess).length !== 0) {
-      setMessage(mess);
+    if (!formIsValid) {
+      return;
     } else {
       dispatch(AddCountryAction(values));
-      setValues({
-        country_name: "",
-        country_desc: "",
-      });
     }
+    resetCountry_name();
+    resetCountry_desc();
   };
+
+  const countryInputClasses = countryHasError
+    ? formclasses["invalid"]
+    : formclasses["input-box-login"];
 
   useEffect(() => {
     if (isOpen) {
@@ -149,18 +153,21 @@ const AddCountry = () => {
                   <form onSubmit={submitHandler}>
                     <div className={formclasses["user-details"]}>
                       {/* {loading && <p>Loading...</p>} */}
-                      <div className={formclasses["input-box-login"]}>
+                      <div className={countryInputClasses}>
                         <span className={formclasses.signinspan}>
                           Country Name
                         </span>
                         <input
                           type="text"
                           name="country_name"
-                          value={values.country_name}
-                          onChange={handleChange}
+                          value={country_name}
+                          onChange={countryHandler}
+                          onBlur={countryBlur}
                         />
-                        {message.country_name && (
-                          <p className={msg.error}>{message.country_name}</p>
+                        {countryHasError && (
+                          <p className={msg.error}>
+                            {"Country Field Is Required."}
+                          </p>
                         )}
                         {error && error.country_exist && (
                           <p className={msg.error}>
@@ -176,13 +183,17 @@ const AddCountry = () => {
                       <textarea
                         className={formclasses.textarea}
                         name="country_desc"
-                        value={values.country_desc}
-                        onChange={handleChange}
+                        value={country_desc}
+                        onChange={countryDescHandler}
                       />
                     </div>
 
                     <div className={formclasses.button}>
-                      <input type="submit" value="Add Country" />
+                      <input
+                        type="submit"
+                        disabled={!formIsValid}
+                        value="Add Country"
+                      />
                     </div>
                     {countryInfo && (
                       <p className={msg.success}>

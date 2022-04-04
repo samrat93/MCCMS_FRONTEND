@@ -34,6 +34,7 @@ import {
   changeUserPasswordReducer,
   addFeedbackReducer,
   ListFeedbackReducer,
+  listProfileReducer,
 } from "./userReducer";
 
 const reducers = combineReducers({
@@ -67,6 +68,7 @@ const reducers = combineReducers({
   UpdateCountryR: updateCountryReducer,
   UpdatecatR: UpdateCategoryReducer,
   UpdateSubCatR: UpdateSubCategoryReducer,
+  ListProfileR: listProfileReducer,
 });
 
 export default reducers;

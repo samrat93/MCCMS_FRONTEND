@@ -4,7 +4,7 @@ import tbl from "../../css/admin_css/table.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import msg from "../../css/msg/msg.module.css";
-import validate from "../../components/admin/stateValidator";
+import UserInput from "../Auth/hooks/UserInput";
 import {
   AddStateAction,
   ListStateAction,
@@ -73,19 +73,26 @@ const AddState = () => {
   };
   //--------------> Delete Popup code End <----------------------
 
-  const [values, setValues] = useState({
-    state_name: "",
-    state_desc: "",
-  });
-  const [message, setMessage] = useState("");
+  const {
+    value: state_name,
+    isValid: stateIsValid,
+    hasError: stateHasError,
+    valueChangeHandler: stateHandler,
+    inputBlurHandler: stateBlur,
+    reset: resetState_name,
+  } = UserInput((value) => value !== "");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+  const {
+    value: state_desc,
+    valueChangeHandler: stateDescHandler,
+    reset: resetState_desc,
+  } = UserInput((value) => value !== "");
+
+  let formIsValid = false;
+  if (stateIsValid) {
+    formIsValid = true;
+  }
+  const values = { state_name, state_desc };
 
   useEffect(() => {
     if (userInfo) {
@@ -95,18 +102,18 @@ const AddState = () => {
 
   const SubmitFormHandler = (e) => {
     e.preventDefault();
-
-    const mess = validate(values);
-    if (Object.keys(mess).length !== 0) {
-      setMessage(mess);
+    if (!formIsValid) {
+      return;
     } else {
       dispatch(AddStateAction(values));
-      setValues({
-        state_desc: "",
-        state_name: "",
-      });
+      resetState_name();
+      resetState_desc();
     }
   };
+  const stateInputClasses = stateHasError
+    ? formclasses["invalid"]
+    : formclasses["input-box-login"];
+
   const [isOpen, setIsOpen] = useState(false);
   const [sid, setSid] = useState(0);
   const [stateData, setStateData] = useState(null);
@@ -148,18 +155,21 @@ const AddState = () => {
                   <form onSubmit={SubmitFormHandler}>
                     <div className={formclasses["user-details"]}>
                       {/* {loading && <p>Loading...</p>} */}
-                      <div className={formclasses["input-box-login"]}>
+                      <div className={stateInputClasses}>
                         <span className={formclasses.signinspan}>
                           State Name
                         </span>
                         <input
                           type="text"
                           name="state_name"
-                          value={values.state_name}
-                          onChange={handleChange}
+                          value={state_name}
+                          onChange={stateHandler}
+                          onBlur={stateBlur}
                         />
-                        {message.state_name && (
-                          <p className={msg.error}>{message.state_name}</p>
+                        {stateHasError && (
+                          <p className={msg.error}>
+                            {"State Field Is Required."}
+                          </p>
                         )}
                         {error && error.state_exist && (
                           <p className={msg.error}>
@@ -175,8 +185,8 @@ const AddState = () => {
                       <textarea
                         className={formclasses.textarea}
                         name="state_desc"
-                        value={values.state_desc}
-                        onChange={handleChange}
+                        value={state_desc}
+                        onChange={stateDescHandler}
                       />
                     </div>
                     {stateInfo && (
@@ -186,7 +196,11 @@ const AddState = () => {
                     )}
 
                     <div className={formclasses.button}>
-                      <input type="submit" value="Add State" />
+                      <input
+                        type="submit"
+                        disabled={!formIsValid}
+                        value="Add State"
+                      />
                     </div>
                   </form>
                 </div>

@@ -2,14 +2,12 @@ import formclasses from "../../../css/public_css/publicForms.module.css";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import msg from "../../../css/msg/msg.module.css";
-// import { Link, useNavigate } from "react-router-dom";
 import { ListComplaintCategoryAction } from "../../../redux/actions/adminActions/ComplaintCategoryAction";
 import { ListComplaintSubCategoryAction } from "../../../redux/actions/adminActions/ComplaintSubCategoryAction";
 import { ListStateAction } from "../../../redux/actions/adminActions/StateActions";
-import Validator from "../../../components/admin/complaintRemarksValidator";
 import { addComplaintAction } from "../../../redux/actions/adminActions/ManageComplaintAction";
 import { UpdateRemarksAction } from "../../../redux/actions/adminActions/ManageComplaintAction";
-
+import UserInput from "../../Auth/hooks/UserInput";
 const ComplaintActionFormContent = ({ compData }) => {
   const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
@@ -48,19 +46,30 @@ const ComplaintActionFormContent = ({ compData }) => {
   );
   const { success } = AddComplaintRemarksR;
 
-  const [values, setValues] = useState({
-    complaint_status: "",
-    remarks: "",
-    complaint_number: "",
-  });
-  const [message, setMessage] = useState("");
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+  const {
+    value: complaint_status,
+    isValid: complaint_statusIsValid,
+    hasError: complaint_statusHasError,
+    valueChangeHandler: complaint_statusChangeHandler,
+    inputBlurHandler: complaint_statusBlurHandler,
+    reset: resetComplaint_status,
+  } = UserInput((value) => value.trim() !== "");
+
+  const {
+    value: remarks,
+    isValid: remarksIsValid,
+    hasError: remarksHasError,
+    valueChangeHandler: remarksChangeHandler,
+    inputBlurHandler: remarksBlurHandler,
+    reset: resetRemarks,
+  } = UserInput((value) => value.trim() !== "");
+
+  let formIsValid = false;
+
+  if (complaint_statusIsValid && remarksIsValid) {
+    formIsValid = true;
+  }
+  const values = { remarks, complaint_status, complaint_number };
 
   useEffect(() => {
     if (userInfo) {
@@ -68,31 +77,26 @@ const ComplaintActionFormContent = ({ compData }) => {
       dispatch(ListComplaintSubCategoryAction());
       dispatch(ListStateAction());
     }
-    setValues({
-      ...values,
-      complaint_number: compData.id,
-    });
   }, [dispatch, userInfo]);
 
-  // console.log(values);
-  // console.log("comp-status-for:", values.complaint_status);
-  // console.log("comp-status-for:", values);
+  const InputClasses = complaint_statusHasError
+    ? formclasses["invalid"]
+    : formclasses["input-box-login"];
+
+  const TextAreaClass = remarksHasError
+    ? formclasses.invalid_text
+    : formclasses.textarea;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const mess = Validator(values);
-    if (Object.keys(mess).length !== 0) {
-      setMessage(mess);
+
+    if (!formIsValid) {
+      return;
     } else {
       const cid = compData.id;
-      const comp_status = values.complaint_status;
+      const comp_status = complaint_status;
       dispatch(addComplaintAction(values));
       dispatch(UpdateRemarksAction({ comp_status, cid: cid }));
-      setValues({
-        complaint_status: "",
-        remarks: "",
-        complaint_number: "",
-      });
     }
   };
 
@@ -192,22 +196,25 @@ const ComplaintActionFormContent = ({ compData }) => {
                 <div className={formclasses.title}>Take Approprate Action</div>
                 <hr className={formclasses.hrTitle} />
 
-                <div className={formclasses["input-box"]}>
+                <div className={InputClasses}>
                   <span className={formclasses.signinspan}>
                     Complaint Status
                   </span>
                   <select
                     name="complaint_status"
-                    value={values.complaint_status}
+                    value={complaint_status}
                     className={formclasses.selectValue}
-                    onChange={handleChange}
+                    onChange={complaint_statusChangeHandler}
+                    onBlur={complaint_statusBlurHandler}
                   >
                     <option>Select Complaint Status</option>
                     <option value="2">Processing</option>
                     <option value="3">Closed</option>
                   </select>
-                  {message.complaint_status && (
-                    <p className={msg.error}>{message.complaint_status}</p>
+                  {complaint_statusHasError && (
+                    <p className={msg.error}>
+                      {"Complaint Status Field Is Required."}
+                    </p>
                   )}
                 </div>
                 <div className={formclasses["input-textarea"]}>
@@ -215,19 +222,20 @@ const ComplaintActionFormContent = ({ compData }) => {
                     Complaint Remarks
                   </span>
                   <textarea
-                    className={formclasses.textarea}
+                    className={TextAreaClass}
                     name="remarks"
-                    value={values.remarks}
-                    onChange={handleChange}
+                    value={remarks}
+                    onChange={remarksChangeHandler}
+                    onBlur={remarksBlurHandler}
                   />
-                  <input
+                  {/* <input
                     type="hidden"
                     name="complaint_number"
                     value={complaint_number}
                     onChange={handleChange}
-                  />
-                  {message.remarks && (
-                    <p className={msg.error}>{message.remarks}</p>
+                  /> */}
+                  {remarksHasError && (
+                    <p className={msg.error}>{"Remarks Field Is Required"}</p>
                   )}
                   {success && (
                     <p className={msg.success}>
@@ -238,7 +246,11 @@ const ComplaintActionFormContent = ({ compData }) => {
                 <div className={formclasses.btndiv}>
                   <div className={formclasses.singleBtnDiv}>
                     <div className={formclasses.button}>
-                      <input type="submit" value="Save Details" />
+                      <input
+                        type="submit"
+                        // disabled={!formIsValid}
+                        value="Save Details"
+                      />
                     </div>
                   </div>
                 </div>

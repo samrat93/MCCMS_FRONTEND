@@ -1,7 +1,6 @@
 import classes from "../../css/admin_css/AdminDashboard.module.css";
 import PersonIcon from "@mui/icons-material/Person";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
-import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import ChartAndGraph from "./ChartsAndGraphs";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +8,6 @@ import { useEffect } from "react";
 import { listComplaintAction } from "../../redux/actions/userActions/complaintAction";
 import { listFeedbackAction } from "../../redux/actions/userActions/FeedbackAction";
 import { readalluser } from "../../redux/actions/adminActions/ManageUserAction";
-import VerifiedIcon from "@mui/icons-material/Verified";
 
 const AdminDashboardPage = () => {
   const dispatch = useDispatch();

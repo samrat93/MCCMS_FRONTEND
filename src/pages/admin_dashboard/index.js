@@ -36,7 +36,7 @@ const AdminDashboard = () => {
           <li>
             <NavLink
               onClick={logoutHandler}
-              to="/homepage"
+              to="/Home"
               className={classes.links_name}
             >
               <LogoutOutlinedIcon

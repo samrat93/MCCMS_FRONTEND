@@ -1,12 +1,7 @@
-import formclasses from "../../css/account_css/UserAccount.module.css";
-import classes from "../../css/admin_css/AdminDashboard.module.css";
-import msg from "../../css/msg/msg.module.css";
-import tbl from "../../css/admin_css/table.module.css";
-import { listFeedbackAction } from "../../redux/actions/userActions/FeedbackAction";
-import { listComplaintAction } from "../../redux/actions/userActions/complaintAction";
-import React, { useState, useEffect, useRef, Fragment } from "react";
+import classes from "../../../css/public_css/publicDashboard.module.css";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../components/layout/LoadingScreen";
+import { listComplaintAction } from "../../../redux/actions/userActions/complaintAction";
 
 import {
   XAxis,
@@ -19,39 +14,37 @@ import {
   Bar,
 } from "recharts";
 
-const ChartAndGraph = () => {
-  const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
-  const { compList } = listComplaintRedu;
-
-  // console.log(compList);
-  const pending = compList?.filter((data) => {
-    return data.complaint_status === "1";
-  })?.length;
-
-  const processing = compList?.filter((data) => {
-    return data.complaint_status === "2";
-  })?.length;
-
-  const complete = compList?.filter((data) => {
-    return data.complaint_status === "3";
-  })?.length;
-
-  const totalcomplaint = compList?.length;
-  // console.log(totalcomplaint, pending, processing, complete);
-
+const GraphsAndChart = () => {
   const dispatch = useDispatch();
-
-  //   const ListFeedbackR = useSelector((state) => state.ListFeedbackR);
-  //   const { loading, feedbacks } = ListFeedbackR;
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
+  const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
+  const { compList } = listComplaintRedu;
+
+  const current_user = userInfo.user_Info.id;
+  const newComplaintList = compList?.filter((data) => {
+    return data.user_id === current_user;
+  });
+  const totalcomplaint = newComplaintList?.length;
+  const pending = newComplaintList?.filter((data) => {
+    return data.complaint_status === "1";
+  }).length;
+
+  const processing = newComplaintList?.filter((data) => {
+    return data.complaint_status === "2";
+  }).length;
+
+  const complete = newComplaintList?.filter((data) => {
+    return data.complaint_status === "3";
+  }).length;
+
   useEffect(() => {
     if (userInfo) {
-      dispatch(listFeedbackAction());
+      dispatch(listComplaintAction());
     }
-  }, [dispatch, userInfo]);
+  }, [userInfo, dispatch]);
 
   const data = [
     {
@@ -67,7 +60,7 @@ const ChartAndGraph = () => {
     <div>
       <div className={classes["sales-boxes"]}>
         <div className={classes["recent-sales"]}>
-          <div className={classes.title}>Complaint Status Chart</div>
+          <div className={classes.title}> Your Complaint Status Chart</div>
           {/* {loading === true ? (
               <div className={classes.loadingDiv}>
                 <Loading />
@@ -108,4 +101,4 @@ const ChartAndGraph = () => {
   );
 };
 
-export default ChartAndGraph;
+export default GraphsAndChart;

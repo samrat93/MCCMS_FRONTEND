@@ -17,12 +17,13 @@ const ClosedComplaints = () => {
   const { loading, compList } = listComplaintRedu;
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
+  const newUser = users?.results;
 
   let newCompList = compList?.map((compObj) => {
     return {
       ...compObj,
-      user_id: users?.find((userObj) => userObj.id === compObj.user_id)
-        .username,
+      user_id: newUser?.find((userObj) => userObj.id === compObj.user_id)
+        ?.username,
     };
   });
 
@@ -36,7 +37,7 @@ const ClosedComplaints = () => {
   useEffect(() => {
     if (isOpen) {
       setCompData((prev) => {
-        return newCompList.find((compObj) => {
+        return newCompList?.find((compObj) => {
           return compObj.id === compId;
         });
       });
@@ -46,10 +47,11 @@ const ClosedComplaints = () => {
     setCompId(+e.target.value);
     setIsOpen(!isOpen);
   };
+  let serialNo = 1;
   useEffect(() => {
     if (userInfo) {
       dispatch(listComplaintAction());
-      dispatch(readalluser());
+      dispatch(readalluser({ Page: serialNo }));
     }
   }, [dispatch, userInfo]);
   return (

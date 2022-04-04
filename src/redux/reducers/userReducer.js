@@ -26,6 +26,19 @@ export const profileAddReducer = (state = {}, action) => {
   }
 };
 
+export const listProfileReducer = (state = { plist: [] }, action) => {
+  switch (action.type) {
+    case UserActionType.PROFILE_LIST_REQUEST:
+      return { loading: true };
+    case UserActionType.PROFILE_LIST_SUCCESS:
+      return { loading: false, plist: action.payload };
+    case UserActionType.PROFILE_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const listComplaintReducer = (state = { compList: [] }, action) => {
   switch (action.type) {
     case UserActionType.LIST_COMPLAINT_REQUEST:

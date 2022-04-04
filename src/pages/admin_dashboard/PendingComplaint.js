@@ -17,10 +17,12 @@ const PendingComplaints = () => {
   const { userInfo } = userSignin;
   const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
   const { loading, compList } = listComplaintRedu;
+
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
   const newUser = users?.results;
-  console.log(newUser);
+  // console.log("New User", newUser);
+
   const ListComplaintRemarksR = useSelector(
     (state) => state.ListComplaintRemarksR
   );
@@ -33,6 +35,7 @@ const PendingComplaints = () => {
         ?.username,
     };
   });
+  console.log("complist", newCompList);
 
   const pendingComplaint = newCompList?.filter((data) => {
     return data.complaint_status === "1";
@@ -55,10 +58,11 @@ const PendingComplaints = () => {
     setCompId(+e.target.value);
     setIsOpen(!isOpen);
   };
+  let serialNo = 1;
   useEffect(() => {
     if (userInfo) {
       dispatch(listComplaintAction());
-      dispatch(readalluser());
+      dispatch(readalluser({ Page: serialNo }));
       dispatch(ListComplaintRemarksAction());
     }
   }, [dispatch, userInfo]);
