@@ -4,7 +4,7 @@
   position: fixed;
   height: 100%;
   width: 240px;
-  background: #386754;
+  background: #231E39;
   transition: all 0.5s ease;
 }
 .sidebar.active {
@@ -45,7 +45,7 @@
 }
 
 .sidebar .nav-links li a:hover {
-  background: #254117;
+  background: #322669;
 }
 .sidebar .nav-links li i {
   min-width: 60px;
@@ -152,7 +152,7 @@ nav .profile-details img {
   height: 40px;
   width: 40px;
   border-radius: 6px;
-  object-fit: cover;
+  background-size: cover;
 }
 nav .profile-details .admin_name {
   font-size: 15px;

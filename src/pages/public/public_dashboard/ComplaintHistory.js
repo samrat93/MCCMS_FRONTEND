@@ -80,66 +80,66 @@ const ComplaintHistory = () => {
   return (
     <div>
       <div className={classesDashboard["home-content"]}>
-        <div className={classesDashboard["sales-boxes"]}>
-          <div className={classesDashboard["recent-sales"]}>
-            <div className={classes.ContentBody}>
-              <div className={classes.container}>
-                <div className={classes.title}>Your Complaint History</div>
-                <div className={classes.content}>
-                  <div className={tbl.tbl_scroll}>
-                    <table className={tbl.table}>
-                      <thead>
-                        <tr>
-                          <th>Complaint Number</th>
-                          <th>Complaint Subject</th>
-                          <th>Complaint Reg Date</th>
-                          <th>Last Updation Date</th>
-                          <th>Complaint Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
+        {/* <div className={classesDashboard["sales-boxes"]}> */}
+        <div className={classesDashboard["recent-sales"]}>
+          <div className={classes.ContentBody}>
+            <div className={classes.container}>
+              <div className={classes.title}>Your Complaint History</div>
+              <div className={classes.content}>
+                <div className={tbl.tbl_scroll}>
+                  <table className={tbl.table}>
+                    <thead>
+                      <tr>
+                        <th>Complaint Number</th>
+                        <th>Complaint Subject</th>
+                        <th>Complaint Reg Date</th>
+                        <th>Last Updation Date</th>
+                        <th>Complaint Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
 
-                      <tbody>
-                        {/* {countries?.map((country) => ( */}
-                        {complaintUser?.map((comp, index) => (
-                          <tr key={index}>
-                            <td>{comp.id}</td>
-                            <td>{comp.complaint_subject}</td>
-                            <td>{comp.complaint_date}</td>
-                            <td>{comp.updation_date}</td>
-                            <Fragment>
-                              <ComplaintStatus status={comp.complaint_status} />
-                            </Fragment>
-                            <td>
-                              <button
-                                className={tbl.tbl_button}
-                                value={comp.id}
-                                onClick={togglePopup}
-                              >
-                                View Details
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    {isOpen && compData && (
-                      <div>
-                        <ComplaintHistForm
-                          content={
-                            <ComplaintHistFormContent userData={compData} />
-                          }
-                          handleClose={togglePopup}
-                        />
-                      </div>
-                    )}
-                  </div>
+                    <tbody>
+                      {/* {countries?.map((country) => ( */}
+                      {complaintUser?.map((comp, index) => (
+                        <tr key={index}>
+                          <td>{comp.id}</td>
+                          <td>{comp.complaint_subject}</td>
+                          <td>{comp.complaint_date}</td>
+                          <td>{comp.updation_date}</td>
+                          <Fragment>
+                            <ComplaintStatus status={comp.complaint_status} />
+                          </Fragment>
+                          <td>
+                            <button
+                              className={tbl.tbl_button}
+                              value={comp.id}
+                              onClick={togglePopup}
+                            >
+                              View Details
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {isOpen && compData && (
+                    <div>
+                      <ComplaintHistForm
+                        content={
+                          <ComplaintHistFormContent userData={compData} />
+                        }
+                        handleClose={togglePopup}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 };

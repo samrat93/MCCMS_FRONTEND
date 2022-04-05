@@ -1,22 +1,32 @@
 import classes from "../../../css/public_css/publicDashboard.module.css";
-import SearchIcon from "@mui/icons-material/Search";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import { Outlet, useLocation, useNavigate, NavLink } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/actions/userActions/userAuthAction";
-import adminImg from "../../../Static/images/admin.jfif";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import HistoryIcon from "@mui/icons-material/History";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SecurityIcon from "@mui/icons-material/Security";
+import { listProfileAction } from "../../../redux/actions/userActions/userProfileAction";
+import { useEffect } from "react";
 
 const PublicDashboard = () => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  //   console.log(userInfo.user_Info.is_superuser);
+  const ListProfileR = useSelector((state) => state.ListProfileR);
+  const { plist } = ListProfileR;
+  const current_user = userInfo.user_Info.id;
+  const myProfile = plist?.find((pobj) => {
+    return pobj.user === current_user;
+  });
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(listProfileAction());
+    }
+  }, [userInfo, dispatch]);
 
   const logoutHandler = (e) => {
     dispatch(logout());
@@ -29,7 +39,7 @@ const PublicDashboard = () => {
           <li>
             <NavLink
               onClick={logoutHandler}
-              to="/homepage"
+              to="/Home"
               className={classes.links_name}
             >
               <LogoutOutlinedIcon
@@ -48,7 +58,7 @@ const PublicDashboard = () => {
       <div className={classes.sidebar}>
         <div className={classes["logo-details"]}>
           <i className={classes["bxl-c-plus-plus"]}></i>
-          <span className={classes.logo_name}>MCCMS</span>
+          <span className={classes.logo_name}>PUBLIC</span>
         </div>
         <ul className={classes["nav-links"]}>
           <li>
@@ -113,14 +123,14 @@ const PublicDashboard = () => {
           <span className={classes.dashboard}>
             Municipal Corporation Complaint Management System
           </span>
-          <div className={classes["search-box"]}>
+          {/* <div className={classes["search-box"]}>
             <input type="text" placeholder="Search..." />
             <i className={classes["bx-search"]}>
               <SearchIcon />
             </i>
-          </div>
+          </div> */}
           <div className={classes["profile-details"]}>
-            <img src={adminImg} alt="" />
+            <img src={myProfile?.user_image} alt="" />
             <span className={classes.admin_name}>
               {userInfo.user_Info.username}
             </span>

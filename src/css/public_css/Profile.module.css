@@ -1,0 +1,108 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+.card-container {
+	background-color: #231E39;
+	border-radius: 5px;
+	box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+	color: #B3B8CD;
+	padding-top: 30px;
+	/* position: relative; */
+    display: inline-block;
+    margin: auto;
+    left: 20%;
+	width: 750px;
+	max-width: 100%;
+	text-align: center;
+}
+
+.card-container .round {
+	border: 1px solid #03BFCB;
+	border-radius: 100%;
+	padding: 7px;
+    background-size: cover;
+    height: 250px;
+    width: 250px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 7px;
+}
+@media only screen and (max-width: 550px) {
+    .card-container .round {
+        height: 150px;
+        width: 150px;
+    }
+}
+
+.imgUpdate {
+	border: 1px solid #03BFCB;
+	margin-top: 5px;
+	margin-left: 35%;
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+	border-radius: 8px;
+	position: relative;
+	margin-bottom: 0;
+}
+@media only screen and (max-width: 550px) {
+    .imgUpdate {
+        height: 80px;
+        width: 80px;
+    }
+}
+
+button.primary {
+	background-color: #03BFCB;
+	border: 1px solid #f89603;
+	border-radius: 3px;
+	color: #231E39;
+	font-family: Montserrat, sans-serif;
+	font-weight: 700;
+	padding: 10px 25px;
+    margin: 10px;
+}
+button.primary:hover{
+    background-color: #f89603;
+    border: 1px solid #03BFCB;
+}
+button.ghost {
+	background-color: #f1950a;
+	color: #02899C;
+    border: 1px solid #03BFCB;
+    border-radius: 3px;
+    font-weight: 500;
+	padding: 10px 25px;
+}
+
+.skills {
+	background-color: #1F1A36;
+	text-align: left;
+	padding: 15px;
+	margin-top: 30px;
+}
+
+.skills ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.skills ul li {
+	display: inline-block;
+	font-size: 14px;
+	margin: 0 15px 7px 0;
+	padding: 7px;
+}
+.ptitle{
+    margin: 5px 0;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #03BFCB;
+    text-transform: uppercase;
+}
+/* .address{
+    margin: 5px 0;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #eeff05;
+} */

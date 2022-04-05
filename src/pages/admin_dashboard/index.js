@@ -55,7 +55,7 @@ const AdminDashboard = () => {
       <div className={classes.sidebar}>
         <div className={classes["logo-details"]}>
           <i className={classes["bxl-c-plus-plus"]}></i>
-          <span className={classes.logo_name}>MCCMS</span>
+          <span className={classes.logo_name}>ADMIN</span>
         </div>
         <ul className={classes["nav-links"]}>
           <li>

@@ -1,22 +1,24 @@
 import classes from "../../../css/public_css/publicForms.module.css";
+import dascss from "../../../css/public_css/Profile.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef, Fragment } from "react";
-import ValidateProfileForm from "../../../components/accounts/user/validateProfile";
+import { useEffect, useState } from "react";
 import { ListStateAction } from "../../../redux/actions/adminActions/StateActions";
 import { ListCountryAction } from "../../../redux/actions/adminActions/CountryActions";
 import {
   registerProfileAction,
   listProfileAction,
+  updateProfileAction,
 } from "../../../redux/actions/userActions/userProfileAction";
 import msg from "../../../css/msg/msg.module.css";
+import swal from "sweetalert";
 
 const UpdateProfileContent = () => {
   const dispatch = useDispatch();
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { states } = listStateRedu;
 
-  const profileAddRedu = useSelector((state) => state.profileAddRedu);
-  const { userProfile } = profileAddRedu;
+  const UpdateProfileR = useSelector((state) => state.UpdateProfileR);
+  const { profileUp } = UpdateProfileR;
 
   const listCountry = useSelector((state) => state.listCountry);
   const { countries } = listCountry;
@@ -27,32 +29,33 @@ const UpdateProfileContent = () => {
   const ListProfileR = useSelector((state) => state.ListProfileR);
   const { plist } = ListProfileR;
 
-  // console.log(plist);
   const current_user = userInfo.user_Info.id;
 
   const myProfile = plist?.find((pobj) => {
-    return pobj.user.id === current_user;
+    return pobj.user === current_user;
   });
+  console.log(myProfile?.user_image.name);
 
-  // console.log("Profile", myProfile);
+  // console.log("Profile-id", myProfile?.id);
+  const id = myProfile?.id;
 
   const [values, setValues] = useState({
-    contact_no: "",
-    pincode: "",
-    gender: "",
-    country: "",
-    state: "",
-    user_image: null,
-    address: "",
-    user: "",
+    contact_no: myProfile?.contact_no,
+    pincode: myProfile?.pincode,
+    gender: myProfile?.gender,
+    country: myProfile?.country,
+    state: myProfile?.state,
+    user_image: myProfile?.user_image,
+    address: myProfile?.address,
+    user: myProfile?.user,
   });
+
   const onChangePicture = (e) => {
     setValues({
       ...values,
       user_image: e.target.files[0],
     });
   };
-  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,34 +74,29 @@ const UpdateProfileContent = () => {
       ...values,
       user: userInfo.user_Info.id,
     });
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, profileUp]);
   // console.log("user_id", values.user_id);
   const submitHandler = (e) => {
     e.preventDefault();
-    const mess = ValidateProfileForm(values);
-    if (Object.keys(mess).length !== 0) {
-      setMessage(mess);
-    } else {
-      let form_data = new FormData();
-      form_data.append("contact_no", values.contact_no);
-      form_data.append("pincode", values.pincode);
-      form_data.append("state", values.state);
-      form_data.append("country", values.country);
-      form_data.append("user_image", values.user_image, values.user_image.name);
-      form_data.append("gender", values.gender);
-      form_data.append("address", values.address);
-      form_data.append("user", values.user);
-      // console.log(values);
+
+    let form_data = new FormData();
+    form_data.append("contact_no", values.contact_no);
+    form_data.append("pincode", values.pincode);
+    form_data.append("state", values.state);
+    form_data.append("country", values.country);
+    form_data.append("user_image", values.user_image);
+    form_data.append("gender", values.gender);
+    form_data.append("address", values.address);
+    form_data.append("user", values.user);
+
+    console.log(values.user_image);
+
+    if (!myProfile) {
       dispatch(registerProfileAction(form_data));
-      setValues({
-        contact_no: "",
-        address: "",
-        pincode: "",
-        state: "",
-        user_image: null,
-        country: "",
-        gender: "",
-      });
+      swal("Profile Added Successfully.", "success");
+    } else {
+      dispatch(updateProfileAction({ form_data, id: id }));
+      swal("Profile Updated Successfully.", "success");
     }
   };
   return (
@@ -106,39 +104,36 @@ const UpdateProfileContent = () => {
       <div className={classes.title}>Update Profile</div>
       <hr className={classes.hrTitle} />
       <div className={classes.content}>
-        <form>
+        <form onSubmit={submitHandler}>
           <div className={classes["user-details"]}>
             <div className={classes["input-box"]}>
               <span className={classes.signinspan}>Contact No</span>
               <input
                 type="text"
                 name="contact_no"
-                value={values.contact_no || ""}
+                // value={values.contact_no || ""}
+                defaultValue={myProfile?.contact_no}
                 onChange={handleChange}
                 placeholder="Enter your contact number"
               />
-              {message.contact_no && (
-                <p className={msg.error}>{message.contact_no}</p>
-              )}
             </div>
             <div className={classes["input-box"]}>
               <span className={classes.signinspan}>Pincode</span>
               <input
-                type="text"
+                type="number"
                 name="pincode"
-                value={values.pincode || ""}
+                // value={values.pincode || ""}
+                defaultValue={myProfile?.pincode}
                 onChange={handleChange}
                 placeholder="Enter your pincode"
               />
-              {message.pincode && (
-                <p className={msg.error}>{message.pincode}</p>
-              )}
             </div>
             <div className={classes["input-box"]}>
               <span className={classes.signinspan}>Gender</span>
               <select
                 name="gender"
-                value={values.gender}
+                // value={values.gender}
+                defaultValue={myProfile?.gender}
                 className={classes.selectValue}
                 onChange={handleChange}
               >
@@ -146,12 +141,12 @@ const UpdateProfileContent = () => {
                 <option value="M">Male</option>
                 <option value="F">Female</option>
               </select>
-              {message.gender && <p className={msg.error}>{message.gender}</p>}
             </div>
             <div className={classes["input-box"]}>
               <span className={classes.signinspan}>Country</span>
               <select
                 name="country"
+                defaultValue={myProfile?.country}
                 className={classes.selectValue}
                 onChange={handleChange}
               >
@@ -162,9 +157,6 @@ const UpdateProfileContent = () => {
                   </option>
                 ))}
               </select>
-              {message.country && (
-                <p className={msg.error}>{message.country}</p>
-              )}
             </div>
             <div className={classes["input-box"]}>
               <span className={classes.signinspan}>State</span>
@@ -172,6 +164,7 @@ const UpdateProfileContent = () => {
                 name="state"
                 className={classes.selectValue}
                 onChange={handleChange}
+                defaultValue={myProfile?.state}
               >
                 <option>Select State</option>
                 {states?.map((s) => (
@@ -180,7 +173,6 @@ const UpdateProfileContent = () => {
                   </option>
                 ))}
               </select>
-              {message.state && <p className={msg.error}>{message.state}</p>}
             </div>
             <div className={classes["input-box"]}>
               <span className={classes.signinspan}>Upload Your Image</span>
@@ -188,9 +180,17 @@ const UpdateProfileContent = () => {
                 className={classes["file-upload"]}
                 type="file"
                 name="user_image"
-                accept="image/png, image/jpeg"
+                // value={values.user_image}
+                accept="image/jpeg,image/png,image/gif"
                 onChange={onChangePicture}
               />
+
+              <img
+                className={dascss.imgUpdate}
+                src={myProfile?.user_image}
+                alt="profile_image"
+              />
+
               <input
                 type="hidden"
                 name="user"
@@ -204,12 +204,10 @@ const UpdateProfileContent = () => {
               <textarea
                 className={classes.textarea}
                 name="address"
-                value={values.address}
+                // value={values.address}
+                defaultValue={myProfile?.address}
                 onChange={handleChange}
               />
-              {userProfile && (
-                <p className={msg.success}>{"Profile Updated Successfully "}</p>
-              )}
             </div>
           </div>
           <div className={classes.btndiv}>

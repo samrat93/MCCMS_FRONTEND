@@ -17,6 +17,14 @@
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
+.container_profile {
+  max-width: 100%;
+  width: auto;
+  background-color: #fff;
+  padding: 20px 20px 20px 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
 .container .title {
   font-size: 25px;
   font-weight: 500;
@@ -156,6 +164,9 @@ form .button input:hover {
 }
 @media (max-width: 550px) {
   .container {
+    max-width: 100%;
+  }
+  .container_profile {
     max-width: 100%;
   }
   form .user-details .input-box {
@@ -359,3 +370,4 @@ form .user-details .input-invalid {
   display: inline;
   margin-left: 5px;
 }
+
