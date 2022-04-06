@@ -8,9 +8,12 @@ import { ListComplaintCategoryAction } from "../../../redux/actions/adminActions
 import { ListComplaintSubCategoryAction } from "../../../redux/actions/adminActions/ComplaintSubCategoryAction";
 import { ListStateAction } from "../../../redux/actions/adminActions/StateActions";
 import msg from "../../../css/msg/msg.module.css";
+import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../../redux/actions/userActions/userAuthAction";
 
 const LodgeComplaint = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const listComplaintSubCR = useSelector((state) => state.listComplaintSubCR);
   const { SubcatList } = listComplaintSubCR;
@@ -28,6 +31,7 @@ const LodgeComplaint = () => {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  console.log(userInfo.user_Info.is_superuser);
 
   const c_id = userInfo.user_Info.id;
   // console.log("current_user", userInfo.user_Info.id);
@@ -65,12 +69,14 @@ const LodgeComplaint = () => {
       dispatch(ListComplaintCategoryAction());
       dispatch(ListComplaintSubCategoryAction());
       dispatch(ListStateAction());
+    } else {
+      navigate("/userlogin");
     }
     setValues({
       ...values,
       user_id: userInfo.user_Info.id,
     });
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -13,9 +13,11 @@ import ValidateComplaintCategory from "../../components/admin/complaintCategoryV
 import UpdateCategoryContent from "./UpdatePages/UpdateCategoryContent";
 import UpdateCategoryForm from "./UpdatePages/UpdateCategoryForm";
 import Loading from "../../components/layout/LoadingScreen";
+import { useNavigate } from "react-router-dom";
 
 const AddComplaintCategory = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const addComplaintCategoryR = useSelector(
     (state) => state.addComplaintCategoryR
   );
@@ -89,8 +91,10 @@ const AddComplaintCategory = () => {
   useEffect(() => {
     if (userInfo) {
       dispatch(ListComplaintCategoryAction());
+    } else {
+      navigate("/userlogin");
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, navigate]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [cid, setCid] = useState(0);

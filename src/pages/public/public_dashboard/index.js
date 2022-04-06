@@ -1,6 +1,6 @@
 import classes from "../../../css/public_css/publicDashboard.module.css";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import FeedbackOutlinedIcon from "@mui/icons-material/FeedbackOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,17 +16,22 @@ const PublicDashboard = () => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const ListProfileR = useSelector((state) => state.ListProfileR);
   const { plist } = ListProfileR;
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(listProfileAction());
+    } else {
+      navigate("/userlogin");
+    }
+  }, [userInfo, dispatch, navigate]);
+
   const current_user = userInfo.user_Info.id;
   const myProfile = plist?.find((pobj) => {
     return pobj.user === current_user;
   });
-  useEffect(() => {
-    if (userInfo) {
-      dispatch(listProfileAction());
-    }
-  }, [userInfo, dispatch]);
 
   const logoutHandler = (e) => {
     dispatch(logout());
@@ -137,7 +142,7 @@ const PublicDashboard = () => {
             {/* <KeyboardArrowDownIcon /> */}
           </div>
         </nav>
-        dsfasdfasdfsad
+
         <Outlet />
       </section>
     </div>

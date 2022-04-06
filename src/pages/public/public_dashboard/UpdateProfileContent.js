@@ -84,7 +84,7 @@ const UpdateProfileContent = () => {
     form_data.append("pincode", values.pincode);
     form_data.append("state", values.state);
     form_data.append("country", values.country);
-    form_data.append("user_image", values.user_image);
+    !values.user_image && form_data.append("user_image", values.user_image);
     form_data.append("gender", values.gender);
     form_data.append("address", values.address);
     form_data.append("user", values.user);

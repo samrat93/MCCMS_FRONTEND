@@ -1,5 +1,6 @@
 import axios from "axios";
 import { UserActionType } from "../../constants/userActionType";
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 export const registerFeedbackAction =
   (values) => async (dispatch, getState) => {
@@ -15,7 +16,7 @@ export const registerFeedbackAction =
         },
       };
       const { data } = await axios.post(
-        "http://127.0.0.1:8000/api/feedback/",
+        `${REACT_APP_API_ENDPOINT}/feedback`,
         values,
         config
       );
@@ -48,7 +49,7 @@ export const listFeedbackAction = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(
-      "http://127.0.0.1:8000/api/feedback/",
+      `${REACT_APP_API_ENDPOINT}/feedback`,
       config
     );
     dispatch({

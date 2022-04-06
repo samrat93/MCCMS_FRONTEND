@@ -18,7 +18,6 @@ import ChangePassword from "./pages/admin_dashboard/ChangePassword";
 import ComplaintList from "./pages/admin_dashboard/ViewComplaints";
 import AddComplaintCategory from "./pages/admin_dashboard/AddComplainCategory";
 import AddComplaintSubCategory from "./pages/admin_dashboard/AddComplaintSubCategory";
-// import EditCountry from "./pages/admin_dashboard/UpdatePages/EditCountry";
 import AdminDashboardPage from "./pages/admin_dashboard/dashboard";
 import PublicDashboard from "./pages/public/public_dashboard";
 import LodgeComplaint from "./pages/public/public_dashboard/LodgeComplaint";
@@ -35,9 +34,27 @@ import Contact from "./pages/Contact";
 import LoginForm from "./pages/Auth/SignIn";
 import UserRegistration from "./pages/Auth/UserRegistration";
 import PublicDashboardPage from "./pages/public/public_dashboard/Dashboard";
+import { useSelector } from "react-redux";
 
 // import NavigationMenu from "./components/layout/NavMenu";
 function App() {
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  console.log("in-appjs", userInfo);
+  const users = userInfo;
+
+  function UserAuth({ path, children }) {
+    return users.user_info.is_superuser === false ? (
+      <Navigate to="/userlogin" />
+    ) : (
+      children
+    );
+  }
+  // function CheckAuth({ children }) {
+  //   return users === null ? children : <Navigate to="/chat" replace />;
+  //   }
+
   return (
     <Router>
       <Routes>
@@ -80,6 +97,7 @@ function App() {
         </Route>
 
         <Route path="/public" element={<PublicDashboard />}>
+          <Route path="/public" element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" exact element={<PublicDashboardPage />} />
           <Route path="LodgeComplaint" exact element={<LodgeComplaint />} />
           <Route path="ComplaintHistory" exact element={<ComplaintHistory />} />

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import classes from "../css/homepage.module.css";
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 
 const HomePage = () => {

@@ -15,6 +15,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/userActions/userAuthAction";
 import adminImg from "../../Static/images/admin.jfif";
+import { useEffect } from "react";
 
 const AdminDashboard = () => {
   const location = useLocation();
@@ -24,6 +25,12 @@ const AdminDashboard = () => {
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
   // console.log(userInfo.user_Info.is_superuser);
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigation("/userlogin");
+    }
+  }, [userInfo, navigation]);
 
   const logoutHandler = (e) => {
     dispatch(logout());

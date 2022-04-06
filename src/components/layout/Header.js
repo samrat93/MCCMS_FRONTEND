@@ -46,7 +46,7 @@ const Header = () => {
       <AppBar sx={{ background: "#063970" }} position="static">
         <Toolbar style={toolbarStyle}>
           <Link to="/Home">
-            <AccountBalanceIcon sx={{ transform: "scale(3)" }} />
+            <AccountBalanceIcon sx={{ transform: "scale(3)", color: "#fff" }} />
           </Link>
 
           {isMatch ? (
