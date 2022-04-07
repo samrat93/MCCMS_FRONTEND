@@ -1,18 +1,15 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
 
-export const addComplaintAction = (values) => async (dispatch, getState) => {
+export const addComplaintAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.ADD_COMPLAINT_REMARKS_REQUEST,
     });
-    const {
-      userSignin: { userInfo },
-    } = getState();
 
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -38,19 +35,15 @@ export const addComplaintAction = (values) => async (dispatch, getState) => {
   }
 };
 
-export const ListComplaintRemarksAction = () => async (dispatch, getState) => {
+export const ListComplaintRemarksAction = () => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.LIST_COMPLAINT_REMARKS_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -74,21 +67,15 @@ export const ListComplaintRemarksAction = () => async (dispatch, getState) => {
   }
 };
 
-export const UpdateRemarksAction = (remarks) => async (dispatch, getState) => {
+export const UpdateRemarksAction = (remarks) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.COMPLAINT_REMARKS_UPDATE_REQUEST,
     });
 
-    // console.log("verify data in action : ", remarks.comp_status);
-    // console.log("complaint id data in action : ", remarks.cid);
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },

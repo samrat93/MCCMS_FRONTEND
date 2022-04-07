@@ -34,9 +34,7 @@ const UpdateProfileContent = () => {
   const myProfile = plist?.find((pobj) => {
     return pobj.user === current_user;
   });
-  console.log(myProfile?.user_image.name);
 
-  // console.log("Profile-id", myProfile?.id);
   const id = myProfile?.id;
 
   const [values, setValues] = useState({
@@ -75,7 +73,6 @@ const UpdateProfileContent = () => {
       user: userInfo.user_Info.id,
     });
   }, [dispatch, userInfo, profileUp]);
-  // console.log("user_id", values.user_id);
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -88,8 +85,6 @@ const UpdateProfileContent = () => {
     form_data.append("gender", values.gender);
     form_data.append("address", values.address);
     form_data.append("user", values.user);
-
-    console.log(values.user_image);
 
     if (!myProfile) {
       dispatch(registerProfileAction(form_data));

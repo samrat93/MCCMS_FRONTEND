@@ -17,24 +17,19 @@ const LodgeComplaint = () => {
 
   const listComplaintSubCR = useSelector((state) => state.listComplaintSubCR);
   const { SubcatList } = listComplaintSubCR;
-  // console.log(SubcatList);
 
   const complaintReducer = useSelector((state) => state.complaintReducer);
   const { compList } = complaintReducer;
-  // console.log("msg for success: ", compList);
 
   const listComplaintCategoryR = useSelector(
     (state) => state.listComplaintCategoryR
   );
   const { catList } = listComplaintCategoryR;
-  // console.log("catlist", catList);
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  console.log(userInfo.user_Info.is_superuser);
 
   const c_id = userInfo.user_Info.id;
-  // console.log("current_user", userInfo.user_Info.id);
 
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { states } = listStateRedu;
@@ -97,7 +92,6 @@ const LodgeComplaint = () => {
       form_data.append("complaint_subject", values.complaint_subject);
       form_data.append("complaint_details", values.complaint_details);
       form_data.append("user_id", values.user_id);
-      // console.log(values);
       dispatch(registerComplaintAction(form_data));
       setValues({
         complaint_category: "",

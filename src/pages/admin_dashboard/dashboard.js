@@ -22,7 +22,6 @@ const AdminDashboardPage = () => {
   const { userInfo } = userSignin;
 
   const usersCount = users?.count;
-  console.log("user-count", users);
   const complaintCount = compList?.length;
 
   const ListFeedbackR = useSelector((state) => state.ListFeedbackR);

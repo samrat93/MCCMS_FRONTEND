@@ -1,29 +1,22 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
 
-export const ChangePasswordAction = (values) => async (dispatch, getState) => {
+export const ChangePasswordAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.CHANGE_PASSWORD_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
 
-    console.log("user_id", userInfo.user_Info.id);
-    console.log("token", userInfo.token);
-
     const { data } = await axios.put(
-      `http://127.0.0.1:8000/api/change_password/${userInfo.user_Info.id}`,
+      `http://127.0.0.1:8000/api/change_password/${values.id}`,
       values,
       config
     );

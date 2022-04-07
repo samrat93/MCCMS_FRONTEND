@@ -1,18 +1,15 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
 
-export const readalluser = (pageNum) => async (dispatch, getState) => {
+export const readalluser = (pageNum) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.USER_LIST_REQUEST,
     });
-    const {
-      userSignin: { userInfo },
-    } = getState();
     // console.log("pagenum", pageNum);
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         "content-type": "application/json",
       },
     };
@@ -36,19 +33,15 @@ export const readalluser = (pageNum) => async (dispatch, getState) => {
   }
 };
 
-export const UserAprroval = (user) => async (dispatch, getState) => {
+export const UserAprroval = (user) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.USER_APPROVAL_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },

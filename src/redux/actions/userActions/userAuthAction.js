@@ -49,7 +49,6 @@ export const userLogin = (values) => async (dispatch) => {
 
     const username = values.usernameValue;
     const password = values.passwordValue;
-    console.log("submit", username, password);
     const config = {
       headers: {
         "content-type": "application/json",
@@ -60,11 +59,17 @@ export const userLogin = (values) => async (dispatch) => {
       { username, password },
       config
     );
+    console.log(data);
+    localStorage.setItem("userInfo", data.token);
     dispatch({
       type: UserActionType.USER_LOGIN_SUCCESS,
       payload: data,
     });
-    localStorage.setItem("userInfo", JSON.stringify(data));
+
+    dispatch({
+      type: UserActionType.USER_LOGIN_DETAILS,
+      payload: data,
+    });
   } catch (error) {
     const login_error = error.response.data.non_field_errors[0];
     dispatch({

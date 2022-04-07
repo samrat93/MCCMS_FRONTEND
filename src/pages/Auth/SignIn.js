@@ -51,13 +51,14 @@ const LoginForm = (props) => {
 
   useEffect(() => {
     if (userInfo) {
-      if (userInfo.user_Info.is_superuser) {
-        navigate("/admin");
-      } else {
-        navigate("/public");
-      }
-    } else {
-      navigate("/userlogin");
+      //   if (userInfo.user_Info.is_superuser) {
+      //     navigate("/admin");
+      //   } else {
+      //     navigate("/public");
+      //   }
+      // } else {
+      //   navigate("/userlogin");
+      navigate("/admin");
     }
   }, [userInfo, navigate]);
 

@@ -38,19 +38,19 @@ import { useSelector } from "react-redux";
 
 // import NavigationMenu from "./components/layout/NavMenu";
 function App() {
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  // const userSignin = useSelector((state) => state.userSignin);
+  // const { userInfo } = userSignin;
 
-  console.log("in-appjs", userInfo);
-  const users = userInfo;
+  // console.log("in-appjs", userInfo);
+  // const users = userInfo;
 
-  function UserAuth({ path, children }) {
-    return users.user_info.is_superuser === false ? (
-      <Navigate to="/userlogin" />
-    ) : (
-      children
-    );
-  }
+  // function UserAuth({ path, children }) {
+  //   return users.user_info.is_superuser === false ? (
+  //     <Navigate to="/userlogin" />
+  //   ) : (
+  //     children
+  //   );
+  // }
   // function CheckAuth({ children }) {
   //   return users === null ? children : <Navigate to="/chat" replace />;
   //   }

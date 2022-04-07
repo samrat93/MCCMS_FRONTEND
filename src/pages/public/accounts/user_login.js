@@ -17,7 +17,7 @@ const User_login = () => {
   const navigate = useNavigate();
 
   const userSignin = useSelector((state) => state.userSignin);
-  const { loading, error, userInfo } = userSignin;
+  const { error, userInfo } = userSignin;
   // const userList = useSelector((state) => state.userList);
   // const { users } = userList;
 
@@ -34,9 +34,7 @@ const User_login = () => {
   };
   useEffect(() => {
     if (userInfo) {
-      // dispatch(readalluser());
       navigate("/admin");
-      // navigate("/public");
     }
   }, [userInfo, navigate]);
 

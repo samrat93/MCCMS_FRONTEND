@@ -21,7 +21,6 @@ const PendingComplaints = () => {
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
   const newUser = users?.results;
-  // console.log("New User", newUser);
 
   const ListComplaintRemarksR = useSelector(
     (state) => state.ListComplaintRemarksR
@@ -35,7 +34,6 @@ const PendingComplaints = () => {
         ?.username,
     };
   });
-  console.log("complist", newCompList);
 
   const pendingComplaint = newCompList?.filter((data) => {
     return data.complaint_status === "1";

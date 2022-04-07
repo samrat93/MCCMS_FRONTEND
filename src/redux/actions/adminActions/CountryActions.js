@@ -1,19 +1,15 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
 
-export const AddCountryAction = (values) => async (dispatch, getState) => {
+export const AddCountryAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_ADD_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -37,19 +33,15 @@ export const AddCountryAction = (values) => async (dispatch, getState) => {
   }
 };
 
-export const ListCountryAction = () => async (dispatch, getState) => {
+export const ListCountryAction = () => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_LIST_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -73,19 +65,15 @@ export const ListCountryAction = () => async (dispatch, getState) => {
   }
 };
 
-export const DeleteCountryAction = (cid) => async (dispatch, getState) => {
+export const DeleteCountryAction = (cid) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_DELETE_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -110,7 +98,7 @@ export const DeleteCountryAction = (cid) => async (dispatch, getState) => {
   }
 };
 
-export const UpdateCountryAction = (values) => async (dispatch, getState) => {
+export const UpdateCountryAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_UPDATE_REQUEST,
@@ -118,16 +106,9 @@ export const UpdateCountryAction = (values) => async (dispatch, getState) => {
     const country_name = values.values.country_name;
     const country_desc = values.values.country_desc;
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
-    // console.log("country-update-value in update: ", values);
-    // console.log("country-name", values.values.country_name);
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },

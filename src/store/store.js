@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import reducer from "../redux/reducers";
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
+  ? localStorage.getItem("userInfo")
   : null;
 
 const initialState = {

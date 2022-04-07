@@ -24,13 +24,12 @@ const AdminDashboard = () => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  // console.log(userInfo.user_Info.is_superuser);
 
-  useEffect(() => {
-    if (!userInfo) {
-      navigation("/userlogin");
-    }
-  }, [userInfo, navigation]);
+  // useEffect(() => {
+  //   if (!userInfo) {
+  //     navigation("/userlogin");
+  //   }
+  // }, [userInfo, navigation]);
 
   const logoutHandler = (e) => {
     dispatch(logout());
@@ -167,7 +166,7 @@ const AdminDashboard = () => {
           <div className={classes["profile-details"]}>
             <img src={adminImg} alt="" />
             <span className={classes.admin_name}>
-              {userInfo.user_Info.username}
+              {/* {userInfo.user_Info.username} */}
             </span>
             {/* <KeyboardArrowDownIcon /> */}
           </div>

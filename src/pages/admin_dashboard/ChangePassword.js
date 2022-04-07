@@ -4,12 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordAction } from "../../redux/actions/adminActions/ChangePasswordAction";
 import msg from "../../css/msg/msg.module.css";
 import UserInput from "../Auth/hooks/UserInput";
+import { userLogin } from "../../redux/actions/userActions/userAuthAction";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const ChangePassword = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const passwordChangeRedu = useSelector((state) => state.passwordChangeRedu);
   const { error, success } = passwordChangeRedu;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo, userData } = userSignin;
+  console.log(userData);
 
   const {
     value: new_password,
@@ -61,6 +69,11 @@ const ChangePassword = () => {
       resetPassword();
     }
   };
+  useState(() => {
+    if (!userInfo) {
+      navigate("/userlogin");
+    }
+  });
   const passwordClasses =
     passwordHasError && old_passwordHasError && conf_passwordHasError
       ? formclasses["invalid"]

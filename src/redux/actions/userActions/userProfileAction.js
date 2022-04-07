@@ -1,19 +1,16 @@
 import axios from "axios";
 import { UserActionType } from "../../constants/userActionType";
 
-export const registerProfileAction = (values) => async (dispatch, getState) => {
+export const registerProfileAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: UserActionType.PROFILE_REGISTER_REQUEST,
     });
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    // console.log("Received-val", values);
+
     const config = {
       headers: {
         "content-type": "multipart/form-data",
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -28,7 +25,6 @@ export const registerProfileAction = (values) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    // console.log("p-error", error.response.data);
     dispatch({
       type: UserActionType.PROFILE_REGISTER_FAIL,
       payload:
@@ -38,19 +34,16 @@ export const registerProfileAction = (values) => async (dispatch, getState) => {
     });
   }
 };
-export const listProfileAction = () => async (dispatch, getState) => {
+export const listProfileAction = () => async (dispatch) => {
   try {
     dispatch({
       type: UserActionType.PROFILE_LIST_REQUEST,
     });
-    const {
-      userSignin: { userInfo },
-    } = getState();
 
     const config = {
       headers: {
         "content-type": "multipart/form-data",
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -64,7 +57,6 @@ export const listProfileAction = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    // console.log("error in profile : ", error.response.data);
     dispatch({
       type: UserActionType.PROFILE_LIST_FAIL,
       payload:
@@ -75,21 +67,18 @@ export const listProfileAction = () => async (dispatch, getState) => {
   }
 };
 
-export const updateProfileAction = (values) => async (dispatch, getState) => {
+export const updateProfileAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: UserActionType.PROFILE_UPDATE_REQUEST,
     });
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    // console.log("Received-val", values.form_data);
+
     const val = values.form_data;
     const config = {
       headers: {
         "Content-Type":
           "multipart/form-data;boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "content-type": "application/json",
       },
@@ -104,7 +93,6 @@ export const updateProfileAction = (values) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    console.log("p-error", error.response.data);
     dispatch({
       type: UserActionType.PROFILE_UPDATE_FAIL,
       payload:

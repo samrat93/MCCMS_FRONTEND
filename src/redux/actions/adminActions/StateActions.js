@@ -1,19 +1,15 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
 
-export const AddStateAction = (values) => async (dispatch, getState) => {
+export const AddStateAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.STATE_ADD_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -39,19 +35,15 @@ export const AddStateAction = (values) => async (dispatch, getState) => {
   }
 };
 
-export const ListStateAction = () => async (dispatch, getState) => {
+export const ListStateAction = () => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.STATE_LIST_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -75,19 +67,15 @@ export const ListStateAction = () => async (dispatch, getState) => {
   }
 };
 
-export const DeleteStateAction = (sid) => async (dispatch, getState) => {
+export const DeleteStateAction = (sid) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.STATE_DELETE_REQUEST,
     });
 
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    console.log("State-id in delete: ", sid);
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -112,7 +100,7 @@ export const DeleteStateAction = (sid) => async (dispatch, getState) => {
   }
 };
 
-export const UpdateStateAction = (values) => async (dispatch, getState) => {
+export const UpdateStateAction = (values) => async (dispatch) => {
   try {
     dispatch({
       type: AdminActionType.STATE_UPDATE_REQUEST,
@@ -120,13 +108,10 @@ export const UpdateStateAction = (values) => async (dispatch, getState) => {
     const state_name = values.values.state_name;
     const state_desc = values.values.state_desc;
     console.log(state_name, state_desc);
-    const {
-      userSignin: { userInfo },
-    } = getState();
 
     const config = {
       headers: {
-        Authorization: `Token ${userInfo.token}`,
+        Authorization: `Token ${localStorage.getItem("userInfo")}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
