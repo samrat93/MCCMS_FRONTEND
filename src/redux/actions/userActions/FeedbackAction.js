@@ -2,40 +2,41 @@ import axios from "axios";
 import { UserActionType } from "../../constants/userActionType";
 const { REACT_APP_API_ENDPOINT } = process.env;
 
-export const registerFeedbackAction = (values) => async (dispatch) => {
-  try {
-    dispatch({
-      type: UserActionType.FEEDBACK_ADD_REQUEST,
-    });
+export const registerFeedbackAction =
+  (values) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: UserActionType.FEEDBACK_ADD_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.post(
-      `${REACT_APP_API_ENDPOINT}/feedback`,
-      values,
-      config
-    );
-    dispatch({
-      type: UserActionType.FEEDBACK_ADD_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    // console.log("error in complaint : ", error.response.data);
-    dispatch({
-      type: UserActionType.FEEDBACK_ADD_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `${REACT_APP_API_ENDPOINT}/feedback`,
+        values,
+        config
+      );
+      dispatch({
+        type: UserActionType.FEEDBACK_ADD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      // console.log("error in complaint : ", error.response.data);
+      dispatch({
+        type: UserActionType.FEEDBACK_ADD_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
-export const listFeedbackAction = () => async (dispatch) => {
+export const listFeedbackAction = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: UserActionType.FEEDBACK_LIST_REQUEST,

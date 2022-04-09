@@ -1,5 +1,6 @@
 import axios from "axios";
 import { UserActionType } from "../../constants/userActionType";
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 export const userSignup = (values) => async (dispatch) => {
   try {
@@ -21,7 +22,7 @@ export const userSignup = (values) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/register/",
+      `${REACT_APP_API_ENDPOINT}/register/`,
       val,
       config
     );
@@ -49,27 +50,22 @@ export const userLogin = (values) => async (dispatch) => {
 
     const username = values.usernameValue;
     const password = values.passwordValue;
+    console.log("submit", username, password);
     const config = {
       headers: {
         "content-type": "application/json",
       },
     };
     const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/login/",
+      `${REACT_APP_API_ENDPOINT}/login/`,
       { username, password },
       config
     );
-    console.log(data);
-    localStorage.setItem("userInfo", data.token);
     dispatch({
       type: UserActionType.USER_LOGIN_SUCCESS,
       payload: data,
     });
-
-    dispatch({
-      type: UserActionType.USER_LOGIN_DETAILS,
-      payload: data,
-    });
+    localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     const login_error = error.response.data.non_field_errors[0];
     dispatch({
