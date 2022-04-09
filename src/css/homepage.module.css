@@ -2,44 +2,54 @@
   height: 60vh;
   display: flex;
   justify-content: center;
-  align-items: baseline;
   padding: 50px;
   width: 100%;
   background-size: cover;
 }
-
 .wrapper .center {
   position: absolute;
   left: 50%;
   top: 40%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,-50%);
   font-family: sans-serif;
-  
+  word-wrap: break-word;
+  width: 100%;
 }
+
 .center h1 {
   color: white;
-  font-size: 6rem;
+  font-size: 4rem;
   font-weight: bold;
   text-align: center;
   word-wrap: break-word;
 }
 .center h2 {
   color: white;
-  font-size: 5rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-top: 10px;
   text-align: center;
   word-wrap: break-word;
 }
 .center .buttons {
-  margin: 35px 280px;
+  margin-top: 35px;
+  margin-left: 45%;
+  justify-content: center;
+}
+
+@media (max-width:550px) {
+  .center .buttons {
+    margin-top: 35px;
+    margin-left: 26%;
+    justify-content: center;
+  }
 }
 .buttons button {
   height: 50px;
-  width: 100%;
+  width: 200px;
   font-size: 18px;
   font-weight: 600;
-  color: #ffb3b3;
+  color: #fff;
   background: red;
   outline: none;
   cursor: pointer;
@@ -49,7 +59,7 @@
   margin: 10px;
 }
 .buttons .btn2 {
-  margin-left: 25px;
+  margin-left: 5px;
 }
 .buttons button:hover {
   background: #cc0000;

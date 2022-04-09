@@ -25,11 +25,11 @@ const AdminDashboard = () => {
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (!userInfo) {
-  //     navigation("/userlogin");
-  //   }
-  // }, [userInfo, navigation]);
+  useEffect(() => {
+    if (!userInfo) {
+      navigation("/userlogin");
+    }
+  }, [userInfo, navigation]);
 
   const logoutHandler = (e) => {
     dispatch(logout());
@@ -45,9 +45,7 @@ const AdminDashboard = () => {
               to="/Home"
               className={classes.links_name}
             >
-              <LogoutOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <LogoutOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Logout</span>
             </NavLink>
           </li>
@@ -66,17 +64,13 @@ const AdminDashboard = () => {
         <ul className={classes["nav-links"]}>
           <li>
             <NavLink to="/admin/dashboard">
-              <DashboardOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <DashboardOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Dashboard</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/admin/userlist" className={classes.links_name}>
-              <GroupOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <GroupOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>User List</span>
             </NavLink>
           </li>
@@ -85,18 +79,14 @@ const AdminDashboard = () => {
               to="/admin/manageUserComplaint/pendingComplaints"
               className={classes.links_name}
             >
-              <ErrorIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <ErrorIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Manage Complaint</span>
             </NavLink>
           </li>
 
           <li>
             <NavLink to="/admin/add-country" className={classes.links_name}>
-              <FlagOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <FlagOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Add Country</span>
             </NavLink>
           </li>
@@ -104,7 +94,7 @@ const AdminDashboard = () => {
           <li>
             <NavLink to="/admin/add-state" className={classes.links_name}>
               <LocationCityOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
+                sx={{ fontSize: "25px", color: "#fff" }}
               />
               <span className={classes.links_name}>Add State</span>
             </NavLink>
@@ -114,9 +104,7 @@ const AdminDashboard = () => {
               to="/admin/userFeedbackView"
               className={classes.links_name}
             >
-              <FeedbackOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <FeedbackOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>View Feedback</span>
             </NavLink>
           </li>
@@ -126,9 +114,7 @@ const AdminDashboard = () => {
               to="/admin/addComplaintCategory"
               className={classes.links_name}
             >
-              <CategoryIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <CategoryIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Add Category</span>
             </NavLink>
           </li>
@@ -137,17 +123,13 @@ const AdminDashboard = () => {
               to="/admin/addComplaintSubCategory"
               className={classes.links_name}
             >
-              <CategoryIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <CategoryIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Add Sub Category</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/admin/change-password" className={classes.links_name}>
-              <SecurityIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <SecurityIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Change Password</span>
             </NavLink>
           </li>
@@ -157,18 +139,11 @@ const AdminDashboard = () => {
       <section className={classes["home-section"]}>
         <nav>
           <span className={classes.dashboard}>Municipal Corporation CMS</span>
-          {/* <div className={classes["search-box"]}>
-            <input type="text" placeholder="Search..." />
-            <i className={classes["bx-search"]}>
-              <SearchIcon />
-            </i>
-          </div> */}
           <div className={classes["profile-details"]}>
             <img src={adminImg} alt="" />
             <span className={classes.admin_name}>
-              {/* {userInfo.user_Info.username} */}
+              {userInfo.user_Info.username}
             </span>
-            {/* <KeyboardArrowDownIcon /> */}
           </div>
         </nav>
         <Outlet />

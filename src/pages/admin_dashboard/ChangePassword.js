@@ -4,20 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordAction } from "../../redux/actions/adminActions/ChangePasswordAction";
 import msg from "../../css/msg/msg.module.css";
 import UserInput from "../Auth/hooks/UserInput";
-import { userLogin } from "../../redux/actions/userActions/userAuthAction";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const ChangePassword = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const passwordChangeRedu = useSelector((state) => state.passwordChangeRedu);
   const { error, success } = passwordChangeRedu;
-
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo, userData } = userSignin;
-  console.log(userData);
 
   const {
     value: new_password,
@@ -69,11 +61,6 @@ const ChangePassword = () => {
       resetPassword();
     }
   };
-  useState(() => {
-    if (!userInfo) {
-      navigate("/userlogin");
-    }
-  });
   const passwordClasses =
     passwordHasError && old_passwordHasError && conf_passwordHasError
       ? formclasses["invalid"]
@@ -96,7 +83,7 @@ const ChangePassword = () => {
                         <input
                           type="password"
                           name="old_password"
-                          placeholder="Enter your old password"
+                          placeholder="Current password"
                           value={old_password}
                           onChange={old_passwordChangeHandler}
                           onBlur={old_passwordBlurHandler}
@@ -121,18 +108,17 @@ const ChangePassword = () => {
                           type="password"
                           name="new_password"
                           value={new_password}
-                          placeholder="Enter your New password"
+                          placeholder="New password"
                           onChange={passwordChangeHandler}
                           onBlur={passwordBlurHandler}
                         />
-
+                        {error && error.npassword && (
+                          <p className={msg.error}>{error.npassword}</p>
+                        )}
                         {passwordHasError && (
                           <p className={msg.error}>
                             {"New Password Field Is Required."}
                           </p>
-                        )}
-                        {error && error.npassword && (
-                          <p className={msg.error}>{error.npassword}</p>
                         )}
                       </div>
                     </div>
@@ -145,7 +131,7 @@ const ChangePassword = () => {
                           type="password"
                           name="conf_password"
                           value={conf_password}
-                          placeholder="Confirm your New password"
+                          placeholder="Confirm New password"
                           onChange={conf_passwordChangeHandler}
                           onBlur={conf_passwordBlurHandler}
                         />
@@ -160,9 +146,7 @@ const ChangePassword = () => {
                             {"Password Doesn't Match !"}
                           </p>
                         )}
-                        {error && error.cpassword && (
-                          <p className={msg.error}>{error.cpassword}</p>
-                        )}
+
                         {success && (
                           <p className={msg.success}>
                             {"Password Change Successfully"}

@@ -9,12 +9,8 @@ import { registerFeedbackAction } from "../../../redux/actions/userActions/Feedb
 const PublicFeedBack = () => {
   const dispatch = useDispatch();
 
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
-
-  const c_id = userInfo.user_Info.id;
   const AddFeedbackR = useSelector((state) => state.AddFeedbackR);
-  const { loading, error, success } = AddFeedbackR;
+  const { error, success } = AddFeedbackR;
 
   const [values, setValues] = useState({
     name: "",
@@ -52,7 +48,6 @@ const PublicFeedBack = () => {
   return (
     <div>
       <div className={classesDashboard["home-content"]}>
-        {/* <div className={classesDashboard["sales-boxes"]}> */}
         <div className={classesDashboard["recent-sales"]}>
           <div className={classes.ContentBody}>
             <div className={classes.container}>
@@ -60,8 +55,6 @@ const PublicFeedBack = () => {
               <div className={classes.content}>
                 <form onSubmit={submitHandler}>
                   <div className={classes["user-details"]}>
-                    {/* {loading && <p>Loading...</p>} */}
-
                     <div className={classes["input-box"]}>
                       <span className={classes.signinspan}>Name</span>
                       <input
@@ -74,12 +67,7 @@ const PublicFeedBack = () => {
                       {message.name && (
                         <p className={msg.error}>{message.name}</p>
                       )}
-                      <input
-                        type="hidden"
-                        name="user_id"
-                        // value={c_id}
-                        // onChange={handleChange}
-                      />
+                      <input type="hidden" name="user_id" />
                     </div>
                     <div className={classes["input-box"]}>
                       <span className={classes.signinspan}>Email</span>
@@ -139,7 +127,6 @@ const PublicFeedBack = () => {
             </div>
           </div>
         </div>
-        {/* </div> */}
       </div>
     </div>
   );

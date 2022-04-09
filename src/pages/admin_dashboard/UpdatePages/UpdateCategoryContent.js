@@ -9,6 +9,7 @@ import swal from "sweetalert";
 
 const UpdateCategoryContent = ({ categoryData }) => {
   const dispatch = useDispatch();
+
   const UpdatecatR = useSelector((state) => state.UpdatecatR);
   const { cat, error } = UpdatecatR;
 
@@ -30,7 +31,7 @@ const UpdateCategoryContent = ({ categoryData }) => {
       category_name: categoryData.category_name,
       category_desc: categoryData.category_desc,
     });
-  }, []);
+  }, [cat]);
 
   const [message, setMessage] = useState("");
 

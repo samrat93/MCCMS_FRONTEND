@@ -2,14 +2,13 @@ import classes from "../../../css/public_css/publicForms.module.css";
 import classesDashboard from "../../../css/public_css/publicDashboard.module.css";
 import validateComplaint from "../../../components/accounts/user/validateComplaint";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { registerComplaintAction } from "../../../redux/actions/userActions/complaintAction";
 import { ListComplaintCategoryAction } from "../../../redux/actions/adminActions/ComplaintCategoryAction";
 import { ListComplaintSubCategoryAction } from "../../../redux/actions/adminActions/ComplaintSubCategoryAction";
 import { ListStateAction } from "../../../redux/actions/adminActions/StateActions";
 import msg from "../../../css/msg/msg.module.css";
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../../../redux/actions/userActions/userAuthAction";
 
 const LodgeComplaint = () => {
   const dispatch = useDispatch();
@@ -28,6 +27,7 @@ const LodgeComplaint = () => {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  console.log(userInfo.user_Info.is_superuser);
 
   const c_id = userInfo.user_Info.id;
 
@@ -106,7 +106,6 @@ const LodgeComplaint = () => {
   return (
     <div>
       <div className={classesDashboard["home-content"]}>
-        {/* <div className={classesDashboard["sales-boxes"]}> */}
         <div className={classesDashboard["recent-sales"]}>
           <div className={classes.ContentBody}>
             <div className={classes.container}>
@@ -114,7 +113,6 @@ const LodgeComplaint = () => {
               <div className={classes.content}>
                 <form onSubmit={submitHandler}>
                   <div className={classes["user-details"]}>
-                    {/* {loading && <p>Loading...</p>} */}
                     <div className={classes["input-box"]}>
                       <span className={classes.signinspan}>
                         Select Complaint Category
@@ -153,11 +151,6 @@ const LodgeComplaint = () => {
                           </option>
                         ))}
                       </select>
-                      {message.complaint_sub_category_id && (
-                        <p className={msg.error}>
-                          {message.complaint_sub_category_id}
-                        </p>
-                      )}
                     </div>
                     <div className={classes["input-box"]}>
                       <span className={classes.signinspan}>Select State</span>
@@ -179,8 +172,6 @@ const LodgeComplaint = () => {
                     </div>
                   </div>
                   <div className={classes["user-details"]}>
-                    {/* {loading && <p>Loading...</p>} */}
-
                     <div className={classes["input-box"]}>
                       <span className={classes.signinspan}>
                         Nature Of Complaint / Complaint Subject
@@ -247,7 +238,6 @@ const LodgeComplaint = () => {
             </div>
           </div>
         </div>
-        {/* </div> */}
       </div>
     </div>
   );

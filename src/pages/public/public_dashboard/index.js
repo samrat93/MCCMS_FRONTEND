@@ -47,9 +47,7 @@ const PublicDashboard = () => {
               to="/Home"
               className={classes.links_name}
             >
-              <LogoutOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <LogoutOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Logout</span>
             </NavLink>
           </li>
@@ -68,17 +66,13 @@ const PublicDashboard = () => {
         <ul className={classes["nav-links"]}>
           <li>
             <NavLink to="/public/dashboard">
-              <DashboardOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <DashboardOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Public Dashboard</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/public/LodgeComplaint" className={classes.links_name}>
-              <ReportProblemIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <ReportProblemIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Lodge Complaint</span>
             </NavLink>
           </li>
@@ -87,25 +81,19 @@ const PublicDashboard = () => {
               to="/public/ComplaintHistory"
               className={classes.links_name}
             >
-              <HistoryIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <HistoryIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Complaint History</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/public/PublicProfile" className={classes.links_name}>
-              <AccountBoxIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <AccountBoxIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Profile</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/public/publicFeedback" className={classes.links_name}>
-              <FeedbackOutlinedIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <FeedbackOutlinedIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Give Feedback</span>
             </NavLink>
           </li>
@@ -114,9 +102,7 @@ const PublicDashboard = () => {
               to="/public/ChangePasswordPublic"
               className={classes.links_name}
             >
-              <SecurityIcon
-                sx={{ fontSize: "25px", color: "#fff", marginLeft: "15px" }}
-              />
+              <SecurityIcon sx={{ fontSize: "25px", color: "#fff" }} />
               <span className={classes.links_name}>Change Password</span>
             </NavLink>
           </li>
@@ -128,18 +114,11 @@ const PublicDashboard = () => {
           <span className={classes.dashboard}>
             Municipal Corporation Complaint Management System
           </span>
-          {/* <div className={classes["search-box"]}>
-            <input type="text" placeholder="Search..." />
-            <i className={classes["bx-search"]}>
-              <SearchIcon />
-            </i>
-          </div> */}
           <div className={classes["profile-details"]}>
             <img src={myProfile?.user_image} alt="" />
             <span className={classes.admin_name}>
               {userInfo.user_Info.username}
             </span>
-            {/* <KeyboardArrowDownIcon /> */}
           </div>
         </nav>
 

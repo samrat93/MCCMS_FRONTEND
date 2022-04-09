@@ -25,7 +25,6 @@ export const registerFeedbackAction =
         payload: data,
       });
     } catch (error) {
-      // console.log("error in complaint : ", error.response.data);
       dispatch({
         type: UserActionType.FEEDBACK_ADD_FAIL,
         payload:

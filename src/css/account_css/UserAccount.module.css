@@ -29,7 +29,7 @@
 
 
 .container .title {
-  font-size: 25px;
+  font-size: 16px;
   font-weight: 500;
   position: relative;
 }
@@ -54,7 +54,7 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 .containerSign .title {
-  font-size: 25px;
+  font-size: 18px;
   font-weight: 500;
   position: relative;
 }
@@ -233,9 +233,22 @@ form .button input:hover {
 }
 .signinspan {
   display: block;
-  font-weight: 500;
-  font-size: 1.3rem;
+  font-weight: 550;
+  color: #3a3636;
+  font-size: 15px;
   margin-bottom: 5px;
+}
+
+.forgetPass {
+  display: block;
+  font-weight: 550;
+  color: #f35b03;
+  font-size: 15px;
+  margin-bottom: 15px;
+  cursor: context-menu;
+}
+.forgetPass:hover{
+  color: #812394;
 }
 
 form .user-details .input-textarea {

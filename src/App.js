@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
-import User_login from "./pages/public/accounts/user_login";
-import Layout from "./components/layout/Layout";
-import SignupForm from "./pages/public/accounts/SignupForm";
 import HomePage from "./pages/homepage";
 import AdminDashboard from "./pages/admin_dashboard";
 import UserList from "./pages/admin_dashboard/UserList";
@@ -36,24 +34,25 @@ import UserRegistration from "./pages/Auth/UserRegistration";
 import PublicDashboardPage from "./pages/public/public_dashboard/Dashboard";
 import { useSelector } from "react-redux";
 
-// import NavigationMenu from "./components/layout/NavMenu";
 function App() {
-  // const userSignin = useSelector((state) => state.userSignin);
-  // const { userInfo } = userSignin;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
-  // console.log("in-appjs", userInfo);
-  // const users = userInfo;
+  function RequiredAuthAdmin({ path, children }) {
+    return userInfo === null || !userInfo.user_Info.is_superuser ? (
+      <Navigate to="/userlogin" replace />
+    ) : (
+      children
+    );
+  }
 
-  // function UserAuth({ path, children }) {
-  //   return users.user_info.is_superuser === false ? (
-  //     <Navigate to="/userlogin" />
-  //   ) : (
-  //     children
-  //   );
-  // }
-  // function CheckAuth({ children }) {
-  //   return users === null ? children : <Navigate to="/chat" replace />;
-  //   }
+  function RequiredAuthPublic({ children }) {
+    return userInfo === null || userInfo.user_Info.is_superuser ? (
+      <Navigate to="/userlogin" replace />
+    ) : (
+      children
+    );
+  }
 
   return (
     <Router>
@@ -61,10 +60,18 @@ function App() {
         <Route path="/" element={<Header />}>
           <Route path="/" element={<Navigate replace to="Home" />} />
           <Route path="/Home" element={<HomePage />} />
+          <Route path="/contact-us" element={<Contact />} />
           <Route path="/userlogin" element={<LoginForm />} />
           <Route path="/usersignup" element={<UserRegistration />} />
         </Route>
-        <Route path="/admin" element={<AdminDashboard />}>
+        <Route
+          path="/admin"
+          element={
+            <RequiredAuthAdmin>
+              <AdminDashboard />
+            </RequiredAuthAdmin>
+          }
+        >
           <Route path="/admin" element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="userlist" element={<UserList />} />
@@ -96,7 +103,14 @@ function App() {
           <Route path="userFeedbackView" element={<UserFeedBackView />} />
         </Route>
 
-        <Route path="/public" element={<PublicDashboard />}>
+        <Route
+          path="/public"
+          element={
+            <RequiredAuthPublic>
+              <PublicDashboard />
+            </RequiredAuthPublic>
+          }
+        >
           <Route path="/public" element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" exact element={<PublicDashboardPage />} />
           <Route path="LodgeComplaint" exact element={<LodgeComplaint />} />

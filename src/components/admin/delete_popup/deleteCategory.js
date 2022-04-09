@@ -7,15 +7,16 @@ import {
 } from "../../../redux/actions/adminActions/ComplaintCategoryAction";
 
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSlider } from "@mui/base";
 
 const DeleteCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
   const dispatch = useDispatch();
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
   const deleteComplaintCatR = useSelector((state) => state.deleteComplaintCatR);
-  const { loading, success } = deleteComplaintCatR;
-  // const navigate = useNavigate();
-  // const userSignin = useSelector((state) => state.userSignin);
-  // const { userInfo } = userSignin;
+  const { cCat } = deleteComplaintCatR;
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -23,10 +24,10 @@ const DeleteCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
     onDialog(false);
   };
   useEffect(() => {
-    if (success) {
+    if (userInfo) {
       dispatch(ListComplaintCategoryAction());
     }
-  }, [dispatch, success]);
+  }, [dispatch, userInfo, cCat]);
 
   return (
     <div className={classes.popup_box}>
@@ -40,11 +41,7 @@ const DeleteCategoryDialog = ({ dialogMessage, onDialog, cname, cid }) => {
           >
             No
           </button>
-          <button
-            className={classes.deleteButton_yes}
-            // onClick={() => onDialog(true)}
-            onClick={deleteHandler}
-          >
+          <button className={classes.deleteButton_yes} onClick={deleteHandler}>
             Yes
           </button>
         </div>

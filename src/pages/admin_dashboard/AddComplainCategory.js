@@ -94,7 +94,7 @@ const AddComplaintCategory = () => {
     } else {
       navigate("/userlogin");
     }
-  }, [dispatch, userInfo, navigate]);
+  }, [dispatch, userInfo, navigate, success]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [cid, setCid] = useState(0);
@@ -201,7 +201,6 @@ const AddComplaintCategory = () => {
               </div>
             ) : (
               <table className={tbl.table}>
-                {/* <caption>Complaint Category Details</caption> */}
                 <thead>
                   <tr>
                     <th>S.N</th>

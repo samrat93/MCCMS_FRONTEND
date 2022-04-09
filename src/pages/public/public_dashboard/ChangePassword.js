@@ -1,48 +1,75 @@
-import classesDashboard from "../../../css/account_css/UserAccount.module.css";
+import formclasses from "../../../css/account_css/UserAccount.module.css";
 import classes from "../../../css/public_css/publicDashboard.module.css";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState } from "react";
-import Validate from "../../../components/accounts/user/validateChangePasswordUser";
 import { ChangePasswordUserAction } from "../../../redux/actions/userActions/changePasswordUserAction";
 import msg from "../../../css/msg/msg.module.css";
+import UserInput from "../../Auth/hooks/UserInput";
+import { useNavigate } from "react-router-dom";
+
+const isNotEmpty = (value) => value.trim() !== "";
 
 const ChangePasswordPublic = () => {
   const dispatch = useDispatch();
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
 
   const changePasswordUserR = useSelector((state) => state.changePasswordUserR);
-  const { loading, error, success } = changePasswordUserR;
+  const { error, success } = changePasswordUserR;
 
-  const [values, setValues] = useState({
-    old_password: "",
-    new_password: "",
-    conf_password: "",
-  });
-  const [message, setMessage] = useState("");
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+  const {
+    value: new_password,
+    isValid: passwordIsValid,
+    hasError: passwordHasError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: resetPassword,
+  } = UserInput(isNotEmpty);
+
+  const {
+    value: old_password,
+    isValid: old_passwordIsValid,
+    hasError: old_passwordHasError,
+    valueChangeHandler: old_passwordChangeHandler,
+    inputBlurHandler: old_passwordBlurHandler,
+    reset: resetOld_password,
+  } = UserInput(isNotEmpty);
+
+  const {
+    value: conf_password,
+    isValid: conf_passwordIsValid,
+    hasError: conf_passwordHasError,
+    valueChangeHandler: conf_passwordChangeHandler,
+    inputBlurHandler: conf_passwordBlurHandler,
+    reset: resetConf_password,
+  } = UserInput(isNotEmpty);
+
+  let formIsValid = false;
+  if (passwordIsValid && old_passwordIsValid && conf_passwordIsValid) {
+    formIsValid = true;
+  }
+  const values = { new_password, old_password, conf_password };
+
+  let passwordMatch = false;
+  if (new_password === conf_password) {
+    passwordMatch = true;
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const mess = Validate(values);
-    if (Object.keys(mess).length !== 0) {
-      setMessage(mess);
+
+    if (!formIsValid) {
+      return;
     } else {
       dispatch(ChangePasswordUserAction(values));
-      setValues({
-        old_password: "",
-        new_password: "",
-        conf_password: "",
-      });
+      resetOld_password();
+      resetConf_password();
+      resetPassword();
     }
   };
+
+  const passwordClasses =
+    passwordHasError && old_passwordHasError && conf_passwordHasError
+      ? formclasses["invalid"]
+      : formclasses["input-box-login"];
 
   return (
     <div>
@@ -50,24 +77,27 @@ const ChangePasswordPublic = () => {
         <div className={classes["sales-boxes"]}>
           <div className={classes["recent-sales"]}>
             <div className={classes.Admin_panel_content_Body}>
-              <div className={classesDashboard.container}>
-                <div className={classesDashboard.title}>Change Password</div>
-                <div className={classesDashboard.content}>
+              <div className={formclasses.container}>
+                <div className={formclasses.title}>Change Password</div>
+                <div className={formclasses.content}>
                   <form onSubmit={submitHandler}>
-                    <div className={classesDashboard["user-details"]}>
-                      <div className={classesDashboard["input-box-login"]}>
-                        <span className={classesDashboard.signinspan}>
+                    <div className={formclasses["user-details"]}>
+                      <div className={passwordClasses}>
+                        <span className={formclasses.signinspan}>
                           Old Password
                         </span>
                         <input
                           type="password"
                           name="old_password"
                           placeholder="Enter your old password"
-                          value={values.old_password}
-                          onChange={handleChange}
+                          value={old_password}
+                          onChange={old_passwordChangeHandler}
+                          onBlur={old_passwordBlurHandler}
                         />
-                        {message.old_password && (
-                          <p className={msg.error}>{message.old_password}</p>
+                        {old_passwordHasError && (
+                          <p className={msg.error}>
+                            {"Old Password Field Is Required."}
+                          </p>
                         )}
                         {error && error.opassword && (
                           <p className={msg.error}>{error.opassword}</p>
@@ -75,48 +105,53 @@ const ChangePasswordPublic = () => {
                       </div>
                     </div>
 
-                    <div className={classesDashboard["user-details"]}>
-                      <div className={classesDashboard["input-box-login"]}>
-                        <span className={classesDashboard.signinspan}>
+                    <div className={formclasses["user-details"]}>
+                      <div className={passwordClasses}>
+                        <span className={formclasses.signinspan}>
                           New Password
                         </span>
                         <input
                           type="password"
                           name="new_password"
-                          value={values.new_password}
+                          value={new_password}
                           placeholder="Enter your New password"
-                          onChange={handleChange}
+                          onChange={passwordChangeHandler}
+                          onBlur={passwordBlurHandler}
                         />
 
-                        {message.new_password && (
-                          <p className={msg.error}>{message.new_password}</p>
+                        {passwordHasError && (
+                          <p className={msg.error}>
+                            {"New Password Field Is Required."}
+                          </p>
                         )}
-                        {error && error.npassword1 && (
-                          <p className={msg.error}>{error.npassword1}</p>
-                        )}
-                        {error && error.npassword2 && (
-                          <p className={msg.error}>{error.npassword2}</p>
-                        )}
-                        {error && error.npassword3 && (
-                          <p className={msg.error}>{error.npassword3}</p>
+                        {error && error.npassword && (
+                          <p className={msg.error}>{error.npassword}</p>
                         )}
                       </div>
                     </div>
-                    <div className={classesDashboard["user-details"]}>
-                      <div className={classesDashboard["input-box-login"]}>
-                        <span className={classesDashboard.signinspan}>
+                    <div className={formclasses["user-details"]}>
+                      <div className={passwordClasses}>
+                        <span className={formclasses.signinspan}>
                           Confirm Password
                         </span>
                         <input
                           type="password"
                           name="conf_password"
-                          value={values.conf_password}
+                          value={conf_password}
                           placeholder="Confirm your New password"
-                          onChange={handleChange}
+                          onChange={conf_passwordChangeHandler}
+                          onBlur={conf_passwordBlurHandler}
                         />
 
-                        {message.conf_password && (
-                          <p className={msg.error}>{message.conf_password}</p>
+                        {conf_passwordHasError && (
+                          <p className={msg.error}>
+                            {"Confirm Password Field Is Required."}
+                          </p>
+                        )}
+                        {!passwordMatch && (
+                          <p className={msg.error}>
+                            {"Password Doesn't Match !"}
+                          </p>
                         )}
 
                         {success && (
@@ -126,10 +161,14 @@ const ChangePasswordPublic = () => {
                         )}
                       </div>
                     </div>
-                    <div className={classesDashboard["user-details"]}>
-                      <div className={classesDashboard["input-box-login"]}>
-                        <div className={classesDashboard.button}>
-                          <input type="submit" value="Change Password" />
+                    <div className={formclasses["user-details"]}>
+                      <div className={formclasses["input-box-login"]}>
+                        <div className={formclasses.button}>
+                          <input
+                            type="submit"
+                            disabled={!formIsValid}
+                            value="Change Password"
+                          />
                         </div>
                       </div>
                     </div>

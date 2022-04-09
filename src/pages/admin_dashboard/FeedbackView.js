@@ -34,7 +34,6 @@ const UserFeedBackView = () => {
               </div>
             ) : (
               <table className={tbl.table}>
-                {/* <caption>User Feedbacks</caption> */}
                 <thead>
                   <tr>
                     <th>S.N</th>
@@ -42,7 +41,6 @@ const UserFeedBackView = () => {
                     <th>Email</th>
                     <th>Feedback Subject</th>
                     <th>Reg Date</th>
-                    <th>Actions</th>
                   </tr>
                 </thead>
 
@@ -54,12 +52,6 @@ const UserFeedBackView = () => {
                       <td>{feed.email}</td>
                       <td>{feed.subject}</td>
                       <td>{feed.reg_date}</td>
-
-                      <td>
-                        <button className={tbl.tbl_button_edit}>
-                          Acknowledge
-                        </button>
-                      </td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,37 +1,43 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
+const { REACT_APP_API_ENDPOINT } = process.env;
 
-export const AddComplaintSubCategoryAction = (values) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AdminActionType.ADD_COMPLAINT_SUB_CATEGORY_REQUEST,
-    });
+export const AddComplaintSubCategoryAction =
+  (values) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AdminActionType.ADD_COMPLAINT_SUB_CATEGORY_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/complaint-sub-category/",
-      values,
-      config
-    );
+      const {
+        userSignin: { userInfo },
+      } = getState();
 
-    dispatch({
-      type: AdminActionType.ADD_COMPLAINT_SUB_CATEGORY_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    const complaint_exist = error.response.data.sub_category_name;
-    dispatch({
-      type: AdminActionType.ADD_COMPLAINT_SUB_CATEGORY_FAIL,
-      payload: { complaint_exist },
-    });
-  }
-};
+      const config = {
+        headers: {
+          Authorization: `Token ${userInfo.token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        `${REACT_APP_API_ENDPOINT}/complaint-sub-category/`,
+        values,
+        config
+      );
+
+      dispatch({
+        type: AdminActionType.ADD_COMPLAINT_SUB_CATEGORY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const complaint_exist = error.response.data.sub_category_name;
+      dispatch({
+        type: AdminActionType.ADD_COMPLAINT_SUB_CATEGORY_FAIL,
+        payload: { complaint_exist },
+      });
+    }
+  };
 
 export const ListComplaintSubCategoryAction =
   () => async (dispatch, getState) => {
@@ -40,15 +46,19 @@ export const ListComplaintSubCategoryAction =
         type: AdminActionType.COMPLAINT_SUB_CATEGORY_LIST_REQUEST,
       });
 
+      const {
+        userSignin: { userInfo },
+      } = getState();
+
       const config = {
         headers: {
-          Authorization: `Token ${localStorage.getItem("userInfo")}`,
+          Authorization: `Token ${userInfo.token}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
       };
       const { data } = await axios.get(
-        "http://127.0.0.1:8000/api/complaint-sub-category/",
+        `${REACT_APP_API_ENDPOINT}/complaint-sub-category/`,
         config
       );
       dispatch({
@@ -73,15 +83,19 @@ export const DeleteComplaintSubCategoryAction =
         type: AdminActionType.COMPLAINT_SUB_CATEGORY_DELETE_REQUEST,
       });
 
+      const {
+        userSignin: { userInfo },
+      } = getState();
+
       const config = {
         headers: {
-          Authorization: `Token ${localStorage.getItem("userInfo")}`,
+          Authorization: `Token ${userInfo.token}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
       };
       const { data } = await axios.delete(
-        `http://127.0.0.1:8000/api/complaint-sub-category/${cid}`,
+        `${REACT_APP_API_ENDPOINT}/complaint-sub-category/${cid}`,
         config
       );
       dispatch({
@@ -89,7 +103,6 @@ export const DeleteComplaintSubCategoryAction =
         payload: data,
       });
     } catch (error) {
-      console.log("error_in_delete_state : ", error.response.data);
       dispatch({
         type: AdminActionType.COMPLAINT_SUB_CATEGORY_DELETE_FAIL,
         payload:
@@ -100,39 +113,42 @@ export const DeleteComplaintSubCategoryAction =
     }
   };
 
-export const UpdateSubCategoryAction = (values) => async (dispatch) => {
-  try {
-    dispatch({
-      type: AdminActionType.COMPLAINT_SUBCAT_UPDATE_REQUEST,
-    });
-    const category_id = values.values.category_id;
-    const sub_category_desc = values.values.sub_category_desc;
-    const sub_category_name = values.values.sub_category_name;
+export const UpdateSubCategoryAction =
+  (values) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: AdminActionType.COMPLAINT_SUBCAT_UPDATE_REQUEST,
+      });
+      const category_id = values.values.category_id;
+      const sub_category_desc = values.values.sub_category_desc;
+      const sub_category_name = values.values.sub_category_name;
+      const {
+        userSignin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `${localStorage.getItem("userInfo")}`,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.patch(
-      `http://127.0.0.1:8000/api/complaint-sub-category/${values.id}/`,
-      { category_id, sub_category_name, sub_category_desc },
-      config
-    );
-    dispatch({
-      type: AdminActionType.COMPLAINT_SUBCAT_UPDATE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    console.log(error.response.data);
-    dispatch({
-      type: AdminActionType.COMPLAINT_SUBCAT_UPDATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      const config = {
+        headers: {
+          Authorization: `Token ${userInfo.token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.patch(
+        `${REACT_APP_API_ENDPOINT}/complaint-sub-category/${values.id}/`,
+        { category_id, sub_category_name, sub_category_desc },
+        config
+      );
+      dispatch({
+        type: AdminActionType.COMPLAINT_SUBCAT_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: AdminActionType.COMPLAINT_SUBCAT_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

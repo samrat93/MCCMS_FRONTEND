@@ -54,9 +54,11 @@ const UserList = () => {
   }, [currId]);
 
   const togglePopup = (e) => {
+    // console.log("user-id", e.target.value);
     setCurrID(+e.target.value);
     setIsOpen(!isOpen);
   };
+  // const [serialNo, setSerialNo] = useState(1);
   const handlePageClick = async (data) => {
     let Page = data.selected + 1;
     dispatch(readalluser({ Page: Page }));

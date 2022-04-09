@@ -12,10 +12,9 @@ const HomePage = () => {
         {/* <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} /> */}
         <div className={classes.wrapper}>
           <div className={classes.center}>
-            <h1>Welcome To HomePage </h1>
-            <h2>Create Something New</h2>
+            <h1>Welcome To MCCMS </h1>
+            <h2>Municipal Corporation Complaint Management System</h2>
             <div className={classes.buttons}>
-              <button>Explore More</button>
               <Link to="/usersignup">
                 <button className={classes.btn2}>Register Now</button>
               </Link>

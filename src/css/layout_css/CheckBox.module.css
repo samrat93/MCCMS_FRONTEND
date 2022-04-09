@@ -49,7 +49,7 @@
 .toggle_text {
   margin-top: auto;
   margin-bottom: auto;
-  font-size: 2rem;
+  font-size: 17px;
 }
 
 .toggle_label::before {

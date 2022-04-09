@@ -1,21 +1,25 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
+const { REACT_APP_API_ENDPOINT } = process.env;
 
-export const addComplaintAction = (values) => async (dispatch) => {
+export const addComplaintAction = (values) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.ADD_COMPLAINT_REMARKS_REQUEST,
     });
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/complaint-remarks/",
+      `${REACT_APP_API_ENDPOINT}/complaint-remarks/`,
       values,
       config
     );
@@ -24,7 +28,6 @@ export const addComplaintAction = (values) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error.response.data);
     dispatch({
       type: AdminActionType.ADD_COMPLAINT_REMARKS_FAIL,
       payload:
@@ -35,21 +38,25 @@ export const addComplaintAction = (values) => async (dispatch) => {
   }
 };
 
-export const ListComplaintRemarksAction = () => async (dispatch) => {
+export const ListComplaintRemarksAction = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.LIST_COMPLAINT_REMARKS_REQUEST,
     });
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.get(
-      "http://127.0.0.1:8000/api/complaint-remarks/",
+      `${REACT_APP_API_ENDPOINT}/complaint-remarks/`,
       config
     );
     dispatch({
@@ -67,22 +74,25 @@ export const ListComplaintRemarksAction = () => async (dispatch) => {
   }
 };
 
-export const UpdateRemarksAction = (remarks) => async (dispatch) => {
+export const UpdateRemarksAction = (remarks) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.COMPLAINT_REMARKS_UPDATE_REQUEST,
     });
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
 
     const { data } = await axios.put(
-      `http://127.0.0.1:8000/api/complaint_remarks_update/${remarks.cid}`,
+      `${REACT_APP_API_ENDPOINT}/complaint_remarks_update/${remarks.cid}`,
       {
         complaint_status: remarks.comp_status,
       },
@@ -94,7 +104,6 @@ export const UpdateRemarksAction = (remarks) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error in approve : ", error.response.data);
     dispatch({
       type: AdminActionType.COMPLAINT_REMARKS_UPDATE_FAIL,
       payload:

@@ -96,7 +96,7 @@ table th {
   color: #e74c3c;
   cursor: pointer;
   align-self: center;
-  font-size: 1rem;
+  font-size: 14px;
   width: auto;
   line-height: 1;
   padding: 0.8em 1em;
@@ -104,7 +104,7 @@ table th {
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  margin-left: 10px;
+  margin: 5px;
   word-wrap: break-word;
   white-space: normal;
 }
@@ -117,7 +117,7 @@ table th {
   background-color: #1397e9;
   cursor: pointer;
   align-self: center;
-  font-size: 1rem;
+  font-size: 14px;
   width: auto;
   line-height: 1;
   padding: 0.8em 1em;
@@ -125,7 +125,7 @@ table th {
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  margin-left: 10px;
+  margin: 5px;
   white-space: normal;
   word-wrap: break-word;
 }
@@ -148,10 +148,10 @@ table th {
   background-color: #e74c3c;
   color: #fff;
   align-self: center;
-  font-size: 1.3rem;
-  padding: 0.1em;
+  font-size: 14px;
+  padding: 0.5em 1em;
   height: auto;
-  width: 100%;
+  width: auto;
   text-align: center;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
@@ -165,10 +165,10 @@ table th {
   border-radius: 0.6em;
   background-color: #fc8d0f;
   color: #fff;
-  width: 100%;
+  width: auto;
   align-self: center;
-  font-size: 1.3rem;
-  padding: 0.1em;
+  font-size: 14px;
+  padding: 0.5em 1em;
   height: auto;
   text-align: center;
   text-transform: uppercase;
@@ -184,10 +184,10 @@ table th {
   background-color: #2e8b57;
   color: #fff;
   align-self: center;
-  font-size: 1.3rem;
-  padding: 0.1em;
+  font-size: 14px;
+  padding: 0.5em 1em;
   height: auto;
-  width: 100%;
+  width: auto;
   text-align: center;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;

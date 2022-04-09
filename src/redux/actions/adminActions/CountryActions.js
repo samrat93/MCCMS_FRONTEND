@@ -1,22 +1,27 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
+const { REACT_APP_API_ENDPOINT } = process.env;
 
-export const AddCountryAction = (values) => async (dispatch) => {
+export const AddCountryAction = (values) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_ADD_REQUEST,
     });
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
 
     const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/country/",
+      `${REACT_APP_API_ENDPOINT}/country/`,
       values,
       config
     );
@@ -33,21 +38,25 @@ export const AddCountryAction = (values) => async (dispatch) => {
   }
 };
 
-export const ListCountryAction = () => async (dispatch) => {
+export const ListCountryAction = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_LIST_REQUEST,
     });
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.get(
-      "http://127.0.0.1:8000/api/country/",
+      `${REACT_APP_API_ENDPOINT}/country/`,
       config
     );
     dispatch({
@@ -65,21 +74,25 @@ export const ListCountryAction = () => async (dispatch) => {
   }
 };
 
-export const DeleteCountryAction = (cid) => async (dispatch) => {
+export const DeleteCountryAction = (cid) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_DELETE_REQUEST,
     });
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.delete(
-      `http://127.0.0.1:8000/api/country/${cid}`,
+      `${REACT_APP_API_ENDPOINT}/country/${cid}`,
       config
     );
     dispatch({
@@ -87,7 +100,6 @@ export const DeleteCountryAction = (cid) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error_in_delete_country : ", error.response.data);
     dispatch({
       type: AdminActionType.COUNTRY_DELETE_FAIL,
       payload:
@@ -98,7 +110,7 @@ export const DeleteCountryAction = (cid) => async (dispatch) => {
   }
 };
 
-export const UpdateCountryAction = (values) => async (dispatch) => {
+export const UpdateCountryAction = (values) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.COUNTRY_UPDATE_REQUEST,
@@ -106,15 +118,19 @@ export const UpdateCountryAction = (values) => async (dispatch) => {
     const country_name = values.values.country_name;
     const country_desc = values.values.country_desc;
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.patch(
-      `http://127.0.0.1:8000/api/country/${values.cid}/`,
+      `${REACT_APP_API_ENDPOINT}/country/${values.cid}/`,
       { country_name, country_desc },
       config
     );
@@ -123,7 +139,6 @@ export const UpdateCountryAction = (values) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error_in_delete_country : ", error.response.data);
     dispatch({
       type: AdminActionType.COUNTRY_UPDATE_FAIL,
       payload:

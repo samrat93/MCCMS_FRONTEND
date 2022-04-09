@@ -23,6 +23,7 @@ const ChartAndGraph = () => {
   const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
   const { compList } = listComplaintRedu;
 
+  // console.log(compList);
   const pending = compList?.filter((data) => {
     return data.complaint_status === "1";
   })?.length;
@@ -36,6 +37,7 @@ const ChartAndGraph = () => {
   })?.length;
 
   const totalcomplaint = compList?.length;
+  // console.log(totalcomplaint, pending, processing, complete);
 
   const dispatch = useDispatch();
 

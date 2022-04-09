@@ -1,3 +1,11 @@
+import * as React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import UserInput from "./hooks/UserInput";
 import classes from "../../css/account_css/UserAccount.module.css";
 import msg from "../../css/msg/msg.module.css";
@@ -51,14 +59,13 @@ const LoginForm = (props) => {
 
   useEffect(() => {
     if (userInfo) {
-      //   if (userInfo.user_Info.is_superuser) {
-      //     navigate("/admin");
-      //   } else {
-      //     navigate("/public");
-      //   }
-      // } else {
-      //   navigate("/userlogin");
-      navigate("/admin");
+      if (userInfo.user_Info.is_superuser) {
+        navigate("/admin");
+      } else {
+        navigate("/public");
+      }
+    } else {
+      navigate("/userlogin");
     }
   }, [userInfo, navigate]);
 
@@ -70,6 +77,15 @@ const LoginForm = (props) => {
     ? classes["invalid"]
     : classes["input-box-login"];
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
       <div className={classes.signupBody}>
@@ -126,6 +142,9 @@ const LoginForm = (props) => {
                 </div>
               </div>
               <div className={classes["input-box"]}>
+                {/* <p className={classes.forgetPass} onClick={handleClickOpen}>
+                  Forget Password ?
+                </p> */}
                 <p className={classes.signinspan}>
                   Not Registered Yet. <Link to="/usersignup"> Register</Link>
                 </p>
@@ -134,6 +153,28 @@ const LoginForm = (props) => {
           </div>
         </div>
       </div>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To reset your password, please enter your email address here. We
+            will send you your login details.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Submit</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

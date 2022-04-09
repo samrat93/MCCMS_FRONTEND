@@ -30,7 +30,6 @@ export const userSignup = (values) => async (dispatch) => {
       type: UserActionType.USER_REGISTER_SUCCESS,
       payload: data,
     });
-    // localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     const username = error.response.data.username;
     const password = error.response.data.password;
@@ -50,7 +49,6 @@ export const userLogin = (values) => async (dispatch) => {
 
     const username = values.usernameValue;
     const password = values.passwordValue;
-    console.log("submit", username, password);
     const config = {
       headers: {
         "content-type": "application/json",

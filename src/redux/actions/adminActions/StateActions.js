@@ -1,21 +1,26 @@
 import axios from "axios";
 import { AdminActionType } from "../../constants/adminActionType";
+const { REACT_APP_API_ENDPOINT } = process.env;
 
-export const AddStateAction = (values) => async (dispatch) => {
+export const AddStateAction = (values) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.STATE_ADD_REQUEST,
     });
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.post(
-      "http://127.0.0.1:8000/api/state/",
+      `${REACT_APP_API_ENDPOINT}/state/`,
       values,
       config
     );
@@ -27,7 +32,6 @@ export const AddStateAction = (values) => async (dispatch) => {
   } catch (error) {
     const state_exist = error.response.data.state_name;
     const other_error = error.response.data;
-    console.log("state other error : ", other_error);
     dispatch({
       type: AdminActionType.STATE_ADD_FAIL,
       payload: { state_exist },
@@ -35,21 +39,25 @@ export const AddStateAction = (values) => async (dispatch) => {
   }
 };
 
-export const ListStateAction = () => async (dispatch) => {
+export const ListStateAction = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.STATE_LIST_REQUEST,
     });
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
+
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.get(
-      "http://127.0.0.1:8000/api/state/",
+      `${REACT_APP_API_ENDPOINT}/state/`,
       config
     );
     dispatch({
@@ -67,21 +75,24 @@ export const ListStateAction = () => async (dispatch) => {
   }
 };
 
-export const DeleteStateAction = (sid) => async (dispatch) => {
+export const DeleteStateAction = (sid) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.STATE_DELETE_REQUEST,
     });
 
+    const {
+      userSignin: { userInfo },
+    } = getState();
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.delete(
-      `http://127.0.0.1:8000/api/state/${sid}`,
+      `${REACT_APP_API_ENDPOINT}/state/${sid}`,
       config
     );
     dispatch({
@@ -89,7 +100,6 @@ export const DeleteStateAction = (sid) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error_in_delete_state : ", error.response.data);
     dispatch({
       type: AdminActionType.STATE_DELETE_FAIL,
       payload:
@@ -100,24 +110,26 @@ export const DeleteStateAction = (sid) => async (dispatch) => {
   }
 };
 
-export const UpdateStateAction = (values) => async (dispatch) => {
+export const UpdateStateAction = (values) => async (dispatch, getState) => {
   try {
     dispatch({
       type: AdminActionType.STATE_UPDATE_REQUEST,
     });
     const state_name = values.values.state_name;
     const state_desc = values.values.state_desc;
-    console.log(state_name, state_desc);
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
     const config = {
       headers: {
-        Authorization: `Token ${localStorage.getItem("userInfo")}`,
+        Authorization: `Token ${userInfo.token}`,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     };
     const { data } = await axios.patch(
-      `http://127.0.0.1:8000/api/state/${values.sid}/`,
+      `${REACT_APP_API_ENDPOINT}/state/${values.sid}/`,
       { state_name, state_desc },
       config
     );
@@ -126,7 +138,6 @@ export const UpdateStateAction = (values) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log("error_in_update_state : ", error.response.data);
     dispatch({
       type: AdminActionType.STATE_UPDATE_FAIL,
       payload:

@@ -1,9 +1,6 @@
 import formclasses from "../../../css/public_css/publicForms.module.css";
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import msg from "../../../css/msg/msg.module.css";
-import tbl from "../../../css/admin_css/table.module.css";
-import { Link, useNavigate } from "react-router-dom";
 import { ListComplaintCategoryAction } from "../../../redux/actions/adminActions/ComplaintCategoryAction";
 import { ListComplaintSubCategoryAction } from "../../../redux/actions/adminActions/ComplaintSubCategoryAction";
 import { ListStateAction } from "../../../redux/actions/adminActions/StateActions";
@@ -11,7 +8,6 @@ import { ListComplaintRemarksAction } from "../../../redux/actions/adminActions/
 
 const ComplaintHistFormContent = ({ userData }) => {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -28,8 +24,6 @@ const ComplaintHistFormContent = ({ userData }) => {
     (state) => state.ListComplaintRemarksR
   );
   const { lcr } = ListComplaintRemarksR;
-
-  // console.log("complaint remarks:", lcr);
 
   const compRemarksList = lcr?.filter((data) => {
     return data.complaint_number === userData.id;
@@ -168,7 +162,6 @@ const ComplaintHistFormContent = ({ userData }) => {
                 <div className={formclasses["input-box"]}>
                   <p className={formclasses.complaint_para}>
                     Status :
-                    {/* <ComplaintStatusView status={comp.complaint_status} /> */}
                     {comp.complaint_status === "2" ? (
                       <span className={formclasses.complaint_spanPending}>
                         complaint in process

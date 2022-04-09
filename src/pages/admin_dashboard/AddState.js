@@ -22,6 +22,7 @@ const AddState = () => {
 
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { loading, states } = listStateRedu;
+  // console.log(loading);
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;

@@ -1,6 +1,5 @@
 import classes from "../../../css/public_css/publicForms.module.css";
 import classesDashboard from "../../../css/public_css/publicDashboard.module.css";
-import msg from "../../../css/msg/msg.module.css";
 import tbl from "../../../css/admin_css/table.module.css";
 import { listComplaintAction } from "../../../redux/actions/userActions/complaintAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +15,6 @@ const ComplaintHistory = () => {
 
   const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
   const { compList } = listComplaintRedu;
-  // console.log("complaint list :", compList);
   const complaintUser = compList?.filter((data) => {
     return data.user_id === user;
   });
@@ -71,7 +69,6 @@ const ComplaintHistory = () => {
     }
   };
 
-  // console.log("filtered data", complaintUser);
   useEffect(() => {
     if (userInfo) {
       dispatch(listComplaintAction());
@@ -80,7 +77,6 @@ const ComplaintHistory = () => {
   return (
     <div>
       <div className={classesDashboard["home-content"]}>
-        {/* <div className={classesDashboard["sales-boxes"]}> */}
         <div className={classesDashboard["recent-sales"]}>
           <div className={classes.ContentBody}>
             <div className={classes.container}>
@@ -100,7 +96,6 @@ const ComplaintHistory = () => {
                     </thead>
 
                     <tbody>
-                      {/* {countries?.map((country) => ( */}
                       {complaintUser?.map((comp, index) => (
                         <tr key={index}>
                           <td>{comp.id}</td>
@@ -139,7 +134,6 @@ const ComplaintHistory = () => {
           </div>
         </div>
       </div>
-      {/* </div> */}
     </div>
   );
 };

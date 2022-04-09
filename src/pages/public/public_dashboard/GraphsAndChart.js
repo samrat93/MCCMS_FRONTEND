@@ -61,15 +61,6 @@ const GraphsAndChart = () => {
       <div className={classes["sales-boxes"]}>
         <div className={classes["recent-sales"]}>
           <div className={classes.title}> Your Complaint Status Chart</div>
-          {/* {loading === true ? (
-              <div className={classes.loadingDiv}>
-                <Loading />
-              </div>
-            ) : ( */}
-          {/* something here
-            )} */}
-
-          {/* <h1 className="chart-heading">Area Chart</h1> */}
           <ResponsiveContainer width={"99%"} height={500}>
             <BarChart
               width={500}
@@ -94,8 +85,6 @@ const GraphsAndChart = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-
-        {/* <div className={classes["top-sales"]}>something here</div> */}
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ import {
   listProfileAction,
   updateProfileAction,
 } from "../../../redux/actions/userActions/userProfileAction";
-import msg from "../../../css/msg/msg.module.css";
 import swal from "sweetalert";
 
 const UpdateProfileContent = () => {
@@ -34,7 +33,6 @@ const UpdateProfileContent = () => {
   const myProfile = plist?.find((pobj) => {
     return pobj.user === current_user;
   });
-
   const id = myProfile?.id;
 
   const [values, setValues] = useState({
@@ -73,6 +71,7 @@ const UpdateProfileContent = () => {
       user: userInfo.user_Info.id,
     });
   }, [dispatch, userInfo, profileUp]);
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -81,7 +80,7 @@ const UpdateProfileContent = () => {
     form_data.append("pincode", values.pincode);
     form_data.append("state", values.state);
     form_data.append("country", values.country);
-    !values.user_image && form_data.append("user_image", values.user_image);
+    form_data.append("user_image", values.user_image);
     form_data.append("gender", values.gender);
     form_data.append("address", values.address);
     form_data.append("user", values.user);
@@ -106,7 +105,6 @@ const UpdateProfileContent = () => {
               <input
                 type="text"
                 name="contact_no"
-                // value={values.contact_no || ""}
                 defaultValue={myProfile?.contact_no}
                 onChange={handleChange}
                 placeholder="Enter your contact number"
@@ -117,7 +115,6 @@ const UpdateProfileContent = () => {
               <input
                 type="number"
                 name="pincode"
-                // value={values.pincode || ""}
                 defaultValue={myProfile?.pincode}
                 onChange={handleChange}
                 placeholder="Enter your pincode"
@@ -127,7 +124,6 @@ const UpdateProfileContent = () => {
               <span className={classes.signinspan}>Gender</span>
               <select
                 name="gender"
-                // value={values.gender}
                 defaultValue={myProfile?.gender}
                 className={classes.selectValue}
                 onChange={handleChange}
@@ -175,7 +171,6 @@ const UpdateProfileContent = () => {
                 className={classes["file-upload"]}
                 type="file"
                 name="user_image"
-                // value={values.user_image}
                 accept="image/jpeg,image/png,image/gif"
                 onChange={onChangePicture}
               />
@@ -199,7 +194,6 @@ const UpdateProfileContent = () => {
               <textarea
                 className={classes.textarea}
                 name="address"
-                // value={values.address}
                 defaultValue={myProfile?.address}
                 onChange={handleChange}
               />
