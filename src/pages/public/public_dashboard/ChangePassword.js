@@ -1,11 +1,11 @@
 import formclasses from "../../../css/account_css/UserAccount.module.css";
 import classes from "../../../css/public_css/publicDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { ChangePasswordUserAction } from "../../../redux/actions/userActions/changePasswordUserAction";
 import msg from "../../../css/msg/msg.module.css";
 import UserInput from "../../Auth/hooks/UserInput";
-import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const isNotEmpty = (value) => value.trim() !== "";
 
@@ -66,6 +66,17 @@ const ChangePasswordPublic = () => {
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      swal({
+        buttons: false,
+        timer: 2000,
+        title: error.npassword || error.opassword,
+        icon: "error",
+      });
+    }
+  }, [error]);
+
   const passwordClasses =
     passwordHasError && old_passwordHasError && conf_passwordHasError
       ? formclasses["invalid"]
@@ -99,9 +110,6 @@ const ChangePasswordPublic = () => {
                             {"Old Password Field Is Required."}
                           </p>
                         )}
-                        {error && error.opassword && (
-                          <p className={msg.error}>{error.opassword}</p>
-                        )}
                       </div>
                     </div>
 
@@ -123,9 +131,6 @@ const ChangePasswordPublic = () => {
                           <p className={msg.error}>
                             {"New Password Field Is Required."}
                           </p>
-                        )}
-                        {error && error.npassword && (
-                          <p className={msg.error}>{error.npassword}</p>
                         )}
                       </div>
                     </div>

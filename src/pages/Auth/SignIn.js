@@ -13,7 +13,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../redux/actions/userActions/userAuthAction";
+import swal from "sweetalert";
 
+const loggedin = () => {
+  swal("Loading...", {
+    buttons: false,
+    timer: 500,
+    icon: "success",
+  });
+};
 const LoginForm = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,21 +61,33 @@ const LoginForm = (props) => {
     } else {
       dispatch(userLogin(values));
     }
-    resetUsername();
-    resetPassword();
+    // resetUsername();
+    // resetPassword();
   };
 
   useEffect(() => {
     if (userInfo) {
       if (userInfo.user_Info.is_superuser) {
+        loggedin();
         navigate("/admin");
       } else {
+        loggedin();
         navigate("/public");
       }
     } else {
       navigate("/userlogin");
     }
   }, [userInfo, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      swal("Username or password not match ! ", {
+        buttons: false,
+        timer: 2000,
+        icon: "error",
+      });
+    }
+  }, [error]);
 
   const usernameInputClasses = usernameHasError
     ? classes["invalid"]
@@ -103,13 +123,14 @@ const LoginForm = (props) => {
                     value={usernameValue}
                     onChange={usernameChangedHandler}
                     onBlur={usernameBlurHandler}
+                    autoComplete="current-password"
                   />
                   {usernameHasError && (
                     <p className={msg.error}>{"Username Field Is Required."}</p>
                   )}
-                  {error && error.login_error && (
+                  {/* {error && error.login_error && (
                     <p className={msg.error}>{error.login_error}</p>
-                  )}
+                  )} */}
                 </div>
               </div>
 
@@ -123,6 +144,7 @@ const LoginForm = (props) => {
                     placeholder="Enter your password"
                     onChange={passwordChangeHandler}
                     onBlur={passwordBlurHandler}
+                    autoComplete="current-password"
                   />
                   {passwordHasError && (
                     <p className={msg.error}>{"Password Field Is Required."}</p>

@@ -9,6 +9,7 @@ import { ListComplaintSubCategoryAction } from "../../../redux/actions/adminActi
 import { ListStateAction } from "../../../redux/actions/adminActions/StateActions";
 import msg from "../../../css/msg/msg.module.css";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const LodgeComplaint = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,17 @@ const LodgeComplaint = () => {
 
   const complaintReducer = useSelector((state) => state.complaintReducer);
   const { compList } = complaintReducer;
+
+  useEffect(() => {
+    if (compList) {
+      swal({
+        buttons: false,
+        timer: 2000,
+        title: "Complaint registered successfully.",
+        icon: "success",
+      });
+    }
+  }, [compList]);
 
   const listComplaintCategoryR = useSelector(
     (state) => state.listComplaintCategoryR
@@ -221,11 +233,11 @@ const LodgeComplaint = () => {
                       )}
                     </div>
                   </div>
-                  {compList && (
+                  {/* {compList && (
                     <p className={msg.success}>
                       {"Your Complaint Registered Successfully."}
                     </p>
-                  )}
+                  )} */}
                   <div className={classes.btndiv}>
                     <div className={classes.singleBtnDiv}>
                       <div className={classes.button}>

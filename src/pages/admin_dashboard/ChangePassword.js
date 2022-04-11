@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordAction } from "../../redux/actions/adminActions/ChangePasswordAction";
 import msg from "../../css/msg/msg.module.css";
 import UserInput from "../Auth/hooks/UserInput";
+import { useEffect } from "react";
+import swal from "sweetalert";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const ChangePassword = () => {
@@ -56,11 +58,20 @@ const ChangePassword = () => {
       return;
     } else {
       dispatch(ChangePasswordAction(values));
-      resetOld_password();
-      resetConf_password();
-      resetPassword();
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      swal({
+        buttons: false,
+        timer: 2000,
+        title: error.npassword || error.opassword,
+        icon: "error",
+      });
+    }
+  }, [error]);
+
   const passwordClasses =
     passwordHasError && old_passwordHasError && conf_passwordHasError
       ? formclasses["invalid"]
@@ -93,9 +104,9 @@ const ChangePassword = () => {
                             {"Old Password Field Is Required."}
                           </p>
                         )}
-                        {error && error.opassword && (
+                        {/* {error && error.opassword && (
                           <p className={msg.error}>{error.opassword}</p>
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -112,9 +123,9 @@ const ChangePassword = () => {
                           onChange={passwordChangeHandler}
                           onBlur={passwordBlurHandler}
                         />
-                        {error && error.npassword && (
+                        {/* {error && error.npassword && (
                           <p className={msg.error}>{error.npassword}</p>
-                        )}
+                        )} */}
                         {passwordHasError && (
                           <p className={msg.error}>
                             {"New Password Field Is Required."}

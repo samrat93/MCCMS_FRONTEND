@@ -65,6 +65,7 @@ export const userLogin = (values) => async (dispatch) => {
     });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
+    console.log("error in login", error.response.data);
     const login_error = error.response.data.non_field_errors[0];
     dispatch({
       type: UserActionType.USER_LOGIN_FAIL,

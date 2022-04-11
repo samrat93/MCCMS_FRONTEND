@@ -8,8 +8,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
-const pages = ["Help", "ContactUs"];
+import { Link } from "react-router-dom";
 
 const DrawerComp = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -22,13 +21,20 @@ const DrawerComp = () => {
         onClose={() => setOpenDrawer(false)}
       >
         <List>
-          {pages.map((page, index) => (
-            <ListItemButton key={index}>
-              <ListItemIcon>
-                <ListItemText>{page}</ListItemText>
-              </ListItemIcon>
-            </ListItemButton>
-          ))}
+          <ListItemButton>
+            <ListItemIcon>
+              <Link to={"/userlogin"}>
+                <ListItemText>Login</ListItemText>
+              </Link>
+            </ListItemIcon>
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <Link to={"/usersignup"}>
+                <ListItemText>Signup</ListItemText>
+              </Link>
+            </ListItemIcon>
+          </ListItemButton>
         </List>
       </Drawer>
       <IconButton

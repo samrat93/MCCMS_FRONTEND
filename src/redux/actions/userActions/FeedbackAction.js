@@ -56,6 +56,7 @@ export const listFeedbackAction = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    console.log("error", error.response.data);
     dispatch({
       type: UserActionType.FEEDBACK_LIST_FAIL,
       payload:
