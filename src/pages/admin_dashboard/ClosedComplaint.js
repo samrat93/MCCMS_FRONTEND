@@ -19,6 +19,11 @@ const ClosedComplaints = () => {
   const { users } = userList;
   const newUser = users?.results;
 
+  const AddComplaintRemarksR = useSelector(
+    (state) => state.AddComplaintRemarksR
+  );
+  const { success } = AddComplaintRemarksR;
+
   let newCompList = compList?.map((compObj) => {
     return {
       ...compObj,
@@ -27,7 +32,7 @@ const ClosedComplaints = () => {
     };
   });
 
-  const pendingComplaint = newCompList?.filter((data) => {
+  const closedComplaint = newCompList?.filter((data) => {
     return data.complaint_status === "3";
   });
   const [isOpen, setIsOpen] = useState(false);
@@ -48,12 +53,13 @@ const ClosedComplaints = () => {
     setIsOpen(!isOpen);
   };
   let serialNo = 1;
+
   useEffect(() => {
     if (userInfo) {
       dispatch(listComplaintAction());
       dispatch(readalluser({ Page: serialNo }));
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, success]);
   return (
     <div>
       <div className={formclasses.title}>Closed Complaint</div>
@@ -86,7 +92,7 @@ const ClosedComplaints = () => {
           </tbody> */}
 
             <tbody>
-              {pendingComplaint?.map((p) => (
+              {closedComplaint?.map((p) => (
                 <tr key={p.id}>
                   <td>{p.id}</td>
                   <td>{p.user_id}</td>

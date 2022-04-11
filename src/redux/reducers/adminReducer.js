@@ -278,7 +278,7 @@ export const updateComplaintRemarksReducer = (state = {}, action) => {
     case AdminActionType.COMPLAINT_REMARKS_UPDATE_REQUEST:
       return { loading: true };
     case AdminActionType.COMPLAINT_REMARKS_UPDATE_SUCCESS:
-      return { loading: false, success: action.payload };
+      return { loading: false, updateRemarks: action.payload };
     case AdminActionType.COMPLAINT_REMARKS_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     default:

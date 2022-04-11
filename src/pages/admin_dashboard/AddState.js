@@ -13,6 +13,7 @@ import DeleteStateDialog from "../../components/admin/delete_popup/deleteState";
 import Loading from "../../components/layout/LoadingScreen";
 import UpdateStateContent from "./UpdatePages/StateUpdateContent";
 import UpdateStateForm from "./UpdatePages/UpdateStateForm";
+import swal from "sweetalert";
 
 const AddState = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const AddState = () => {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const deleteStateRedu = useSelector((state) => state.deleteStateRedu);
+  const { success } = deleteStateRedu;
 
   //--------------> Delete Popup code Start <----------------------
   const [state, setState] = useState(stateInfo);
@@ -98,7 +101,7 @@ const AddState = () => {
     if (userInfo) {
       dispatch(ListStateAction());
     }
-  }, [dispatch, userInfo, stateInfo]);
+  }, [dispatch, userInfo, success, stateInfo]);
 
   const SubmitFormHandler = (e) => {
     e.preventDefault();
@@ -134,6 +137,24 @@ const AddState = () => {
     setSid(+e.target.value);
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    if (stateInfo) {
+      swal("State Added Successfully.", {
+        buttons: false,
+        timer: 1500,
+        icon: "success",
+      });
+    }
+    if (error) {
+      swal({
+        buttons: false,
+        timer: 2000,
+        title: error.state_exist,
+        icon: "error",
+      });
+    }
+  }, [stateInfo, error]);
 
   return (
     <div>
@@ -171,11 +192,6 @@ const AddState = () => {
                             {"State Field Is Required."}
                           </p>
                         )}
-                        {error && error.state_exist && (
-                          <p className={msg.error}>
-                            {"State with this state name already exists."}
-                          </p>
-                        )}
                       </div>
                     </div>
                     <div className={formclasses["input-textarea"]}>
@@ -189,11 +205,6 @@ const AddState = () => {
                         onChange={stateDescHandler}
                       />
                     </div>
-                    {stateInfo && (
-                      <p className={msg.success}>
-                        {"State Added Successfully."}
-                      </p>
-                    )}
 
                     <div className={formclasses.button}>
                       <input

@@ -1,5 +1,5 @@
 import formclasses from "../../../css/public_css/publicForms.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import msg from "../../../css/msg/msg.module.css";
 import { ListComplaintCategoryAction } from "../../../redux/actions/adminActions/ComplaintCategoryAction";
@@ -8,12 +8,17 @@ import { ListStateAction } from "../../../redux/actions/adminActions/StateAction
 import { addComplaintAction } from "../../../redux/actions/adminActions/ManageComplaintAction";
 import { UpdateRemarksAction } from "../../../redux/actions/adminActions/ManageComplaintAction";
 import UserInput from "../../Auth/hooks/UserInput";
+import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
+
 const ComplaintActionFormContent = ({ compData }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  // console.log("complaint_id:", compData.id);
+
   const complaint_number = compData.id;
+
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { states } = listStateRedu;
 
@@ -41,18 +46,12 @@ const ComplaintActionFormContent = ({ compData }) => {
     })
     .map((v) => v.state_name);
 
-  const AddComplaintRemarksR = useSelector(
-    (state) => state.AddComplaintRemarksR
-  );
-  const { success } = AddComplaintRemarksR;
-
   const {
     value: complaint_status,
     isValid: complaint_statusIsValid,
     hasError: complaint_statusHasError,
     valueChangeHandler: complaint_statusChangeHandler,
     inputBlurHandler: complaint_statusBlurHandler,
-    reset: resetComplaint_status,
   } = UserInput((value) => value.trim() !== "");
 
   const {
@@ -61,7 +60,6 @@ const ComplaintActionFormContent = ({ compData }) => {
     hasError: remarksHasError,
     valueChangeHandler: remarksChangeHandler,
     inputBlurHandler: remarksBlurHandler,
-    reset: resetRemarks,
   } = UserInput((value) => value.trim() !== "");
 
   let formIsValid = false;
@@ -76,8 +74,10 @@ const ComplaintActionFormContent = ({ compData }) => {
       dispatch(ListComplaintCategoryAction());
       dispatch(ListComplaintSubCategoryAction());
       dispatch(ListStateAction());
+    } else {
+      navigate("/userlogin");
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, navigate]);
 
   const InputClasses = complaint_statusHasError
     ? formclasses["invalid"]
@@ -97,6 +97,11 @@ const ComplaintActionFormContent = ({ compData }) => {
       const comp_status = complaint_status;
       dispatch(addComplaintAction(values));
       dispatch(UpdateRemarksAction({ comp_status, cid: cid }));
+      swal("Complaint Status Updated Successfully.", {
+        buttons: false,
+        timer: 1500,
+        icon: "success",
+      });
     }
   };
 
@@ -236,11 +241,6 @@ const ComplaintActionFormContent = ({ compData }) => {
                   /> */}
                   {remarksHasError && (
                     <p className={msg.error}>{"Remarks Field Is Required"}</p>
-                  )}
-                  {success && (
-                    <p className={msg.success}>
-                      {"Complaint Details Updated Successfully "}
-                    </p>
                   )}
                 </div>
                 <div className={formclasses.btndiv}>

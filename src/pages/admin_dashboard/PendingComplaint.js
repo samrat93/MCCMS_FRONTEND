@@ -21,10 +21,10 @@ const PendingComplaints = () => {
   const { users } = userList;
   const newUser = users?.results;
 
-  const ListComplaintRemarksR = useSelector(
-    (state) => state.ListComplaintRemarksR
+  const AddComplaintRemarksR = useSelector(
+    (state) => state.AddComplaintRemarksR
   );
-  const { lcr } = ListComplaintRemarksR;
+  const { success } = AddComplaintRemarksR;
 
   let newCompList = compList?.map((compObj) => {
     return {
@@ -56,13 +56,14 @@ const PendingComplaints = () => {
     setIsOpen(!isOpen);
   };
   let serialNo = 1;
+
   useEffect(() => {
     if (userInfo) {
       dispatch(listComplaintAction());
       dispatch(readalluser({ Page: serialNo }));
       dispatch(ListComplaintRemarksAction());
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, success]);
 
   return (
     <div>

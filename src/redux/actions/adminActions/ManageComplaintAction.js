@@ -64,6 +64,7 @@ export const ListComplaintRemarksAction = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    console.log(error.response.data);
     dispatch({
       type: AdminActionType.LIST_COMPLAINT_REMARKS_FAIL,
       payload:

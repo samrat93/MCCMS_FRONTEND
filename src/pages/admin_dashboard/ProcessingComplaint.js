@@ -15,9 +15,16 @@ const ProcessingComplaints = () => {
   const { userInfo } = userSignin;
   const listComplaintRedu = useSelector((state) => state.listComplaintRedu);
   const { loading, compList } = listComplaintRedu;
+
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
-  const newUser = userList?.results;
+
+  const AddComplaintRemarksR = useSelector(
+    (state) => state.AddComplaintRemarksR
+  );
+  const { success } = AddComplaintRemarksR;
+
+  const newUser = users?.results;
 
   let newCompList = compList?.map((compObj) => {
     return {
@@ -27,9 +34,10 @@ const ProcessingComplaints = () => {
     };
   });
 
-  const pendingComplaint = newCompList?.filter((data) => {
+  const processingComplaint = newCompList?.filter((data) => {
     return data.complaint_status === "2";
   });
+
   const [isOpen, setIsOpen] = useState(false);
   const [compId, setCompId] = useState(0);
   const [compData, setCompData] = useState(null);
@@ -47,13 +55,13 @@ const ProcessingComplaints = () => {
     setCompId(+e.target.value);
     setIsOpen(!isOpen);
   };
-
+  let serialNo = 1;
   useEffect(() => {
     if (userInfo) {
       dispatch(listComplaintAction());
-      dispatch(readalluser());
+      dispatch(readalluser({ Page: serialNo }));
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, success]);
   return (
     <div>
       <div className={formclasses.title}> Complaint In Process</div>
@@ -86,7 +94,7 @@ const ProcessingComplaints = () => {
           </tbody> */}
 
             <tbody>
-              {pendingComplaint?.map((p) => (
+              {processingComplaint?.map((p) => (
                 <tr key={p.id}>
                   <td>{p.id}</td>
                   <td>{p.user_id}</td>

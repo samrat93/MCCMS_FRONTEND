@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { userSignup } from "../../redux/actions/userActions/userAuthAction";
 import classes from "../../css/account_css/UserAccount.module.css";
 import msg from "../../css/msg/msg.module.css";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
+import swal from "sweetalert";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
@@ -22,7 +23,6 @@ const UserRegistration = () => {
     hasError: usernameHasError,
     valueChangeHandler: usernameChangedHandler,
     inputBlurHandler: usernameBlurHandler,
-    reset: resetUsername,
   } = UserInput(isNotEmpty);
 
   const {
@@ -31,7 +31,6 @@ const UserRegistration = () => {
     hasError: emailHasError,
     valueChangeHandler: emailChangedHandler,
     inputBlurHandler: emailBlurHandler,
-    reset: resetEmail,
   } = UserInput(isEmail);
 
   const {
@@ -40,7 +39,6 @@ const UserRegistration = () => {
     hasError: passwordHasError,
     valueChangeHandler: passwordChangedHandler,
     inputBlurHandler: passwordBlurHandler,
-    reset: resetPassword,
   } = UserInput(isNotEmpty);
 
   const {
@@ -49,20 +47,13 @@ const UserRegistration = () => {
     hasError: conpassHasError,
     valueChangeHandler: conpassChangedHandler,
     inputBlurHandler: conpassBlurHandler,
-    reset: resetConpass,
   } = UserInput(isNotEmpty);
 
-  const {
-    value: firstNameValue,
-    valueChangeHandler: firstNameChangedHandler,
-    reset: resetFirstname,
-  } = UserInput(isNotEmpty);
+  const { value: firstNameValue, valueChangeHandler: firstNameChangedHandler } =
+    UserInput(isNotEmpty);
 
-  const {
-    value: lastNameValue,
-    valueChangeHandler: lastNameChangedHandler,
-    reset: resetLastname,
-  } = UserInput(isNotEmpty);
+  const { value: lastNameValue, valueChangeHandler: lastNameChangedHandler } =
+    UserInput(isNotEmpty);
 
   let formIsValid = false;
   if (usernameIsValid && emailIsValid && passwordIsValid && conpassIsValid) {
@@ -88,13 +79,26 @@ const UserRegistration = () => {
     } else {
       dispatch(userSignup(values));
     }
-    resetUsername();
-    resetEmail();
-    resetPassword();
-    resetConpass();
-    resetFirstname();
-    resetLastname();
   };
+
+  useEffect(() => {
+    if (error) {
+      swal({
+        buttons: false,
+        timer: 2000,
+        icon: "error",
+        title: error.email || error.password || error.username,
+      });
+    }
+    if (userInfo) {
+      swal("User Registred Successfully.", {
+        buttons: false,
+        timer: 700,
+        icon: "success",
+      });
+      navigate("/userlogin");
+    }
+  }, [error, navigate, userInfo]);
   const InputClasses =
     usernameHasError && emailHasError && passwordHasError && conpassHasError
       ? classes["invalid"]
@@ -118,12 +122,10 @@ const UserRegistration = () => {
                     onChange={usernameChangedHandler}
                     onBlur={usernameBlurHandler}
                     placeholder="Enter your username"
+                    autoComplete="username"
                   />
                   {usernameHasError && (
                     <p className={msg.error}>{"Username Field Is Required."}</p>
-                  )}
-                  {error && error.username && (
-                    <p className={msg.error}>{error.username}</p>
                   )}
                 </div>
 
@@ -136,12 +138,10 @@ const UserRegistration = () => {
                     onChange={emailChangedHandler}
                     placeholder="Enter your email"
                     onBlur={emailBlurHandler}
+                    autoComplete="email"
                   />
                   {emailHasError && (
                     <p className={msg.error}>{"Email Field Is Required."}</p>
-                  )}
-                  {error && error.email && (
-                    <p className={msg.error}>{error.email}</p>
                   )}
                 </div>
 
@@ -153,6 +153,7 @@ const UserRegistration = () => {
                     value={firstNameValue}
                     onChange={firstNameChangedHandler}
                     placeholder="Enter your first name"
+                    autoComplete="first_name"
                   />
                 </div>
                 <div className={classes["input-box"]}>
@@ -163,6 +164,7 @@ const UserRegistration = () => {
                     value={lastNameValue}
                     onChange={lastNameChangedHandler}
                     placeholder="Enter your last name"
+                    autoComplete="last_name"
                   />
                 </div>
 
@@ -175,12 +177,10 @@ const UserRegistration = () => {
                     onChange={passwordChangedHandler}
                     placeholder="Enter your password"
                     onBlur={passwordBlurHandler}
+                    autoComplete="password"
                   />
                   {passwordHasError && (
                     <p className={msg.error}>{"Password Field Is Required."}</p>
-                  )}
-                  {error && error.password && (
-                    <p className={msg.error}>{error.password}</p>
                   )}
                 </div>
 
@@ -193,6 +193,7 @@ const UserRegistration = () => {
                     onChange={conpassChangedHandler}
                     placeholder="Confirm your password"
                     onBlur={conpassBlurHandler}
+                    autoComplete="conpass"
                   />
                   {conpassHasError && (
                     <p className={msg.error}>

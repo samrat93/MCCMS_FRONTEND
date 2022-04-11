@@ -123,7 +123,7 @@ const LoginForm = (props) => {
                     value={usernameValue}
                     onChange={usernameChangedHandler}
                     onBlur={usernameBlurHandler}
-                    autoComplete="current-password"
+                    autoComplete="username"
                   />
                   {usernameHasError && (
                     <p className={msg.error}>{"Username Field Is Required."}</p>
@@ -144,7 +144,7 @@ const LoginForm = (props) => {
                     placeholder="Enter your password"
                     onChange={passwordChangeHandler}
                     onBlur={passwordBlurHandler}
-                    autoComplete="current-password"
+                    autoComplete="password"
                   />
                   {passwordHasError && (
                     <p className={msg.error}>{"Password Field Is Required."}</p>

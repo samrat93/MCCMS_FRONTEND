@@ -8,7 +8,7 @@ export const userSignup = (values) => async (dispatch) => {
       type: UserActionType.USER_REGISTER_REQUEST,
     });
 
-    const username = values.emailValue;
+    const username = values.usernameValue;
     const first_name = values.firstNameValue;
     const email = values.emailValue;
     const last_name = values.lastNameValue;
@@ -65,7 +65,6 @@ export const userLogin = (values) => async (dispatch) => {
     });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
-    console.log("error in login", error.response.data);
     const login_error = error.response.data.non_field_errors[0];
     dispatch({
       type: UserActionType.USER_LOGIN_FAIL,

@@ -14,6 +14,7 @@ import CountryUpdateContent from "./UpdatePages/CountryUpdateContent";
 import UpdateCountryForm from "./UpdatePages/UpdateCountryForm";
 import Loading from "../../components/layout/LoadingScreen";
 import UserInput from "../Auth/hooks/UserInput";
+import swal from "sweetalert";
 
 const AddCountry = () => {
   const dispatch = useDispatch();
@@ -133,6 +134,24 @@ const AddCountry = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    if (countryInfo) {
+      swal("Country Added Successfully.", {
+        buttons: false,
+        timer: 1500,
+        icon: "success",
+      });
+    }
+    if (error) {
+      swal({
+        buttons: false,
+        timer: 2000,
+        title: error.country_exist,
+        icon: "error",
+      });
+    }
+  }, [countryInfo, error]);
+
   return (
     <div>
       <div className={classes["home-content"]}>
@@ -169,11 +188,6 @@ const AddCountry = () => {
                             {"Country Field Is Required."}
                           </p>
                         )}
-                        {error && error.country_exist && (
-                          <p className={msg.error}>
-                            {"Country with this country name already exists."}
-                          </p>
-                        )}
                       </div>
                     </div>
                     <div className={formclasses["input-textarea"]}>
@@ -195,11 +209,6 @@ const AddCountry = () => {
                         value="Add Country"
                       />
                     </div>
-                    {countryInfo && (
-                      <p className={msg.success}>
-                        {"Country Add Successfully"}
-                      </p>
-                    )}
                   </form>
                 </div>
               </div>

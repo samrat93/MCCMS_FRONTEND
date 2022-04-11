@@ -5,18 +5,25 @@ import {
   ListStateAction,
 } from "../../../redux/actions/adminActions/StateActions";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const DeleteStateDialog = ({ dialogMessage, onDialog, nameState, sid }) => {
   const dispatch = useDispatch();
-  const deleteCountryRedu = useSelector((state) => state.deleteCountryRedu);
-  const { loading, success } = deleteCountryRedu;
 
   const deleteHandler = (e) => {
     e.preventDefault();
     dispatch(DeleteStateAction(sid));
+    swal("State Deleted Successfully.", {
+      buttons: false,
+      timer: 1500,
+      icon: "success",
+    });
     onDialog(false);
   };
+
+  const deleteStateRedu = useSelector((state) => state.deleteStateRedu);
+  const { success } = deleteStateRedu;
+
   useEffect(() => {
     if (success) {
       dispatch(ListStateAction());

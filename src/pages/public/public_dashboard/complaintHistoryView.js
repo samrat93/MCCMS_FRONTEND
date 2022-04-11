@@ -28,7 +28,6 @@ const ComplaintHistFormContent = ({ userData }) => {
   const compRemarksList = lcr?.filter((data) => {
     return data.complaint_number === userData.id;
   });
-
   const catdata = catList
     ?.filter((data) => {
       return data.id === userData.complaint_category;
