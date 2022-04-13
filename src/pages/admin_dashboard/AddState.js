@@ -4,7 +4,7 @@ import tbl from "../../css/admin_css/table.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import msg from "../../css/msg/msg.module.css";
-import UserInput from "../Auth/hooks/UserInput";
+import UserInput from "../Auth/hooks/useInput";
 import {
   AddStateAction,
   ListStateAction,
@@ -23,8 +23,9 @@ const AddState = () => {
 
   const listStateRedu = useSelector((state) => state.listStateRedu);
   const { loading, states } = listStateRedu;
-  // console.log(loading);
 
+  const UpdateStateR = useSelector((state) => state.UpdateStateR);
+  const { statedata } = UpdateStateR;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const deleteStateRedu = useSelector((state) => state.deleteStateRedu);
@@ -101,7 +102,7 @@ const AddState = () => {
     if (userInfo) {
       dispatch(ListStateAction());
     }
-  }, [dispatch, userInfo, success, stateInfo]);
+  }, [dispatch, userInfo, success, stateInfo, statedata]);
 
   const SubmitFormHandler = (e) => {
     e.preventDefault();
@@ -137,24 +138,6 @@ const AddState = () => {
     setSid(+e.target.value);
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    if (stateInfo) {
-      swal("State Added Successfully.", {
-        buttons: false,
-        timer: 1500,
-        icon: "success",
-      });
-    }
-    if (error) {
-      swal({
-        buttons: false,
-        timer: 2000,
-        title: error.state_exist,
-        icon: "error",
-      });
-    }
-  }, [stateInfo, error]);
 
   return (
     <div>
@@ -192,6 +175,9 @@ const AddState = () => {
                             {"State Field Is Required."}
                           </p>
                         )}
+                        {error && error.state_exist && (
+                          <p className={msg.error}>{error.state_exist}</p>
+                        )}
                       </div>
                     </div>
                     <div className={formclasses["input-textarea"]}>
@@ -204,6 +190,11 @@ const AddState = () => {
                         value={state_desc}
                         onChange={stateDescHandler}
                       />
+                      {stateInfo && (
+                        <p className={msg.success}>
+                          {"State Added Successfully."}
+                        </p>
+                      )}
                     </div>
 
                     <div className={formclasses.button}>

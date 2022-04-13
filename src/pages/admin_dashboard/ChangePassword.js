@@ -3,9 +3,10 @@ import formclasses from "../../css/account_css/UserAccount.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangePasswordAction } from "../../redux/actions/adminActions/ChangePasswordAction";
 import msg from "../../css/msg/msg.module.css";
-import UserInput from "../Auth/hooks/UserInput";
+import UserInput from "../Auth/hooks/useInput";
 import { useEffect } from "react";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const ChangePassword = () => {
@@ -19,7 +20,6 @@ const ChangePassword = () => {
     hasError: passwordHasError,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-    reset: resetPassword,
   } = UserInput(isNotEmpty);
 
   const {
@@ -28,7 +28,6 @@ const ChangePassword = () => {
     hasError: old_passwordHasError,
     valueChangeHandler: old_passwordChangeHandler,
     inputBlurHandler: old_passwordBlurHandler,
-    reset: resetOld_password,
   } = UserInput(isNotEmpty);
 
   const {
@@ -37,7 +36,6 @@ const ChangePassword = () => {
     hasError: conf_passwordHasError,
     valueChangeHandler: conf_passwordChangeHandler,
     inputBlurHandler: conf_passwordBlurHandler,
-    reset: resetConf_password,
   } = UserInput(isNotEmpty);
 
   let formIsValid = false;
@@ -104,9 +102,6 @@ const ChangePassword = () => {
                             {"Old Password Field Is Required."}
                           </p>
                         )}
-                        {/* {error && error.opassword && (
-                          <p className={msg.error}>{error.opassword}</p>
-                        )} */}
                       </div>
                     </div>
 
@@ -123,9 +118,7 @@ const ChangePassword = () => {
                           onChange={passwordChangeHandler}
                           onBlur={passwordBlurHandler}
                         />
-                        {/* {error && error.npassword && (
-                          <p className={msg.error}>{error.npassword}</p>
-                        )} */}
+
                         {passwordHasError && (
                           <p className={msg.error}>
                             {"New Password Field Is Required."}
@@ -157,7 +150,6 @@ const ChangePassword = () => {
                             {"Password Doesn't Match !"}
                           </p>
                         )}
-
                         {success && (
                           <p className={msg.success}>
                             {"Password Change Successfully"}

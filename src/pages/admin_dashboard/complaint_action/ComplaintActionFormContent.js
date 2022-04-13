@@ -7,7 +7,7 @@ import { ListComplaintSubCategoryAction } from "../../../redux/actions/adminActi
 import { ListStateAction } from "../../../redux/actions/adminActions/StateActions";
 import { addComplaintAction } from "../../../redux/actions/adminActions/ManageComplaintAction";
 import { UpdateRemarksAction } from "../../../redux/actions/adminActions/ManageComplaintAction";
-import UserInput from "../../Auth/hooks/UserInput";
+import UserInput from "../../Auth/hooks/useInput";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 

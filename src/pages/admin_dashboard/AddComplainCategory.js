@@ -27,6 +27,9 @@ const AddComplaintCategory = () => {
   );
   const { loading, catList } = listComplaintCategoryR;
 
+  const UpdatecatR = useSelector((state) => state.UpdatecatR);
+  const { cat } = UpdatecatR;
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -94,7 +97,7 @@ const AddComplaintCategory = () => {
     } else {
       navigate("/userlogin");
     }
-  }, [dispatch, userInfo, navigate, success]);
+  }, [dispatch, userInfo, navigate, success, cat]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [cid, setCid] = useState(0);

@@ -23,16 +23,7 @@ const Header = () => {
   const toolbarStyle = {
     minHeight: "80px",
   };
-  const styles = (theme) => ({
-    label: {
-      fontSize: "18px",
-    },
-  });
-  const TabBigger = withStyles(styles)((props) => {
-    return <Tab className={props.classes.label} {...props} />;
-  });
 
-  const classes = useState();
   return (
     <Fragment>
       <AppBar sx={{ background: "#063970" }} position="static">
@@ -43,14 +34,18 @@ const Header = () => {
 
           {isMatch ? (
             <>
-              <Typography sx={{ fontSize: "3rem", paddingLeft: "10%" }}>
+              <Typography
+                sx={{ fontSize: "2rem", paddingLeft: "10%" }}
+                style={{ color: "white" }}
+              >
                 MCCMS
               </Typography>
+
               <DrawerComp />
             </>
           ) : (
             <React.Fragment>
-              <Typography sx={{ transform: "scale(1.2)", paddingLeft: "10%" }}>
+              <Typography sx={{ transform: "scale(1.4)", paddingLeft: "10%" }}>
                 Municipal Corporation's CMS
               </Typography>
               <Tabs
@@ -62,13 +57,7 @@ const Header = () => {
                 textColor="inherit"
                 value={value}
                 onChange={(e, value) => setValue(value)}
-              >
-                {/* <TabBigger label="Help" />
-                <TabBigger label="Contact" />
-                <Link to="/userlogin">
-                  <TabBigger label="Login" />
-                </Link> */}
-              </Tabs>
+              ></Tabs>
               <Link to="/userlogin">
                 <Button sx={{ marginLeft: "auto" }} variant="contained">
                   Login

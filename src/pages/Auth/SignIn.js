@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import UserInput from "./hooks/UserInput";
+import UserInput from "./hooks/useInput";
 import classes from "../../css/account_css/UserAccount.module.css";
 import msg from "../../css/msg/msg.module.css";
 import { Link, useNavigate } from "react-router-dom";

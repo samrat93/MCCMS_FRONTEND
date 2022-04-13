@@ -1,7 +1,7 @@
 import classes from "../../../css/admin_css/AdminDashboard.module.css";
 import formclasses from "../../../css/account_css/UserAccount.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import msg from "../../../css/msg/msg.module.css";
 import validate from "../../../components/admin/stateValidator";
 import swal from "sweetalert";
@@ -9,9 +9,7 @@ import { UpdateStateAction } from "../../../redux/actions/adminActions/StateActi
 
 const UpdateStateContent = ({ stateData }) => {
   const UpdateStateR = useSelector((state) => state.UpdateStateR);
-  const { cdata, error } = UpdateStateR;
-  //   const listStateRedu = useSelector((state) => state.listStateRedu);
-  //   const { states } = listStateRedu;
+  const { error } = UpdateStateR;
 
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
@@ -19,12 +17,14 @@ const UpdateStateContent = ({ stateData }) => {
     state_name: "",
     state_desc: "",
   });
+
   useEffect(() => {
     setValues({
       state_name: stateData.state_name,
       state_desc: stateData.state_desc,
     });
   }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -32,6 +32,7 @@ const UpdateStateContent = ({ stateData }) => {
       [name]: value,
     });
   };
+
   const SubmitFormHandler = (e) => {
     e.preventDefault();
     const mess = validate(values);

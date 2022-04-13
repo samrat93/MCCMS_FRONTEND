@@ -13,7 +13,7 @@ import {
 import CountryUpdateContent from "./UpdatePages/CountryUpdateContent";
 import UpdateCountryForm from "./UpdatePages/UpdateCountryForm";
 import Loading from "../../components/layout/LoadingScreen";
-import UserInput from "../Auth/hooks/UserInput";
+import UserInput from "../Auth/hooks/useInput";
 import swal from "sweetalert";
 
 const AddCountry = () => {
@@ -23,6 +23,12 @@ const AddCountry = () => {
 
   const listCountry = useSelector((state) => state.listCountry);
   const { loading, countries } = listCountry;
+
+  const UpdateCountryR = useSelector((state) => state.UpdateCountryR);
+  const { cdata } = UpdateCountryR;
+
+  const deleteCountryRedu = useSelector((state) => state.deleteCountryRedu);
+  const { success } = deleteCountryRedu;
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -74,7 +80,7 @@ const AddCountry = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [cid, setCid] = useState(0);
-  const [cdata, setCData] = useState(null);
+  const [cData, setCData] = useState(null);
 
   const {
     value: country_name,
@@ -100,7 +106,7 @@ const AddCountry = () => {
     if (userInfo) {
       dispatch(ListCountryAction());
     }
-  }, [dispatch, userInfo, countryInfo]);
+  }, [dispatch, userInfo, countryInfo, cdata, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -258,10 +264,10 @@ const AddCountry = () => {
               </table>
             )}
 
-            {isOpen && cdata && (
+            {isOpen && cData && (
               <div>
                 <UpdateCountryForm
-                  content={<CountryUpdateContent countryData={cdata} />}
+                  content={<CountryUpdateContent countryData={cData} />}
                   handleClose={togglePopup}
                 />
               </div>

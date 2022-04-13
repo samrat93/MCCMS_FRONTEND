@@ -17,7 +17,6 @@ const UserList = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
-  const [items, setItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   let limit = 10;
 
@@ -54,11 +53,9 @@ const UserList = () => {
   }, [currId]);
 
   const togglePopup = (e) => {
-    // console.log("user-id", e.target.value);
     setCurrID(+e.target.value);
     setIsOpen(!isOpen);
   };
-  // const [serialNo, setSerialNo] = useState(1);
   const handlePageClick = async (data) => {
     let Page = data.selected + 1;
     dispatch(readalluser({ Page: Page }));
@@ -101,7 +98,7 @@ const UserList = () => {
                   ) : (
                     <tbody>
                       {newUser?.map((user, index) => (
-                        <tr key={index}>
+                        <tr key={user.id}>
                           <td>{(serialNo - 1) * 10 + index + 1}</td>
                           <td>{user.username}</td>
                           <td>{user.email}</td>

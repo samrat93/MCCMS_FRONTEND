@@ -10,7 +10,6 @@ import {
 } from "../../redux/actions/adminActions/ComplaintSubCategoryAction";
 import { ListComplaintCategoryAction } from "../../redux/actions/adminActions/ComplaintCategoryAction";
 import Loading from "../../components/layout/LoadingScreen";
-
 import DeleteSubCategoryDialog from "../../components/admin/delete_popup/deleteSubCategory";
 import ValidateComplaintSubCategory from "../../components/admin/complaintSubCatValidator";
 import UpdateSubCategoryContent from "./UpdatePages/SubCategoryContent";
@@ -31,6 +30,9 @@ const AddComplaintSubCategory = () => {
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+
+  const UpdateSubCatR = useSelector((state) => state.UpdateSubCatR);
+  const { subcat } = UpdateSubCatR;
 
   const [values, setValues] = useState({
     category_id: "",
@@ -116,7 +118,7 @@ const AddComplaintSubCategory = () => {
       dispatch(ListComplaintSubCategoryAction());
       dispatch(ListComplaintCategoryAction());
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo, subcat]);
 
   const submitHandler = (e) => {
     e.preventDefault();

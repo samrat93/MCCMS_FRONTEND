@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import { ChangePasswordUserAction } from "../../../redux/actions/userActions/changePasswordUserAction";
 import msg from "../../../css/msg/msg.module.css";
-import UserInput from "../../Auth/hooks/UserInput";
+import UserInput from "../../Auth/hooks/useInput";
 import swal from "sweetalert";
 
 const isNotEmpty = (value) => value.trim() !== "";

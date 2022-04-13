@@ -18,7 +18,6 @@ import adminImg from "../../Static/images/admin.jfif";
 import { useEffect } from "react";
 
 const AdminDashboard = () => {
-  const location = useLocation();
   const navigation = useNavigate();
 
   const userSignin = useSelector((state) => state.userSignin);

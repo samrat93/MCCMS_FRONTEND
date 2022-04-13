@@ -1,4 +1,4 @@
-import UserInput from "./hooks/UserInput";
+import UserInput from "./hooks/useInput";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
